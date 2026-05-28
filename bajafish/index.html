@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>BAJAFISH — Know Before You Go</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-bg">
+      <div class="login-bg-gradient"></div>
+      <div class="login-bg-glow"></div>
+    </div>
+    <div class="login-content">
+      <div class="login-logo-wrap">
+        <img src="logo-icon.png" alt="BajaFish" class="login-logo-icon">
+        <img src="wordmark.png" alt="BAJAFISH" class="login-wordmark">
+        <p class="login-tagline">Know before you go.</p>
+      </div>
+      <div class="login-tier-selector">
+        <div class="login-tier-label">Select tier to test</div>
+        <div class="login-tier-pills">
+          <button class="tier-pill" data-tier="free">Free</button>
+          <button class="tier-pill" data-tier="scout">Scout</button>
+          <button class="tier-pill tier-pill--active" data-tier="pro">Pro</button>
+          <button class="tier-pill" data-tier="unlimited">Unlimited</button>
+        </div>
+      </div>
+      <form id="login-form" class="login-form" novalidate>
+        <div class="login-field">
+          <label class="login-label">Email</label>
+          <input type="email" id="login-email" class="login-input" value="pro@bajafish.test" autocomplete="email" spellcheck="false">
+        </div>
+        <div class="login-field">
+          <label class="login-label">Password</label>
+          <input type="password" id="login-password" class="login-input" value="BajaFish123!" autocomplete="current-password">
+        </div>
+        <div id="login-error" class="login-error hidden">Invalid credentials. Use a BajaFish test account.</div>
+        <button type="submit" class="login-submit">Enter BajaFish</button>
+      </form>
+      <div class="login-test-note">Test password: <strong>BajaFish123!</strong></div>
+    </div>
+  </div>
+
+  <!-- APP SHELL -->
+  <div id="app-shell" class="app-shell hidden">
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <img src="logo-icon.png" alt="" class="top-logo-icon">
+        <img src="wordmark.png" alt="BAJAFISH" class="top-wordmark">
+      </div>
+      <div class="top-bar-right">
+        <div class="plan-chip" id="plan-chip">
+          <span class="plan-chip-dot"></span>
+          <span class="plan-chip-name" id="plan-chip-name">Pro</span>
+        </div>
+        <button class="top-icon-btn" id="logout-btn" aria-label="Switch account" title="Switch Account">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- SCREENS -->
+    <div class="screen-container">
+
+      <!-- ── HOME ── -->
+      <div class="screen active" id="screen-home">
+        <div class="home-hero">
+          <div class="home-hero-glow"></div>
+          <div class="home-hero-inner">
+            <div class="live-badge"><span class="live-dot"></span><span>Live Intelligence</span></div>
+            <h1 class="home-hero-title">What's Biting<br>Today?</h1>
+            <p class="home-hero-sub">Baja California · Pacific &amp; Sea of Cortez</p>
+            <div class="home-stats-row">
+              <div class="home-stat"><span class="home-stat-num" id="stat-reports">—</span><span class="home-stat-lbl">Reports</span></div>
+              <div class="home-stat-divider"></div>
+              <div class="home-stat"><span class="home-stat-num" id="stat-species">—</span><span class="home-stat-lbl">Species</span></div>
+              <div class="home-stat-divider"></div>
+              <div class="home-stat"><span class="home-stat-num" id="stat-zones">—</span><span class="home-stat-lbl">Active Zones</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-content">
+          <div class="filter-scroll">
+            <div class="filter-pills" id="home-filter-pills">
+              <button class="fpill fpill--active" data-rating="all">All</button>
+              <button class="fpill fpill--hot" data-rating="hot">🔥 Hot</button>
+              <button class="fpill fpill--good" data-rating="good">✓ Good</button>
+              <button class="fpill fpill--slow" data-rating="slow">Slow</button>
+            </div>
+            <div class="filter-selects">
+              <select id="zone-filter" class="filter-select"><option value="all">All Zones</option></select>
+              <select id="species-filter" class="filter-select">
+                <option value="all">All Species</option>
+                <option value="yellowtail">Yellowtail</option>
+                <option value="dorado">Dorado</option>
+                <option value="yellowfin">Yellowfin Tuna</option>
+                <option value="roosterfish">Roosterfish</option>
+                <option value="cabrilla">Cabrilla</option>
+                <option value="striped-marlin">Striped Marlin</option>
+                <option value="sierra">Sierra</option>
+                <option value="pargo">Pargo</option>
+                <option value="corvina">Corvina</option>
+                <option value="wahoo">Wahoo</option>
+                <option value="grouper">Grouper</option>
+                <option value="white-seabass">White Seabass</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="home-module" id="hotspots-module">
+            <div class="module-header">
+              <span class="module-eyebrow">Intelligence</span>
+              <h2 class="module-title">Top Hot Spots</h2>
+            </div>
+            <div id="hotspots-content" class="module-body"></div>
+          </div>
+
+          <div class="home-module" id="captains-module">
+            <div class="module-header">
+              <span class="module-eyebrow">This Week</span>
+              <h2 class="module-title">Hottest Captains</h2>
+            </div>
+            <div id="top-captains-content" class="module-body"></div>
+          </div>
+
+          <div class="home-module">
+            <div class="module-header">
+              <span class="module-eyebrow">Recent</span>
+              <h2 class="module-title">Latest Reports</h2>
+            </div>
+          </div>
+          <div id="reports-list" class="reports-list"></div>
+
+          <select id="rating-filter" style="display:none"><option value="all">Any</option><option value="hot">Hot</option><option value="good">Good</option><option value="slow">Slow</option></select>
+        </div>
+      </div>
+
+      <!-- ── MAPS ── -->
+      <div class="screen" id="screen-maps">
+        <div class="map-header">
+          <div class="map-header-inner">
+            <div class="live-badge"><span class="live-dot live-dot--green"></span><span>44 Panga Villages</span></div>
+            <h2 class="map-header-title">Fishing Zone Map</h2>
+            <div class="map-coast-pills">
+              <span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span>
+              <span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span>
+            </div>
+          </div>
+          <div class="map-layer-bar" id="map-layer-bar">
+            <button class="map-layer-btn map-layer-btn--active" data-layer="zones">Zones</button>
+            <button class="map-layer-btn" data-layer="heat" id="heat-map-btn">🔥 Heat Map</button>
+            <button class="map-layer-btn" data-layer="conditions">Conditions</button>
+          </div>
+        </div>
+        <div class="heat-search-bar hidden" id="heat-search-bar">
+          <svg class="heat-search-icon" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input type="text" id="heat-species-search" class="heat-search-input" placeholder="Search by species — Yellowtail, Dorado…">
+        </div>
+        <div id="baja-map" class="baja-map"></div>
+        <div class="map-lock-overlay hidden" id="map-lock-overlay">
+          <div class="map-lock-card">
+            <div class="lock-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <h3 class="lock-title">Live Heat Maps</h3>
+            <p class="lock-body">See where fish are biting right now — by species, zone, and captain activity. Pro and Unlimited only.</p>
+            <button class="lock-upgrade-btn" data-open-upgrade>Unlock Heat Maps</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CAPTAINS ── -->
+      <div class="screen" id="screen-captains">
+        <div class="cap-hero">
+          <div class="cap-hero-glow"></div>
+          <div class="cap-hero-inner">
+            <div class="live-badge"><span class="live-dot"></span><span>Verified Captains</span></div>
+            <h2 class="cap-hero-title">Find Your<br>Captain.</h2>
+            <p class="cap-hero-sub">44 fishing zones · Pacific &amp; Sea of Cortez</p>
+            <div class="cap-stats-row">
+              <div class="cap-stat"><span class="cap-stat-num" id="stat-captains">—</span><span class="cap-stat-lbl">Captains</span></div>
+              <div class="cap-stat-div"></div>
+              <div class="cap-stat"><span class="cap-stat-num" id="stat-cap-zones">—</span><span class="cap-stat-lbl">Zones</span></div>
+              <div class="cap-stat-div"></div>
+              <div class="cap-stat"><span class="cap-stat-num" id="stat-cap-rating">—</span><span class="cap-stat-lbl">Avg Rating</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cap-controls">
+          <div class="cap-search-wrap">
+            <svg class="cap-search-icon" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input id="captain-search" class="cap-search-input" type="text" placeholder="Search captains, zones, species…" autocomplete="off">
+            <button class="cap-search-clear hidden" id="captain-search-clear">✕</button>
+          </div>
+          <div class="loc-scroll"><div class="loc-chips" id="cap-location-chips">
+            <button class="loc-chip loc-chip--active" data-zone="all">All</button>
+            <button class="loc-chip" data-zone="popotla">Popotla</button>
+            <button class="loc-chip" data-zone="ensenada">Ensenada</button>
+            <button class="loc-chip" data-zone="cabo">Cabo</button>
+            <button class="loc-chip" data-zone="la-paz">La Paz</button>
+            <button class="loc-chip loc-chip--more" id="loc-more-btn">＋ More</button>
+          </div></div>
+          <div class="sort-scroll"><div class="sort-pills" id="cap-sort-strip">
+            <button class="sort-pill sort-pill--active" data-sort="rated">Top Rated</button>
+            <button class="sort-pill" data-sort="active">Most Active</button>
+            <button class="sort-pill" data-sort="experience">Most Experience</button>
+            <button class="sort-pill" data-sort="yellowtail">Best for Yellowtail</button>
+            <button class="sort-pill" data-sort="dorado">Best for Dorado</button>
+          </div></div>
+        </div>
+
+        <div class="cap-filter-row">
+          <button class="cap-filter-btn" data-filter="location"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="cap-filter-label">Location</span></button>
+          <button class="cap-filter-btn" data-filter="species"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="11" cy="12" rx="7" ry="5"/><circle cx="9" cy="11" r="1" fill="currentColor" stroke="none"/></svg><span class="cap-filter-label">Species</span></button>
+          <button class="cap-filter-btn" data-filter="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span class="cap-filter-label">Rating</span></button>
+          <button class="cap-filter-btn" data-filter="specialty"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg><span class="cap-filter-label">Specialty</span></button>
+        </div>
+
+        <div class="cap-results-label" id="captains-count"></div>
+        <div id="captains-list" class="cap-list"></div>
+      </div>
+
+      <!-- ── COMMUNITY ── -->
+      <div class="screen" id="screen-community">
+        <div class="community-hero">
+          <div class="community-hero-glow"></div>
+          <div class="community-hero-inner">
+            <div class="live-badge"><span class="live-dot live-dot--green"></span><span>Anglers Connecting</span></div>
+            <h2 class="community-hero-title">The Baja<br>Community.</h2>
+            <p class="community-hero-sub">Pool pangas, plan meetups, connect with serious anglers.</p>
+          </div>
+        </div>
+        <div class="community-tabs">
+          <button class="community-tab community-tab--active" data-ctab="pool">Pool a Panga</button>
+          <button class="community-tab" data-ctab="meetups">Meetups</button>
+          <button class="community-tab" data-ctab="forum">Forum</button>
+        </div>
+        <div class="community-panel active" id="ctab-pool">
+          <div class="crew-actions">
+            <div class="crew-action-stats">
+              <div class="crew-astat"><span id="stat-open-trips">—</span><span>Open Trips</span></div>
+              <div class="crew-astat"><span id="stat-crew-spots">—</span><span>Spots Available</span></div>
+              <div class="crew-astat"><span id="stat-avg-split">—</span><span>Avg Per Person</span></div>
+            </div>
+            <button class="crew-post-btn" id="crew-post-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Post a Trip
+            </button>
+          </div>
+          <div class="filter-pills crew-filter-pills">
+            <button class="fpill fpill--active" data-crew-filter="all">All</button>
+            <button class="fpill" data-crew-filter="pacific">Pacific</button>
+            <button class="fpill" data-crew-filter="cortez">Sea of Cortez</button>
+            <button class="fpill" data-crew-filter="open">Open Spots</button>
+          </div>
+          <div id="crew-trips-list" class="crew-trips-list"></div>
+        </div>
+        <div class="community-panel" id="ctab-meetups">
+          <div id="meetups-content" class="community-locked-content"></div>
+        </div>
+        <div class="community-panel" id="ctab-forum">
+          <div id="forum-content" class="community-locked-content"></div>
+        </div>
+      </div>
+
+      <!-- ── PROFILE ── -->
+      <div class="screen" id="screen-profile">
+        <div class="profile-hero">
+          <div class="profile-avatar" id="profile-avatar">?</div>
+          <div class="profile-email" id="profile-email-display">—</div>
+          <div class="profile-plan-badge" id="profile-plan-badge"><span class="profile-plan-name" id="profile-plan-name">—</span></div>
+        </div>
+        <div class="profile-content">
+          <div class="profile-section">
+            <div class="profile-section-title">Your Plan</div>
+            <div id="profile-plan-detail" class="profile-plan-detail"></div>
+            <button class="profile-upgrade-btn hidden" id="profile-upgrade-btn" data-open-upgrade>Upgrade Plan →</button>
+          </div>
+          <div class="profile-section">
+            <div class="profile-section-title">Access Overview</div>
+            <div id="profile-permissions" class="profile-permissions"></div>
+          </div>
+          <div class="profile-section">
+            <div class="profile-section-title">Compare Plans</div>
+            <div class="plan-comparison" id="plan-comparison"></div>
+          </div>
+          <div class="profile-section">
+            <div class="profile-section-title">Settings</div>
+            <div class="profile-settings">
+              <div class="setting-row"><span>Dark Mode</span><button class="setting-toggle active" id="theme-toggle-profile"><span class="toggle-track"><span class="toggle-thumb"></span></span></button></div>
+              <div class="setting-row"><span>Version</span><span class="setting-value">2.0 Premium</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /screen-container -->
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button class="bnav-item active" data-screen="home">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="bnav-label">Home</span>
+      </button>
+      <button class="bnav-item" data-screen="maps">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+        <span class="bnav-label">Maps</span>
+      </button>
+      <button class="bnav-item" data-screen="captains">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        <span class="bnav-label">Captains</span>
+      </button>
+      <button class="bnav-item" data-screen="community">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="bnav-label">Community</span>
+      </button>
+      <button class="bnav-item" data-screen="profile">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+        <span class="bnav-label">Profile</span>
+      </button>
+    </nav>
+
+  </div><!-- /app-shell -->
+
+  <!-- BOTTOM SHEETS -->
+  <div class="bs-overlay" id="bs-overlay"></div>
+
+  <div class="bottom-sheet" id="bs-locations" role="dialog" aria-modal="true">
+    <div class="bs-handle"></div>
+    <div class="bs-header"><h3 class="bs-title">Select Location</h3><button class="bs-close" id="bs-close">✕</button></div>
+    <div class="bs-search-wrap"><input class="bs-search" id="bs-location-search" type="text" placeholder="Search locations…" autocomplete="off"></div>
+    <div class="bs-list" id="bs-location-list"></div>
+    <div class="bs-footer"><button class="bs-apply-btn" id="bs-apply">Show Captains</button></div>
+  </div>
+
+  <div class="bottom-sheet" id="bs-filter" role="dialog" aria-modal="true">
+    <div class="bs-handle"></div>
+    <div class="bs-header"><h3 class="bs-title" id="bs-filter-title">Filter</h3><button class="bs-close" id="bs-filter-close">✕</button></div>
+    <div class="bs-list" id="bs-filter-list"></div>
+    <div class="bs-footer"><button class="bs-apply-btn" id="bs-filter-apply">Apply Filter</button></div>
+  </div>
+
+  <!-- UPGRADE MODAL -->
+  <div id="upgrade-modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-card upgrade-modal-card">
+      <button class="modal-close" id="upgrade-modal-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="upgrade-modal-logo">
+        <img src="logo-icon.png" alt="BajaFish" class="upgrade-logo-icon">
+        <img src="wordmark.png" alt="BAJAFISH" class="upgrade-logo-wordmark">
+      </div>
+      <h2 class="upgrade-modal-title">Unlock the Full Baja Network</h2>
+      <div class="upgrade-tabs">
+        <button class="upgrade-tab active" data-utab="free">Free</button>
+        <button class="upgrade-tab" data-utab="scout">Scout</button>
+        <button class="upgrade-tab" data-utab="pro">Pro</button>
+        <button class="upgrade-tab" data-utab="unlimited">Unlimited</button>
+      </div>
+      <div id="upgrade-panels">
+        <div class="upgrade-panel active" data-upanel="free">
+          <div class="upgrade-tier-info"><span class="upgrade-tier-badge">Tier 0</span><div class="upgrade-tier-desc">Starter access — delayed data, limited views</div></div>
+          <form class="upgrade-form" data-utier-form="free" novalidate>
+            <input type="email" class="upgrade-input" data-auth-email value="free@bajafish.test">
+            <input type="password" class="upgrade-input" data-auth-password value="BajaFish123!">
+            <button type="submit" class="upgrade-submit">Enter Free</button>
+          </form>
+        </div>
+        <div class="upgrade-panel" data-upanel="scout">
+          <div class="upgrade-tier-info"><span class="upgrade-tier-badge upgrade-tier-badge--paid">Tier 1</span><div class="upgrade-tier-desc">Heat maps + community starter access</div></div>
+          <form class="upgrade-form" data-utier-form="scout" novalidate>
+            <input type="email" class="upgrade-input" data-auth-email value="scout@bajafish.test">
+            <input type="password" class="upgrade-input" data-auth-password value="BajaFish123!">
+            <button type="submit" class="upgrade-submit upgrade-submit--premium">Enter Scout</button>
+          </form>
+        </div>
+        <div class="upgrade-panel" data-upanel="pro">
+          <div class="upgrade-tier-info"><span class="upgrade-tier-badge upgrade-tier-badge--paid">Tier 2</span><div class="upgrade-tier-desc">Full intelligence + captain access + live heat maps</div></div>
+          <form class="upgrade-form" data-utier-form="pro" novalidate>
+            <input type="email" class="upgrade-input" data-auth-email value="pro@bajafish.test">
+            <input type="password" class="upgrade-input" data-auth-password value="BajaFish123!">
+            <button type="submit" class="upgrade-submit upgrade-submit--premium">Enter Pro</button>
+          </form>
+        </div>
+        <div class="upgrade-panel" data-upanel="unlimited">
+          <div class="upgrade-tier-info"><span class="upgrade-tier-badge upgrade-tier-badge--gold">Tier 3</span><div class="upgrade-tier-desc">Everything — full community, all data, total access</div></div>
+          <form class="upgrade-form" data-utier-form="unlimited" novalidate>
+            <input type="email" class="upgrade-input" data-auth-email value="unlimited@bajafish.test">
+            <input type="password" class="upgrade-input" data-auth-password value="BajaFish123!">
+            <button type="submit" class="upgrade-submit upgrade-submit--gold">Enter Unlimited</button>
+          </form>
+        </div>
+      </div>
+      <div class="upgrade-note">Test password for all tiers: <strong>BajaFish123!</strong></div>
+    </div>
+  </div>
+
+  <!-- SUBMIT REPORT MODAL -->
+  <div id="submit-modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-card submit-modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Submit a Report</h2>
+          <p class="modal-sub">Your report helps every angler planning a Baja trip.</p>
+        </div>
+        <button class="modal-close" id="submit-modal-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="submit-steps">
+        <div class="submit-step submit-step--active" id="step-indicator-1"><span class="step-num">1</span><span class="step-label">Species</span></div>
+        <div class="submit-step-line"></div>
+        <div class="submit-step" id="step-indicator-2"><span class="step-num">2</span><span class="step-label">Details</span></div>
+        <div class="submit-step-line"></div>
+        <div class="submit-step" id="step-indicator-3"><span class="step-num">3</span><span class="step-label">Report</span></div>
+      </div>
+      <form id="report-form" class="submit-form" novalidate>
+        <div class="submit-panel active" id="submit-panel-1">
+          <div class="submit-field-label">What did you catch? <span class="form-hint">Tap to select</span></div>
+          <div id="fish-picker" class="fish-picker"></div>
+          <input type="hidden" id="submit-species">
+          <div id="legal-limit-warning" class="legal-limit-warning hidden"></div>
+          <div class="submit-nav"><button type="button" class="submit-next" id="step1-next">Continue →</button></div>
+        </div>
+        <div class="submit-panel" id="submit-panel-2">
+          <div class="submit-form-row">
+            <div class="submit-field"><label class="submit-label">Zone</label><select class="submit-input" id="submit-zone" required><option value="">Select zone…</option></select></div>
+            <div class="submit-field"><label class="submit-label">Date Fished</label><input type="date" class="submit-input" id="submit-date" required></div>
+          </div>
+          <div class="submit-form-row">
+            <div class="submit-field"><label class="submit-label">Fish Count</label><input type="number" class="submit-input" id="submit-count" min="0" max="999" placeholder="How many?"></div>
+            <div class="submit-field"><label class="submit-label">Captain</label><input type="text" class="submit-input" id="submit-captain" placeholder="Optional"></div>
+          </div>
+          <div class="submit-form-row">
+            <div class="submit-field"><label class="submit-label">How Was It?</label><select class="submit-input" id="submit-rating" required><option value="hot">Hot — Wide open</option><option value="good">Good — Steady action</option><option value="slow">Slow — Picked a few</option></select></div>
+            <div class="submit-field"><label class="submit-label">Bait / Lures</label><input type="text" class="submit-input" id="submit-bait" placeholder="e.g. Live sardina"></div>
+          </div>
+          <div id="count-limit-check" class="count-limit-check hidden"></div>
+          <div class="submit-nav submit-nav--two"><button type="button" class="submit-back" id="step2-back">← Back</button><button type="button" class="submit-next" id="step2-next">Continue →</button></div>
+        </div>
+        <div class="submit-panel" id="submit-panel-3">
+          <div class="submit-field"><label class="submit-label">Your Name</label><input type="text" class="submit-input" id="submit-name" required placeholder="Angler name"></div>
+          <div class="submit-field"><label class="submit-label">Report / Notes</label><textarea class="submit-input submit-textarea" id="submit-notes" rows="4" placeholder="Water conditions, best spots, technique tips…"></textarea></div>
+          <div class="submit-nav submit-nav--two"><button type="button" class="submit-back" id="step3-back">← Back</button><button type="submit" class="submit-final">Submit Report</button></div>
+        </div>
+      </form>
+      <div id="submit-success" class="submit-success hidden">
+        <div class="submit-success-icon">✓</div>
+        <h3>Report Submitted!</h3>
+        <p>Your report is now live and helping anglers plan their Baja trips.</p>
+        <button class="submit-next" id="submit-done-btn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST A TRIP MODAL -->
+  <div id="crew-post-modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div><h3 class="modal-title">Post a Trip</h3><p class="modal-sub">Match with anglers heading the same direction.</p></div>
+        <button class="modal-close" id="crew-modal-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <form id="crew-post-form" class="submit-form" novalidate>
+        <div class="submit-form-row">
+          <div class="submit-field"><label class="submit-label">Zone</label><select class="submit-input" id="crew-zone" required><option value="">Select zone…</option></select></div>
+          <div class="submit-field"><label class="submit-label">Target Species</label><input class="submit-input" id="crew-species-input" type="text" placeholder="e.g. Yellowtail" required></div>
+        </div>
+        <div class="submit-form-row">
+          <div class="submit-field"><label class="submit-label">Trip Date</label><input class="submit-input" id="crew-date" type="date" required></div>
+          <div class="submit-field"><label class="submit-label">Panga Total ($)</label><input class="submit-input" id="crew-total-cost" type="number" placeholder="350" min="50" max="2000" required></div>
+        </div>
+        <div class="submit-form-row">
+          <div class="submit-field"><label class="submit-label">Total Spots</label><select class="submit-input" id="crew-total-spots"><option value="2">2 anglers</option><option value="3">3 anglers</option><option value="4" selected>4 anglers</option><option value="5">5 anglers</option><option value="6">6 anglers</option></select></div>
+          <div class="submit-field"><label class="submit-label">Your Name</label><input class="submit-input" id="crew-name" type="text" placeholder="e.g. Cabo Mike" required></div>
+        </div>
+        <div class="submit-field"><label class="submit-label">Message to Crew</label><textarea class="submit-input submit-textarea" id="crew-message" rows="2" placeholder="Early start? Bring gear? What's the plan?"></textarea></div>
+        <button type="submit" class="submit-final">Post My Trip</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FAB -->
+  <button class="fab hidden" id="fab-submit" aria-label="Submit a fishing report" title="Submit Report">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  </button>
+
+  <!-- Toast -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data.js"></script>
+  <script src="weather.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
