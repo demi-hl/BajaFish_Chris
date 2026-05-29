@@ -10,9 +10,11 @@
 // =============================================
 
 // ── OpenWeatherMap API Key ───────────────────
-// Get your free key at: https://openweathermap.org/api
-// Paste it below (new keys activate within ~2 hours of signup)
-const OWM_API_KEY = '29c6bd1f342f774aae0fff47863d4d88';
+// Loaded at runtime from config.js (gitignored) via window.BAJAFISH_CONFIG.
+// See config.example.js for setup. SECURITY: the key previously hardcoded here was
+// committed to git history and MUST be rotated at https://home.openweathermap.org/api_keys
+// For production, prefer a serverless proxy that keeps the key server-side (see MVP_ROADMAP P0.5).
+const OWM_API_KEY = (typeof window !== 'undefined' && window.BAJAFISH_CONFIG && window.BAJAFISH_CONFIG.owmKey) || '';
 
 const WEATHER_CACHE_KEY = 'baja-conditions-v3';  // bumped version to bust old cache
 const WEATHER_CACHE_TTL = 60 * 60 * 1000;       // 1 hour

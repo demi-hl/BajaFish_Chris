@@ -17,3 +17,12 @@ npm-debug.log*
 
 # Claude local settings (keep launch.json, ignore local overrides)
 .claude/settings.local.json
+
+# Local runtime config — never commit API keys
+config.js
+
+# Vercel
+.vercel/
+
+# Overhaul workspace (audit reports, staged images, screenshots, scratch scripts)
+.claude/overhaul/

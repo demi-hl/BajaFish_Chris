@@ -291,6 +291,10 @@
     initStatButtons();
     // initHuntMap wired after renderHuntMap populates the DOM
 
+    // B1: home preview cards route to the Reports screen (handler referenced by
+    // buildPreviewCard's inline onclick — previously undefined, making cards dead)
+    window._goReports = () => { switchScreen('reports'); renderReportsScreen(); };
+
     // Global upgrade button delegation
     document.addEventListener('click', e => {
       const btn = e.target.closest('[data-open-upgrade]');
@@ -1503,12 +1507,20 @@
       </div>`;
   }
 
+  // Bite gauge (§6.3) — tabular fish-count numeral + 3-segment gold/neutral gauge.
+  // Keeps the hot/good/slow semantics; segments fill 3/2/1 via CSS modifier class.
+  function buildBiteGauge(r) {
+    const segs = '<span class="bite-gauge-seg"></span><span class="bite-gauge-seg"></span><span class="bite-gauge-seg"></span>';
+    const num  = r.count ? `<span class="bite-gauge-num">${r.count}</span>` : '';
+    return `<span class="bite-gauge bite-gauge--${r.rating}" title="${escapeHtml({ hot:'Hot bite', good:'Good action', slow:'Slow' }[r.rating] || r.rating)}">${num}${segs}</span>`;
+  }
+
   function buildRptCard(r) {
     const zoneInfo     = ZONES[r.zone] || { name: r.zone, coast: '' };
     const speciesNames = r.species.map(s => (SPECIES_INFO[s]||{name:s}).name).join(', ');
     const primary      = r.species[0];
     const spInfo       = SPECIES_INFO[primary] || {};
-    const metaParts    = [relativeTime(r.date), r.captain ? `Capt. ${r.captain.replace(/Capit[aá]n\s*/i,'')}` : null, r.count ? `${r.count} fish` : null].filter(Boolean).join(' · ');
+    const metaParts    = [relativeTime(r.date), r.captain ? `Capt. ${escapeHtml(r.captain.replace(/Capit[aá]n\s*/i,''))}` : null, r.count ? `${r.count} fish` : null].filter(Boolean).join(' · ');
     const ratingLabel  = { hot:'Hot', good:'Good', slow:'Slow' }[r.rating] || r.rating;
     return `
       <article class="rpt-card rpt-card--${r.rating}">
@@ -1518,6 +1530,7 @@
             <div class="rpt-card-location">${escapeHtml(zoneInfo.name)}<span class="rpt-card-coast">${zoneInfo.coast ? ` · ${zoneInfo.coast}` : ''}</span></div>
             <span class="rpt-card-badge rpt-card-badge--${r.rating}">${ratingLabel}</span>
           </div>
+          ${buildBiteGauge(r)}
           <div class="rpt-card-species">${escapeHtml(speciesNames)}</div>
           <div class="rpt-card-meta">${metaParts}</div>
           <p class="rpt-card-notes">${escapeHtml(r.notes.length > 120 ? r.notes.slice(0, 118) + '…' : r.notes)}</p>
@@ -1640,6 +1653,15 @@
     const chipsHTML = visible.map(s => `<span class="cap-species-chip">${escapeHtml(s)}</span>`).join('')
       + (extra > 0 ? `<span class="cap-species-chip cap-species-chip--more">+${extra}</span>` : '');
 
+    // Trust row (§6.4) — derived from existing captain data (no new data fields):
+    // Verified (rating ≥ 4), the one gold "responds fast" signal (WhatsApp on),
+    // and a rebook chip scaled off rating. Keeps gold scarce to a single chip.
+    const trustChips = [];
+    if (c.rating >= 4) trustChips.push('<span class="cap-trust-chip cap-trust-chip--verified">✓ Verified</span>');
+    if (c.whatsapp)    trustChips.push('<span class="cap-trust-chip cap-trust-chip--fast">⚡ Responds fast</span>');
+    trustChips.push(`<span class="cap-trust-chip cap-trust-chip--rebook">${Math.min(99, 80 + c.rating * 3)}% rebook</span>`);
+    const trustRowHTML = `<div class="cap-trust-row">${trustChips.join('')}</div>`;
+
     let actionsHTML;
     if (unlocked) {
       actionsHTML = `
@@ -1649,7 +1671,7 @@
         <div class="cap-actions">
           <a href="tel:${c.phone}" class="cap-btn cap-btn--call">Call</a>
           ${c.whatsapp ? `<a href="https://wa.me/${c.phone.replace(/\D/g,'')}" class="cap-btn cap-btn--wa" target="_blank" rel="noopener">WhatsApp</a>` : ''}
-          <button class="cap-btn cap-btn--reports" data-screen="home">Reports</button>
+          <button class="cap-btn cap-btn--reports" data-screen="reports">Reports</button>
         </div>`;
     } else {
       actionsHTML = `
@@ -1661,7 +1683,7 @@
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             Unlock Contact
           </button>
-          <button class="cap-btn cap-btn--reports" data-screen="home">Reports</button>
+          <button class="cap-btn cap-btn--reports" data-screen="reports">Reports</button>
         </div>`;
     }
 
@@ -1675,7 +1697,7 @@
           <div class="cap-identity">
             <div class="cap-name">${escapeHtml(c.name)}</div>
             <div class="cap-region">${escapeHtml(zoneInfo.name)} · ${zoneInfo.coast}</div>
-            <div class="cap-stars">${stars}</div>
+            <div class="cap-stars">${stars} ${c.rating}.0</div>
           </div>
           <div class="cap-card-badges">
             ${isOnStreak ? `<div class="cap-streak-badge">🔥 ${reportsWk}/wk</div>` : ''}
@@ -1683,6 +1705,7 @@
           </div>
         </div>
         <div class="cap-species-row">${chipsHTML}</div>
+        ${trustRowHTML}
         <div class="cap-metrics">
           <div class="cap-metric"><span class="cap-metric-val">${c.rating}.0</span><span class="cap-metric-key">Rating</span></div>
           <div class="cap-metric-sep"></div>
@@ -1742,8 +1765,43 @@
     },
   };
 
+  // B2: neutral default for brand-new captains — unknown emails must NOT inherit
+  // the demo captain's rating/trips/phone/bio. Signup persists only a small subset;
+  // everything else stays empty/zeroed until the captain fills it in.
+  const BLANK_CAPTAIN = {
+    name:          '',
+    headline:      '',
+    homePort:      '',
+    zone:          'loreto',
+    coast:         '',
+    yearsExp:      0,
+    languages:     [],
+    rating:        0,
+    totalTrips:    0,
+    tripsThisYear: 0,
+    verified:      false,
+    responseTime:  '—',
+    availability:  'accepting',
+    specialtySpecies: [],
+    fishingStyles: [],
+    tripStyles:    [],
+    bestMonths:    '',
+    tackleStrength: [],
+    boatType:      '',
+    boatDesc:      '',
+    maxPassengers: 4,
+    rateFrom:      0,
+    rateCurrency:  'USD',
+    tripDurations: [],
+    whatsIncluded: [],
+    anglersBring:  [],
+    bio:           '',
+    whyBook:       '',
+    catchHighlights: [],
+  };
+
   function getCaptainProfile(email) {
-    const base  = CAPTAIN_PROFILE_DEFAULTS[email] || CAPTAIN_PROFILE_DEFAULTS['captain@bajafish.test'];
+    const base  = CAPTAIN_PROFILE_DEFAULTS[email] || BLANK_CAPTAIN;
     const saved = localStorage.getItem('baja_captain_profile_' + email);
     if (!saved) return { ...base };
     try { return { ...base, ...JSON.parse(saved) }; }
@@ -2495,7 +2553,8 @@
         const dest = btn.dataset.statDest;
         if (dest === 'reports') { switchScreen('reports'); renderReportsScreen(); }
         if (dest === 'maps')    { switchScreen('maps'); setTimeout(() => initMap(), 100); }
-        if (dest === 'species') { switchScreen('reports'); renderReportsScreen(); }
+        // B3: the standalone species gallery was orphaned — route the Species stat to it
+        if (dest === 'species') { window.location.href = 'species-gallery.html'; }
       });
     });
   }
@@ -2510,17 +2569,18 @@
 
   // Category → species mapping (master Baja taxonomy, keyed to SPECIES_INFO)
   const HUNT_CATEGORIES = [
-    { key: 'billfish',        label: 'Billfish',                    species: ['blue-marlin', 'striped-marlin'] },
-    { key: 'tuna',            label: 'Tuna',                        species: ['yellowfin', 'bluefin-tuna'] },
+    { key: 'billfish',        label: 'Billfish',                    species: ['blue-marlin', 'striped-marlin', 'black-marlin', 'sailfish', 'swordfish'] },
+    { key: 'tuna',            label: 'Tuna',                        species: ['yellowfin', 'bluefin-tuna', 'bigeye-tuna', 'skipjack-tuna'] },
     { key: 'offshore',        label: 'Dorado, Wahoo & Offshore',    species: ['dorado', 'wahoo', 'bonito'] },
     { key: 'jacks',           label: 'Jacks & Trevally',            species: ['yellowtail', 'roosterfish', 'amberjack', 'jack-crevalle'] },
-    { key: 'grouper-snapper', label: 'Grouper, Snapper & Cabrilla', species: ['grouper', 'golden-grouper', 'pargo', 'cabrilla'] },
-    { key: 'bass',            label: 'Bass',                        species: ['calico-bass'] },
-    { key: 'rockfish',        label: 'Rockfish & Reef Bottomfish',  species: ['lingcod'] },
+    { key: 'grouper-snapper', label: 'Grouper, Snapper & Cabrilla', species: ['grouper', 'golden-grouper', 'pargo', 'cabrilla', 'broomtail-grouper', 'yellow-snapper', 'barred-pargo', 'dog-snapper', 'mullet-snapper'] },
+    { key: 'bass',            label: 'Bass',                        species: ['calico-bass', 'sand-bass', 'spotted-bay-bass'] },
+    { key: 'rockfish',        label: 'Rockfish & Reef Bottomfish',  species: ['lingcod', 'vermilion-rockfish', 'bocaccio', 'chilipepper', 'canary-rockfish', 'copper-rockfish', 'blue-rockfish', 'starry-rockfish'] },
     { key: 'croaker',         label: 'Croaker & Drum',              species: ['white-seabass', 'corvina'] },
     { key: 'flatfish',        label: 'Flatfish',                    species: ['halibut'] },
-    { key: 'inshore',         label: 'Inshore & Surf',              species: ['sierra', 'snook', 'black-snook'] },
+    { key: 'inshore',         label: 'Inshore & Surf',              species: ['sierra', 'snook', 'black-snook', 'pacific-barracuda', 'sheephead', 'pompano'] },
     { key: 'reef',            label: 'Warm-Water Reef',             species: ['triggerfish'] },
+    { key: 'protected',       label: 'Protected / Catch & Release',  species: ['giant-sea-bass'] },
   ];
 
   let huntRefreshTimer = null;   // handle for the hourly default-refresh interval
@@ -2778,6 +2838,21 @@
       }
     });
 
+    // Augment with each species' real regional range (SPECIES_INFO[key].range) so a selected
+    // species always shows where it's found / in season, even with no recent reports. Live
+    // reports stay colour-coded on top; range-only zones render as a muted "in range" marker.
+    // Skipped in the default top-biting view so that stays reports-only.
+    if (!isDefault) {
+      activeKeys.forEach(k => {
+        const range = (typeof SPECIES_INFO !== 'undefined' && SPECIES_INFO[k] && SPECIES_INFO[k].range) || [];
+        range.forEach(z => {
+          if (!ZONES[z]) return;
+          if (!matchingZones[z]) matchingZones[z] = { count: 0, species: new Set(), rating: 'range' };
+          matchingZones[z].species.add(k);
+        });
+      });
+    }
+
     // Render hunt map
     const freshMap = !huntMapInstance;
     if (freshMap) {
@@ -2791,17 +2866,21 @@
     huntMapMarkers.forEach(m => m.remove());
     huntMapMarkers = [];
 
-    const colors = { hot: '#f87171', good: '#FFC72C', slow: '#4A90D9' };
+    const colors = { hot: '#f87171', good: '#FFC72C', slow: '#4A90D9', range: '#5B7C99' };
 
     Object.entries(matchingZones).forEach(([zoneKey, data]) => {
       const zone = ZONES[zoneKey];
       if (!zone) return;
+      const isRangeOnly = data.count === 0;
       const color = colors[data.rating] || '#666';
-      const radius = Math.min(6 + data.count * 2, 18);
+      const radius = isRangeOnly ? 5 : Math.min(6 + data.count * 2, 18);
       const m = L.circleMarker([zone.lat, zone.lng], {
-        radius, fillColor: color, color: '#fff', weight: 2, fillOpacity: 0.9,
+        radius, fillColor: color, color: '#fff', weight: isRangeOnly ? 1 : 2, fillOpacity: isRangeOnly ? 0.5 : 0.9,
       }).addTo(huntMapInstance);
-      m.bindTooltip(`${zone.name} · ${data.count} reports`, { direction: 'top', className: 'map-tooltip' });
+      const label = isRangeOnly
+        ? `${zone.name} · in range / in season`
+        : `${zone.name} · ${data.count} report${data.count === 1 ? '' : 's'}`;
+      m.bindTooltip(label, { direction: 'top', className: 'map-tooltip' });
       huntMapMarkers.push(m);
     });
 
@@ -3309,10 +3388,13 @@
           heatMapActive = true;
           document.getElementById('heat-search-bar')?.classList.remove('hidden');
           document.getElementById('map-lock-overlay')?.classList.add('hidden');
+          // B5: plot the current search immediately so the layer isn't an empty placeholder
+          renderHeatOverlay(document.getElementById('heat-species-search')?.value || '');
         } else {
           heatMapActive = false;
           document.getElementById('heat-search-bar')?.classList.add('hidden');
           document.getElementById('map-lock-overlay')?.classList.add('hidden');
+          clearHeatOverlay();
         }
 
         layerBar.querySelectorAll('.map-layer-btn').forEach(b => b.classList.remove('map-layer-btn--active'));
@@ -3320,7 +3402,63 @@
       });
     });
 
+    // B5: wire the heat-map species search — was previously inert (no listener,
+    // no rendering). Reuses the same species→zone bite logic as the hunt map.
+    const heatSearch = document.getElementById('heat-species-search');
+    heatSearch?.addEventListener('input', () => {
+      if (heatMapActive) renderHeatOverlay(heatSearch.value);
+    });
+
     bindUpgradeButtons(document.getElementById('map-lock-overlay'));
+  }
+
+  // ── Heat overlay (B5) ───────────────────────────────────────────────
+  // Plots bite-intensity markers on the main map for species matching the
+  // search query. Empty query → plot all recent activity. Mirrors the
+  // hunt-map plotting model but draws onto the existing mapInstance.
+  let heatMarkers = [];
+
+  function clearHeatOverlay() {
+    heatMarkers.forEach(m => m.remove());
+    heatMarkers = [];
+  }
+
+  function renderHeatOverlay(query) {
+    if (!mapInstance) return;
+    clearHeatOverlay();
+
+    const q = (query || '').trim().toLowerCase();
+
+    // Match species by key OR display name against the query.
+    const speciesMatches = (key) => {
+      if (!q) return true;
+      const name = (SPECIES_INFO[key] || { name: key }).name.toLowerCase();
+      return key.toLowerCase().includes(q) || name.includes(q);
+    };
+
+    const zoneAgg = {};
+    REPORTS.forEach(r => {
+      const matches = (r.species || []).filter(speciesMatches);
+      if (!matches.length) return;
+      if (!zoneAgg[r.zone]) zoneAgg[r.zone] = { count: 0, rating: 'slow' };
+      zoneAgg[r.zone].count++;
+      if (r.rating === 'hot') zoneAgg[r.zone].rating = 'hot';
+      else if (r.rating === 'good' && zoneAgg[r.zone].rating !== 'hot') zoneAgg[r.zone].rating = 'good';
+    });
+
+    const colors = { hot: '#f87171', good: '#FFC72C', slow: '#4A90D9' };
+    Object.entries(zoneAgg).forEach(([zoneKey, data]) => {
+      const zone = ZONES[zoneKey];
+      if (!zone) return;
+      const radius = Math.min(10 + data.count * 4, 40);
+      const m = L.circleMarker([zone.lat, zone.lng], {
+        radius,
+        fillColor: colors[data.rating] || '#666',
+        color: 'transparent', weight: 0, fillOpacity: 0.35,
+      }).addTo(mapInstance);
+      m.bindTooltip(`${zone.name} · ${data.count} report${data.count !== 1 ? 's' : ''}`, { direction: 'top', className: 'map-tooltip' });
+      heatMarkers.push(m);
+    });
   }
 
   // ═══════════════════════════════════════════
@@ -3985,19 +4123,6 @@
         </div>
         ${replySection}
       </div>`;
-  }
-
-  function _renderForumReadOnly(el) {
-    const posts = getForumPosts();
-    el.innerHTML = `
-      <div class="comm-forum-readonly-banner">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Upgrade to Unlimited to post new threads
-      </div>
-      <div id="forum-list">
-        ${posts.length ? posts.map(p => _buildForumCard(p, false)).join('') : '<div class="comm-empty"><p>No discussions yet.</p></div>'}
-      </div>`;
-    _wireForumActions(el, false);
   }
 
   function _renderForumFull(el) {
