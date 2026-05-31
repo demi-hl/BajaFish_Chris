@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="/site/site.css?v=10">
+  <link rel="stylesheet" href="/site/site.css?v=11">
 </head>
 <body>
 
@@ -38,6 +38,9 @@
   <section class="hero" id="hero">
     <div class="hero__media" data-parallax aria-hidden="true">
       <img src="/img/hero-main.jpg" alt="" class="hero__img" fetchpriority="high">
+      <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true">
+        <source data-src="/site/img/hero-ocean.mp4?v=1" type="video/mp4">
+      </video>
     </div>
     <div class="hero__scrim" aria-hidden="true"></div>
     <div class="hero__grain" aria-hidden="true"></div>
@@ -368,7 +371,7 @@
       <div class="getapp__device" data-reveal data-reveal-d="1">
         <div class="phone">
           <div class="phone__island" aria-hidden="true"></div>
-          <img class="phone__screen" src="/site/img/app-screen.png" alt="BajaFish on iPhone" loading="lazy">
+          <img class="phone__screen" src="/site/img/app-screen.png?v=3" alt="BajaFish on iPhone" loading="lazy">
           <div class="phone__glare" aria-hidden="true"></div>
         </div>
       </div>
@@ -412,7 +415,7 @@
   <script src="/site/departures.js?v=1"></script>
   <script src="/site/catch-data.js?v=1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="/site/water.js?v=2"></script>
+  <script src="/site/hero-video.js?v=1"></script>
   <script src="/site/site.js?v=14"></script>
 </body>
 </html>
