@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="/site/site.css?v=12">
+  <link rel="stylesheet" href="/site/site.css?v=13">
 </head>
 <body>
 
@@ -186,7 +186,51 @@
     <p class="cap-count" id="capCount" aria-live="polite"></p>
     <div class="cap-grid" id="capGrid" aria-label="Captains"></div>
     <p class="cap-empty" id="capEmpty" hidden>No captains match those filters.</p>
+    <div class="cap-join" data-reveal>
+      <div class="cap-join__txt">
+        <h3>Run a panga in Baja?</h3>
+        <p>Get listed on BajaFish. Tell us your ports, your target species, and your track record. No app to download.</p>
+      </div>
+      <button type="button" class="btn btn--gold btn--lg" data-join>Join the fleet</button>
+    </div>
   </section>
+
+  <!-- CAPTAIN SELF-REPORT FORM (modal) -->
+  <div class="join" id="capJoin" aria-hidden="true">
+    <div class="join__backdrop" data-join-close></div>
+    <div class="join__sheet" role="dialog" aria-modal="true" aria-labelledby="joinTitle">
+      <div class="join__head">
+        <div>
+          <p class="eyebrow eyebrow--gold">Join the fleet</p>
+          <h2 class="join__title" id="joinTitle">List your panga</h2>
+        </div>
+        <button type="button" class="join__x" data-join-close aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <form class="join-form" id="capJoinForm" action="https://formspree.io/f/your-form-id" method="POST">
+        <div class="join-grid">
+          <label class="field"><span>Captain name</span><input name="name" type="text" required autocomplete="name"></label>
+          <label class="field"><span>WhatsApp or phone</span><input name="whatsapp" type="tel" required autocomplete="tel"></label>
+          <label class="field"><span>Home port</span><select name="port" id="joinPort" required><option value="">Select a port</option></select></label>
+          <label class="field"><span>Years fishing</span><input name="years" type="number" min="0" max="80" inputmode="numeric"></label>
+          <label class="field field--wide"><span>Target species</span><input name="species" type="text" placeholder="Yellowtail, Dorado, Roosterfish"></label>
+          <label class="field"><span>Anglers per year (approx)</span><input name="anglers_per_year" type="text" inputmode="numeric" placeholder="e.g. 300"></label>
+          <label class="field"><span>Pangas in your fleet</span><input name="boats" type="number" min="1" max="50" inputmode="numeric" placeholder="1"></label>
+          <label class="field field--wide"><span>Short bio</span><textarea name="bio" rows="3" placeholder="Where you fish, what you are known for, languages spoken."></textarea></label>
+        </div>
+        <p class="join-note">We will request boat and trip photos over WhatsApp after you submit, so nothing to upload here.</p>
+        <label class="join-consent"><input type="checkbox" name="consent" required><span>I am a licensed local panguero and consent to being listed on BajaFish.</span></label>
+        <button type="submit" class="btn btn--gold btn--lg join-submit">Send my details</button>
+        <p class="join-error" hidden>Something went wrong. Please WhatsApp us instead.</p>
+      </form>
+      <div class="join-done" hidden>
+        <h3>Got it, captain.</h3>
+        <p>Thanks. Our team will review your details and reach out on WhatsApp to verify and add you to the fleet.</p>
+        <button type="button" class="btn btn--ghost" data-join-close>Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ░░ ZONE MAP ░░ -->
   <section class="zonemap" id="map">
@@ -431,6 +475,6 @@
   <script src="/site/catch-data.js?v=1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="/site/hero-video.js?v=1"></script>
-  <script src="/site/site.js?v=15"></script>
+  <script src="/site/site.js?v=16"></script>
 </body>
 </html>

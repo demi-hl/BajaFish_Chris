@@ -207,6 +207,48 @@ section{position:relative}
 .cap.is-hidden{display:none}
 .cap-empty{text-align:center;color:var(--fg-2);padding:50px var(--pad)}
 @media (max-width:640px){.cap-controls{flex-direction:column;align-items:stretch}.cap-filters,.cap-select{width:100%}.cap-filters{justify-content:center}}
+/* captain self-report CTA + form modal */
+.cap-join{max-width:1200px;margin:clamp(30px,5vw,56px) auto 0;padding:clamp(26px,4vw,38px) var(--pad);
+  display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--line)}
+.cap-join__txt{max-width:620px}
+.cap-join h3{font-family:var(--serif);font-size:clamp(22px,3vw,30px);color:#fff}
+.cap-join p{color:var(--fg-2);font-size:15px;margin-top:8px}
+.join{position:fixed;inset:0;z-index:130;display:flex;align-items:center;justify-content:center;
+  padding:clamp(12px,3vw,40px);opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility .5s var(--ease)}
+.join.is-open{opacity:1;visibility:visible}
+.join__backdrop{position:absolute;inset:0;background:rgba(2,8,12,.8);backdrop-filter:blur(10px)}
+.join__sheet{position:relative;width:min(680px,100%);max-height:92vh;overflow:auto;border-radius:20px;
+  background:radial-gradient(120% 80% at 50% 0%,var(--sea),var(--ink) 70%),var(--ink-2);
+  border:1px solid var(--line-2);box-shadow:0 50px 120px -40px #000,inset 0 0 0 1px rgba(255,199,44,.06);
+  padding:clamp(22px,3vw,38px);transform:translateY(18px) scale(.985);transition:transform .55s var(--ease-2)}
+.join.is-open .join__sheet{transform:none}
+.join__sheet::-webkit-scrollbar{width:10px}
+.join__sheet::-webkit-scrollbar-thumb{background:rgba(243,236,221,.14);border-radius:8px}
+.join__head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px}
+.join__title{font-family:var(--serif);font-size:clamp(26px,3.4vw,36px);color:#fff;margin-top:6px}
+.join__x{flex:none;width:42px;height:42px;border-radius:50%;background:rgba(243,236,221,.06);border:1px solid var(--line-2);
+  color:var(--fg);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s var(--ease)}
+.join__x:hover{background:rgba(243,236,221,.14)}
+.join__x svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.join-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field--wide{grid-column:1 / -1}
+.field span{font-size:13px;color:var(--fg-2);letter-spacing:.02em}
+.field input,.field select,.field textarea{background:rgba(243,236,221,.04);border:1px solid var(--line);border-radius:12px;
+  padding:12px 14px;color:var(--fg);font:inherit;font-size:15px}
+.field textarea{resize:vertical;min-height:78px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.join-note{font-size:13px;color:var(--muted);margin:16px 0 0}
+.join-consent{display:flex;gap:10px;align-items:flex-start;margin:16px 0 22px;font-size:14px;color:var(--fg-2)}
+.join-consent input{margin-top:3px;accent-color:var(--gold)}
+.join-submit{width:100%;justify-content:center}
+.join-error{color:#ff9b9b;font-size:14px;margin-top:12px}
+.join-done{text-align:center;padding:20px 6px}
+.join-done h3{font-family:var(--serif);font-size:28px;color:#fff}
+.join-done p{color:var(--fg-2);margin:12px 0 24px;font-size:15px}
+@media (max-width:560px){.join-grid{grid-template-columns:1fr}}
 
 /* ============================================================ WHAT'S BITING (live reports strip) */
 .biting__live{display:inline-flex;align-items:center;gap:9px}
