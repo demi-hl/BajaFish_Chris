@@ -14,8 +14,10 @@
     var srcs = v.querySelectorAll('source[data-src]');
     for (var i = 0; i < srcs.length; i++) srcs[i].src = srcs[i].getAttribute('data-src');
     v.preload = 'auto';
+    // reveal the video layer immediately so its dusk poster covers the photo (no warm-photo flash),
+    // then the frames start moving once it buffers
+    if (media) media.classList.add('video-on');
     v.load();
-    v.addEventListener('playing', function () { if (media) media.classList.add('video-on'); }, { once: true });
     var p = v.play();
     if (p && typeof p.catch === 'function') p.catch(function () {});
   }
