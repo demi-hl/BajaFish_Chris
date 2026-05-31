@@ -12,13 +12,25 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="BajaFish">
+  <!-- Social share. Prefix og:url and og:image with the production domain when deployed. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BajaFish">
+  <meta property="og:title" content="BajaFish, Panga Sportfishing in Baja California">
+  <meta property="og:description" content="Live fishing intelligence and the local panga captains who put you on fish, across the Pacific and the Sea of Cortez.">
+  <meta property="og:image" content="/site/img/og.jpg">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BajaFish, Panga Sportfishing in Baja California">
+  <meta name="twitter:description" content="Live fishing intelligence and the local panga captains who put you on fish, across the Pacific and the Sea of Cortez.">
+  <meta name="twitter:image" content="/site/img/og.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="/site/site.css?v=14">
+  <link rel="stylesheet" href="/site/site.css?v=15">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- ░░ NAV ░░ -->
   <header class="nav" id="nav">
@@ -41,6 +53,7 @@
     </button>
   </header>
 
+  <main id="main">
   <!-- ░░ HERO ░░ -->
   <section class="hero" id="hero">
     <div class="hero__media" data-parallax aria-hidden="true">
@@ -79,7 +92,7 @@
     <ul class="hero__stats" aria-label="Coverage">
       <li data-rise data-rise-d="3"><b class="count" data-stat="villages" data-to="44">0</b><span>Panga villages</span></li>
       <li data-rise data-rise-d="4"><b class="count" data-stat="captains" data-to="50">0</b><span>Local captains</span></li>
-      <li data-rise data-rise-d="5"><b class="count" data-stat="species" data-to="51">0</b><span>Target species</span></li>
+      <li data-rise data-rise-d="5"><b class="count" data-stat="species" data-to="39">0</b><span>Target species</span></li>
     </ul>
   </section>
 
@@ -109,7 +122,7 @@
       <article class="coast-card" data-reveal>
         <div class="coast-card__media"><img src="/img/baja-coast.jpg" alt="The Pacific coast of Baja California" loading="lazy"></div>
         <div class="coast-card__body">
-          <span class="tag">Pacific Side</span>
+          <span class="tag tag--warm">Pacific Side</span>
           <h3>Cold, green &amp; wild</h3>
           <p>Kelp-edge yellowtail, white seabass and giant calicos from Ensenada to Mag Bay. Cool upwelling water and the legendary Cedros Island bite.</p>
           <div class="coast-card__live" data-coast-live="Pacific" hidden>
@@ -122,7 +135,7 @@
       <article class="coast-card" data-reveal data-reveal-d="1">
         <div class="coast-card__media"><img src="/img/texture-water.jpg" alt="The Sea of Cortez" loading="lazy"></div>
         <div class="coast-card__body">
-          <span class="tag tag--warm">Sea of Cortez</span>
+          <span class="tag">Sea of Cortez</span>
           <h3>Warm, blue &amp; alive</h3>
           <p>Jacques Cousteau's "aquarium of the world." Marlin, dorado, roosterfish and pargo from La Paz down through the East Cape and Cabo.</p>
           <div class="coast-card__live" data-coast-live="Sea of Cortez" hidden>
@@ -229,7 +242,7 @@
         <p class="join-note">We will request boat and trip photos over WhatsApp after you submit, so nothing to upload here.</p>
         <label class="join-consent"><input type="checkbox" name="consent" required><span>I am a licensed local panguero and consent to being listed on BajaFish.</span></label>
         <button type="submit" class="btn btn--gold btn--lg join-submit">Send my details</button>
-        <p class="join-error" hidden>Something went wrong. Please WhatsApp us instead.</p>
+        <p class="join-error" role="alert" hidden>Something went wrong. Please WhatsApp us instead.</p>
       </form>
       <div class="join-done" hidden>
         <h3>Got it, captain.</h3>
@@ -248,13 +261,13 @@
     </div>
 
     <div class="zonemap__frame" data-reveal>
-      <div class="zonemap__filter" role="tablist" aria-label="Filter by coast">
-        <button class="zmf is-on" data-coast="all" role="tab" aria-selected="true">All</button>
-        <button class="zmf" data-coast="Pacific" role="tab" aria-selected="false">Pacific</button>
-        <button class="zmf" data-coast="Sea of Cortez" role="tab" aria-selected="false">Sea of Cortez</button>
+      <div class="zonemap__filter" role="group" aria-label="Filter by coast">
+        <button type="button" class="zmf is-on" data-coast="all" aria-pressed="true">All</button>
+        <button type="button" class="zmf" data-coast="Pacific" aria-pressed="false">Pacific</button>
+        <button type="button" class="zmf" data-coast="Sea of Cortez" aria-pressed="false">Sea of Cortez</button>
       </div>
 
-      <div id="baja-map" role="application" aria-label="Map of Baja California panga fishing villages"></div>
+      <div id="baja-map" role="region" aria-label="Map of Baja California panga fishing villages"></div>
 
       <aside class="zone-panel" id="zonePanel" aria-hidden="true" aria-label="Zone detail">
         <button class="zone-panel__x" id="zonePanelClose" aria-label="Close zone detail">
@@ -263,7 +276,7 @@
         <div class="zone-panel__scroll" id="zonePanelBody"></div>
       </aside>
 
-      <div class="zonemap__legend" aria-hidden="true">
+      <div class="zonemap__legend">
         <span><i class="dot dot--gold"></i>Pacific</span>
         <span><i class="dot dot--aqua"></i>Sea of Cortez</span>
         <span><i class="dot dot--hub"></i>Major launch hub</span>
@@ -275,14 +288,14 @@
   <section class="species" id="species">
     <div class="section-head" data-reveal>
       <p class="eyebrow">The quarry</p>
-      <h2 class="section-title">Fifty-one species.<br><span class="ital">One unforgettable fight.</span></h2>
+      <h2 class="section-title">Thirty-nine species.<br><span class="ital">One unforgettable fight.</span></h2>
       <p class="section-lede">From kelp-cold rockcod to grander marlin, explore what swims here, when it bites, and exactly what it's caught on.</p>
     </div>
 
     <div class="explorer" data-reveal>
       <div class="explorer__filters" aria-label="Filter species">
-        <div class="filterset" id="catFilters" role="tablist" aria-label="By category"></div>
-        <div class="filterset filterset--coast" id="coastFilters" role="tablist" aria-label="By coast"></div>
+        <div class="filterset" id="catFilters" role="group" aria-label="By category"></div>
+        <div class="filterset filterset--coast" id="coastFilters" role="group" aria-label="By coast"></div>
       </div>
       <p class="explorer__count" id="speciesCount" aria-live="polite"></p>
     </div>
@@ -356,7 +369,7 @@
           <p class="trust-stat__note">Ensenada to the East Cape</p>
         </li>
         <li class="trust-stat">
-          <div class="trust-stat__n"><span class="count" data-stat="species" data-to="51">0</span></div>
+          <div class="trust-stat__n"><span class="count" data-stat="species" data-to="39">0</span></div>
           <div class="trust-stat__label">Target species</div>
           <p class="trust-stat__note">Rockcod to grander marlin</p>
         </li>
@@ -429,7 +442,7 @@
           <label class="field field--wide"><span>Anything else</span><textarea name="message" rows="3" placeholder="Experience level, mothership or day trip, any questions."></textarea></label>
         </div>
         <button type="submit" class="btn btn--gold btn--lg join-submit">Send my trip request</button>
-        <p class="join-error" hidden>Something went wrong. Please WhatsApp us instead.</p>
+        <p class="join-error" role="alert" hidden>Something went wrong. Please WhatsApp us instead.</p>
       </form>
       <div class="join-done" hidden>
         <h3>Request received.</h3>
@@ -479,6 +492,8 @@
     </div>
   </section>
 
+  </main>
+
   <footer class="foot">
     <div class="foot__grid">
       <div class="foot__top">
@@ -517,6 +532,6 @@
   <script src="/site/catch-data.js?v=1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="/site/hero-video.js?v=2"></script>
-  <script src="/site/site.js?v=20"></script>
+  <script src="/site/site.js?v=21"></script>
 </body>
 </html>

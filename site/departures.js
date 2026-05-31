@@ -1,4 +1,4 @@
-/* BajaFish — trimmed departure intel for the zone map panel.
+/* BajaFish, trimmed departure intel for the zone map panel.
    Sourced from /.claude/overhaul/departures.json (research, 2026-05-29).
    Keyed by ZONES key; bare global (read via typeof guard in site.js). */
 const DEPARTURES = {
@@ -11,7 +11,7 @@ const DEPARTURES = {
     operators: "Old Mill Hotel, Don Eddie's Landing, K&M Sportfishing"
   },
   'isla-cedros': {
-    launchType: 'Fly-in only (Biosphere Reserve); 27–28 ft super-pangas',
+    launchType: 'Fly-in only (Biosphere Reserve); 27 to 28 ft super-pangas',
     operators: 'Cedros Outdoor Adventures, Cedros Sportfishing',
     latFix: 28.20, lngFix: -115.21
   },
@@ -57,7 +57,7 @@ const DEPARTURES = {
   },
   'los-barriles': {
     launchType: 'Open-beach launch (tractor-assisted), no permanent ramp',
-    operators: 'Van Wormer Resorts — 50+ boat fleet (the East Cape hub)'
+    operators: 'Van Wormer Resorts, 50+ boat fleet (the East Cape hub)'
   },
   'la-ribera': {
     launchType: 'Open-beach launch, no marina',

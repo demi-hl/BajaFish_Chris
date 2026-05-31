@@ -446,8 +446,7 @@
     function chip(label, attr, val, on) {
       var b = E('button', 'chip' + (on ? ' is-on' : ''), label);
       b.type = 'button';
-      b.setAttribute('role', 'tab');
-      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
       b.setAttribute(attr, val);
       return b;
     }
@@ -486,7 +485,7 @@
         Array.prototype.forEach.call(bar.querySelectorAll('.chip'), function (x) {
           var on = x === b;
           x.classList.toggle('is-on', on);
-          x.setAttribute('aria-selected', on ? 'true' : 'false');
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
         apply();
       });
@@ -769,7 +768,7 @@
         var lng = (dep && typeof dep.lngFix === 'number') ? dep.lngFix : z.lng;
 
         var m = L.marker([lat, lng], { icon: zoneIcon(z.coast, isHub), riseOnHover: true, keyboard: true });
-        m.bindTooltip(z.name, { direction: 'top', offset: [0, -4], className: 'ztip', opacity: 1 });
+        m.bindTooltip(z.name + ', ' + (z.coast || 'Baja California'), { direction: 'top', offset: [0, -4], className: 'ztip', opacity: 1 });
         m.on('click', function () { openZone(key); });
         m.addTo(map);
         markers[key] = m;
@@ -876,7 +875,7 @@
           filterBtns.forEach(function (x) {
             var on = x === b;
             x.classList.toggle('is-on', on);
-            x.setAttribute('aria-selected', on ? 'true' : 'false');
+            x.setAttribute('aria-pressed', on ? 'true' : 'false');
           });
           Object.keys(markers).forEach(function (key) {
             var el = markEl(markers[key]); if (!el) return;

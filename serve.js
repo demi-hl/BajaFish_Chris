@@ -21,8 +21,14 @@ const MIME = {
 };
 
 const server = http.createServer((req, res) => {
-  const urlPath = req.url.split('?')[0];
-  let filePath = path.join(DIR, urlPath === '/' ? 'index.html' : urlPath);
+  let urlPath;
+  try { urlPath = decodeURIComponent(req.url.split('?')[0]); }
+  catch (e) { res.writeHead(400); res.end('Bad request'); return; }
+  const filePath = path.resolve(DIR, '.' + (urlPath === '/' ? '/index.html' : urlPath));
+  // keep reads inside the project directory (block path traversal)
+  if (filePath !== DIR && !filePath.startsWith(DIR + path.sep)) {
+    res.writeHead(403); res.end('Forbidden'); return;
+  }
   const ext = path.extname(filePath);
   const contentType = MIME[ext] || 'application/octet-stream';
 

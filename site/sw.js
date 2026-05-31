@@ -2,11 +2,11 @@
    Scope: /site/. Navigations are network-first with an offline fallback to the
    cached shell; same-origin assets are cache-first and populated as fetched.
    Cross-origin requests (fonts, Leaflet) are left to the network. */
-var CACHE = 'bajafish-v3';
+var CACHE = 'bajafish-v4';
 var SHELL = [
   '/site/index.html',
-  '/site/site.css?v=14',
-  '/site/site.js?v=20',
+  '/site/site.css?v=15',
+  '/site/site.js?v=21',
   '/site/hero-video.js?v=2',
   '/site/catch-data.js?v=1',
   '/site/departures.js?v=1',
@@ -20,7 +20,11 @@ self.addEventListener('install', function (e) {
   e.waitUntil(
     caches.open(CACHE)
       .then(function (c) { return Promise.allSettled(SHELL.map(function (u) { return c.add(u); })); })
-      .then(function () { return self.skipWaiting(); })
+      .then(function (results) {
+        var failed = results.filter(function (r) { return r.status === 'rejected'; }).length;
+        if (failed && self.console) console.warn('[BajaFish SW] precache: ' + failed + ' of ' + SHELL.length + ' shell entries failed to cache');
+        return self.skipWaiting();
+      })
   );
 });
 
@@ -41,7 +45,7 @@ self.addEventListener('fetch', function (e) {
   if (req.mode === 'navigate') {
     e.respondWith(
       fetch(req).then(function (r) {
-        var cp = r.clone(); caches.open(CACHE).then(function (c) { c.put(req, cp); });
+        if (r && r.ok) { var cp = r.clone(); caches.open(CACHE).then(function (c) { c.put(req, cp); }); }
         return r;
       }).catch(function () {
         return caches.match(req).then(function (m) { return m || caches.match('/site/index.html'); });

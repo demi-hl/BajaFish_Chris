@@ -68,54 +68,54 @@ License terms:
 
 ## Full attribution strings (verbatim from iNaturalist)
 
-- **Amberjack (Almaco)** (`amberjack.jpg`): (c) Carmen B. de los Santos, some rights reserved (CC BY-NC-SA) — https://inaturalist-open-data.s3.amazonaws.com/photos/58686657/large.jpeg
-- **Barred Pargo (Mexican Barred Snapper)** (`barred-pargo.jpg`): (c) Carlos Domínguez-Rodríguez, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/116988313/large.jpeg
-- **Bigeye Trevally (Big-Eye Jack)** (`bigeye-trevally.jpg`): (c) Ian Banks, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/10940024/large.jpeg
-- **Bigeye Tuna** (`bigeye-tuna.jpg`): (c) Gonzalo Mucientes Sandoval, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/60591403/large.jpeg
-- **Black Marlin** (`black-marlin.jpg`): (c) Tony Stromberg, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/249168728/large.jpeg
-- **Blue Marlin** (`blue-marlin.jpg`): (c) MARC MARTIN SOLA, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/593123052/large.jpg
-- **Blue Rockfish** (`blue-rockfish.jpg`): (c) Vince Golder, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/439884556/large.jpeg
-- **Pacific Bluefin Tuna** (`bluefin-tuna.jpg`): (c) Zach Fratello, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/546878270/large.jpg
-- **Bocaccio** (`bocaccio.jpg`): (c) scuba_max, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/642234168/large.jpg
-- **Pacific Bonito** (`bonito.jpg`): (c) Jacob, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/229544907/large.jpg
-- **Broomtail Grouper** (`broomtail-grouper.jpg`): (c) Keith P, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/279807395/large.jpg
-- **Leopard Grouper (Cabrilla)** (`cabrilla.jpg`): (c) Arturo Velasco, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/314805215/large.jpeg
-- **Kelp Bass (Calico Bass)** (`calico-bass.jpg`): (c) stunfisk, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/638096774/large.jpg
-- **Canary Rockfish** (`canary-rockfish.jpg`): (c) jfalconsgate, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/456446876/large.jpg
-- **Chilipepper Rockfish** (`chilipepper.jpg`): (c) Jacob, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/439181026/large.jpeg
-- **Copper Rockfish** (`copper-rockfish.jpg`): (c) KJ, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/117750791/large.jpg
-- **Corvina / Gulf Corvina** (`corvina.jpg`): (c) outdooraddy, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/67717216/large.jpg
-- **Pacific Dog Snapper / Cubera (Pargo Prieto)** (`dog-snapper.jpg`): (c) Arturo Velasco, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/219690979/large.jpeg
-- **Dorado / Mahi-Mahi** (`dorado.jpg`): (c) Remy DUBAS, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/351547082/large.jpeg
-- **Giant Sea Bass** (`giant-sea-bass.jpg`): (c) Jonathan Williams, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/523249777/large.jpg
-- **Golden Grouper (xanthic Leopard Grouper)** (`golden-grouper.jpg`): (c) Arturo Velasco, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/219690892/large.jpeg
-- **Grouper (generic / Spotted Cabrilla)** (`grouper.jpg`): (c) tunicatedreamz, some rights reserved (CC BY) — https://inaturalist-open-data.s3.amazonaws.com/photos/662945673/large.jpg
-- **Gulf Grouper** (`gulf-grouper.jpg`): (c) Vince Golder, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/513140445/large.jpg
-- **California Halibut** (`halibut.jpg`): (c) Kellie Uyeda, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/376346141/large.jpeg
-- **Pacific Crevalle Jack (Toro)** (`jack-crevalle.jpg`): (c) Bill Levine, some rights reserved (CC BY) — https://inaturalist-open-data.s3.amazonaws.com/photos/311072397/large.jpeg
-- **Pacific Ladyfish (Machete)** (`ladyfish.jpg`): (c) B, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/216950502/large.jpeg
-- **Lingcod** (`lingcod.jpg`): (c) rolandwirth, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/10940200/large.jpeg
-- **Mullet Snapper (Pargo Mulato)** (`mullet-snapper.jpg`): (c) Fernando Olea, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/33629236/large.jpeg
-- **Ocean Whitefish** (`ocean-whitefish.jpg`): (c) Jacob, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/508985302/large.jpg
-- **Pacific Barracuda** (`pacific-barracuda.jpg`): (c) Dave Fitzgerald, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/431737885/large.jpeg
-- **Pargo / Snapper (generic)** (`pargo.jpg`): (c) Bodo Nuñez Oberg, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/126839448/large.jpeg
-- **Colorado Snapper (Pargo Colorado)** (`pargo-colorado.jpg`): (c) Joseph Rodríguez, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/548733008/large.jpg
-- **Longfin Yellowtail / Almaco Jack (Pez Fuerte)** (`pez-fuerte.jpg`): (c) Austin D West, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/301516387/large.jpg
-- **Gafftopsail Pompano / Paloma Pompano** (`pompano.jpg`): (c) Floyd E. Hayes, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/210612322/large.jpeg
-- **Roosterfish** (`roosterfish.jpg`): (c) William Hull, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/30335076/large.jpg
-- **Pacific Sailfish** (`sailfish.jpg`): (c) Wayne and Pam Osborn, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/255463195/large.jpg
-- **Barred Sand Bass** (`sand-bass.jpg`): (c) CallieSanDiego, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/539059544/large.jpg
-- **California Sheephead** (`sheephead.jpg`): (c) Craig Chaddock, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/54279578/large.jpeg
-- **Pacific Sierra (Sierra Mackerel)** (`sierra.jpg`): (c) donnymidas, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/601390781/large.jpg
-- **Skipjack Tuna** (`skipjack-tuna.jpg`): (c) Scott Plume, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/490499302/large.jpg
-- **Black Snook** (`snook.jpg`): no rights reserved — https://inaturalist-open-data.s3.amazonaws.com/photos/76619994/large.jpeg
-- **Spotted Bay Bass** (`spotted-bay-bass.jpg`): (c) Alexis, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/305159924/large.jpeg
-- **Striped Marlin** (`striped-marlin.jpg`): (c) Fernando Olea, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/33570742/large.jpeg
-- **Swordfish (Broadbill)** (`swordfish.jpg`): (c) Luke Halpin, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/95840213/large.jpg
-- **Finescale Triggerfish** (`triggerfish.jpg`): (c) Bill Levine, some rights reserved (CC BY) — https://inaturalist-open-data.s3.amazonaws.com/photos/221255705/large.jpeg
-- **Vermilion Rockfish** (`vermilion-rockfish.jpg`): (c) hewittdoesit, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/595416335/large.jpg
-- **Wahoo** (`wahoo.jpg`): (c) Antonio Amaral, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/247966949/large.jpeg
-- **White Seabass** (`white-seabass.jpg`): (c) mornelas, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/434062466/large.jpeg
-- **Yellow Snapper (Pargo Amarillo)** (`yellow-snapper.jpg`): (c) Julien Renoult, some rights reserved (CC BY) — https://inaturalist-open-data.s3.amazonaws.com/photos/12423848/large.jpg
-- **Yellowfin Tuna** (`yellowfin.jpg`): (c) Mateusz Ciechanowski, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/462017609/large.jpeg
-- **California Yellowtail** (`yellowtail.jpg`): (c) eyrelab, some rights reserved (CC BY-NC) — https://inaturalist-open-data.s3.amazonaws.com/photos/271218862/large.jpeg
+- **Amberjack (Almaco)** (`amberjack.jpg`): (c) Carmen B. de los Santos, some rights reserved (CC BY-NC-SA), https://inaturalist-open-data.s3.amazonaws.com/photos/58686657/large.jpeg
+- **Barred Pargo (Mexican Barred Snapper)** (`barred-pargo.jpg`): (c) Carlos Domínguez-Rodríguez, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/116988313/large.jpeg
+- **Bigeye Trevally (Big-Eye Jack)** (`bigeye-trevally.jpg`): (c) Ian Banks, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/10940024/large.jpeg
+- **Bigeye Tuna** (`bigeye-tuna.jpg`): (c) Gonzalo Mucientes Sandoval, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/60591403/large.jpeg
+- **Black Marlin** (`black-marlin.jpg`): (c) Tony Stromberg, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/249168728/large.jpeg
+- **Blue Marlin** (`blue-marlin.jpg`): (c) MARC MARTIN SOLA, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/593123052/large.jpg
+- **Blue Rockfish** (`blue-rockfish.jpg`): (c) Vince Golder, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/439884556/large.jpeg
+- **Pacific Bluefin Tuna** (`bluefin-tuna.jpg`): (c) Zach Fratello, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/546878270/large.jpg
+- **Bocaccio** (`bocaccio.jpg`): (c) scuba_max, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/642234168/large.jpg
+- **Pacific Bonito** (`bonito.jpg`): (c) Jacob, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/229544907/large.jpg
+- **Broomtail Grouper** (`broomtail-grouper.jpg`): (c) Keith P, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/279807395/large.jpg
+- **Leopard Grouper (Cabrilla)** (`cabrilla.jpg`): (c) Arturo Velasco, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/314805215/large.jpeg
+- **Kelp Bass (Calico Bass)** (`calico-bass.jpg`): (c) stunfisk, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/638096774/large.jpg
+- **Canary Rockfish** (`canary-rockfish.jpg`): (c) jfalconsgate, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/456446876/large.jpg
+- **Chilipepper Rockfish** (`chilipepper.jpg`): (c) Jacob, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/439181026/large.jpeg
+- **Copper Rockfish** (`copper-rockfish.jpg`): (c) KJ, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/117750791/large.jpg
+- **Corvina / Gulf Corvina** (`corvina.jpg`): (c) outdooraddy, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/67717216/large.jpg
+- **Pacific Dog Snapper / Cubera (Pargo Prieto)** (`dog-snapper.jpg`): (c) Arturo Velasco, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/219690979/large.jpeg
+- **Dorado / Mahi-Mahi** (`dorado.jpg`): (c) Remy DUBAS, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/351547082/large.jpeg
+- **Giant Sea Bass** (`giant-sea-bass.jpg`): (c) Jonathan Williams, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/523249777/large.jpg
+- **Golden Grouper (xanthic Leopard Grouper)** (`golden-grouper.jpg`): (c) Arturo Velasco, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/219690892/large.jpeg
+- **Grouper (generic / Spotted Cabrilla)** (`grouper.jpg`): (c) tunicatedreamz, some rights reserved (CC BY), https://inaturalist-open-data.s3.amazonaws.com/photos/662945673/large.jpg
+- **Gulf Grouper** (`gulf-grouper.jpg`): (c) Vince Golder, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/513140445/large.jpg
+- **California Halibut** (`halibut.jpg`): (c) Kellie Uyeda, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/376346141/large.jpeg
+- **Pacific Crevalle Jack (Toro)** (`jack-crevalle.jpg`): (c) Bill Levine, some rights reserved (CC BY), https://inaturalist-open-data.s3.amazonaws.com/photos/311072397/large.jpeg
+- **Pacific Ladyfish (Machete)** (`ladyfish.jpg`): (c) B, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/216950502/large.jpeg
+- **Lingcod** (`lingcod.jpg`): (c) rolandwirth, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/10940200/large.jpeg
+- **Mullet Snapper (Pargo Mulato)** (`mullet-snapper.jpg`): (c) Fernando Olea, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/33629236/large.jpeg
+- **Ocean Whitefish** (`ocean-whitefish.jpg`): (c) Jacob, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/508985302/large.jpg
+- **Pacific Barracuda** (`pacific-barracuda.jpg`): (c) Dave Fitzgerald, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/431737885/large.jpeg
+- **Pargo / Snapper (generic)** (`pargo.jpg`): (c) Bodo Nuñez Oberg, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/126839448/large.jpeg
+- **Colorado Snapper (Pargo Colorado)** (`pargo-colorado.jpg`): (c) Joseph Rodríguez, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/548733008/large.jpg
+- **Longfin Yellowtail / Almaco Jack (Pez Fuerte)** (`pez-fuerte.jpg`): (c) Austin D West, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/301516387/large.jpg
+- **Gafftopsail Pompano / Paloma Pompano** (`pompano.jpg`): (c) Floyd E. Hayes, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/210612322/large.jpeg
+- **Roosterfish** (`roosterfish.jpg`): (c) William Hull, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/30335076/large.jpg
+- **Pacific Sailfish** (`sailfish.jpg`): (c) Wayne and Pam Osborn, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/255463195/large.jpg
+- **Barred Sand Bass** (`sand-bass.jpg`): (c) CallieSanDiego, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/539059544/large.jpg
+- **California Sheephead** (`sheephead.jpg`): (c) Craig Chaddock, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/54279578/large.jpeg
+- **Pacific Sierra (Sierra Mackerel)** (`sierra.jpg`): (c) donnymidas, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/601390781/large.jpg
+- **Skipjack Tuna** (`skipjack-tuna.jpg`): (c) Scott Plume, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/490499302/large.jpg
+- **Black Snook** (`snook.jpg`): no rights reserved, https://inaturalist-open-data.s3.amazonaws.com/photos/76619994/large.jpeg
+- **Spotted Bay Bass** (`spotted-bay-bass.jpg`): (c) Alexis, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/305159924/large.jpeg
+- **Striped Marlin** (`striped-marlin.jpg`): (c) Fernando Olea, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/33570742/large.jpeg
+- **Swordfish (Broadbill)** (`swordfish.jpg`): (c) Luke Halpin, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/95840213/large.jpg
+- **Finescale Triggerfish** (`triggerfish.jpg`): (c) Bill Levine, some rights reserved (CC BY), https://inaturalist-open-data.s3.amazonaws.com/photos/221255705/large.jpeg
+- **Vermilion Rockfish** (`vermilion-rockfish.jpg`): (c) hewittdoesit, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/595416335/large.jpg
+- **Wahoo** (`wahoo.jpg`): (c) Antonio Amaral, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/247966949/large.jpeg
+- **White Seabass** (`white-seabass.jpg`): (c) mornelas, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/434062466/large.jpeg
+- **Yellow Snapper (Pargo Amarillo)** (`yellow-snapper.jpg`): (c) Julien Renoult, some rights reserved (CC BY), https://inaturalist-open-data.s3.amazonaws.com/photos/12423848/large.jpg
+- **Yellowfin Tuna** (`yellowfin.jpg`): (c) Mateusz Ciechanowski, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/462017609/large.jpeg
+- **California Yellowtail** (`yellowtail.jpg`): (c) eyrelab, some rights reserved (CC BY-NC), https://inaturalist-open-data.s3.amazonaws.com/photos/271218862/large.jpeg
