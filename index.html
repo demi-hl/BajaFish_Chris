@@ -6,10 +6,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>BAJAFISH — Know Before You Go</title>
-  <link rel="stylesheet" href="style.css?v=20260427-6">
+  <link rel="stylesheet" href="style.css?v=20260529-4">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="openwater.css?v=20260529-4">
 </head>
 <body>
 
@@ -68,12 +69,12 @@
         <div class="ls-panel" id="ls-panel-create">
           <div class="ls-account-type-row">
             <button class="ls-acct-btn ls-acct-btn--active" data-acct-type="angler">
-              <span class="ls-acct-icon">🎣</span>
+              <span class="ls-acct-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 12c1-3.5 5-6 8.5-6s6 2.5 7 6c-1 3.5-3.5 6-7 6s-7.5-2.5-8.5-6z"/><circle cx="16" cy="11" r=".8" fill="currentColor" stroke="none"/><path d="M6.5 12c-1.5 0-3-1-4-2 .5 2 .5 2 0 4 1-1 2.5-2 4-2z"/></svg></span>
               <span class="ls-acct-label">Angler</span>
               <span class="ls-acct-sub">Fish the Baja</span>
             </button>
             <button class="ls-acct-btn" data-acct-type="captain">
-              <span class="ls-acct-icon">⚓</span>
+              <span class="ls-acct-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg></span>
               <span class="ls-acct-label">Captain</span>
               <span class="ls-acct-sub">List your panga</span>
             </button>
@@ -151,7 +152,7 @@
             </div>
             <div id="create-captain-error" class="ls-error hidden">Please fill in name, email, password, and home port.</div>
             <button type="submit" class="ls-submit ls-submit--captain">
-              <span class="ls-submit-label">⚓ Create Captain Account</span>
+              <span class="ls-submit-label"><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg> Create Captain Account</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
             <p class="ls-captain-free-note">Captains list for free. Anglers pay to reach you.</p>
@@ -172,7 +173,7 @@
               <button class="ls-tier-pill" data-tier="scout">Scout</button>
               <button class="ls-tier-pill" data-tier="pro">Pro</button>
               <button class="ls-tier-pill" data-tier="unlimited">Unlimited</button>
-              <button class="ls-tier-pill ls-tier-pill--captain" data-tier="captain">⚓ Captain</button>
+              <button class="ls-tier-pill ls-tier-pill--captain" data-tier="captain"><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg> Captain</button>
             </div>
             <p class="ls-dev-note">Password: <strong>BajaFish123!</strong></p>
           </div>
@@ -214,6 +215,7 @@
 
         <!-- Cinematic hero -->
         <header class="home-hero">
+          <div class="ow-hero-media" data-ow-parallax aria-hidden="true"></div>
           <div class="home-hero-glow" aria-hidden="true"></div>
           <div class="home-hero-inner">
             <p class="hub-live-badge eyebrow">
@@ -384,7 +386,7 @@
           </div>
           <div class="map-layer-bar" id="map-layer-bar" role="tablist" aria-label="Map layer">
             <button class="map-layer-btn map-layer-btn--active" data-layer="zones">Zones</button>
-            <button class="map-layer-btn" data-layer="heat" id="heat-map-btn">🔥 Heat Map</button>
+            <button class="map-layer-btn" data-layer="heat" id="heat-map-btn"><svg class="ow-ico ow-ico--gold" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> Heat Map</button>
             <button class="map-layer-btn" data-layer="conditions">Conditions</button>
           </div>
         </header>
@@ -784,10 +786,12 @@
   <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="config.js?v=20260427-6"></script>
-  <script src="data.js?v=20260427-6"></script>
-  <script src="weather.js?v=20260427-6"></script>
-  <script src="app.js?v=20260427-6"></script>
+  <script src="config.js?v=20260529-4"></script>
+  <script src="icons.js?v=20260529-4"></script>
+  <script src="data.js?v=20260529-4"></script>
+  <script src="weather.js?v=20260529-4"></script>
+  <script src="app.js?v=20260529-4"></script>
+  <script src="openwater.js?v=20260529-4"></script>
 
   <!-- ── OVERHAUL §7 — additive presentation JS (no logic changes to app.js handlers) ── -->
   <script>

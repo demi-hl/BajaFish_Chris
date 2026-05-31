@@ -1,0 +1,1400 @@
+/* BajaFish, species catch intelligence (baits / lures / technique / season).
+   Generated from .claude/overhaul/catch-data.json + species-images-v2.json.
+   Browser-global, no module system. Read with: window.CATCH (array) or
+   window.CATCH_BY_KEY (lookup). XSS note: render strings via textContent only.
+   Each entry's `img` resolves to a new photo (/site/img/species/<key>.jpg),
+   else a legacy /fish/<key>.jpg, else the iNaturalist Open Data URL.
+   ============================================================ */
+window.CATCH = [
+  {
+    "key": "yellowtail",
+    "commonName": "California Yellowtail",
+    "spanishName": "Jurel",
+    "scientificName": "Seriola lalandi",
+    "category": "Pelagic",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Dec to Jun (Pacific); summer to early fall at Cedros",
+    "marquee": true,
+    "baits": [
+      "live sardina",
+      "live mackerel (caballito)",
+      "live squid",
+      "cut bait",
+      "dropper-loop squid"
+    ],
+    "lures": [
+      "yo-yo iron (heavy jig)",
+      "surface iron",
+      "Rapala-style swimbaits",
+      "knife jigs",
+      "metal jigs"
+    ],
+    "technique": "Throw surface iron in the wind lane or depth-charge yo-yo iron to the bottom and crank fast; fly-line or slow-troll live mackerel/sardina along kelp and high spots for the bigger 'mossbacks'. Cedros is the iron-throwing capital.",
+    "notes": "App flagship Pacific panger fish. Almost all yellowtail over 40 lb come on bait; surface iron and yo-yo iron carry the numbers.",
+    "img": "/site/img/species/yellowtail.jpg"
+  },
+  {
+    "key": "pez-fuerte",
+    "commonName": "Longfin Yellowtail / Almaco Jack (Pez Fuerte)",
+    "spanishName": "Pez Fuerte / Medregal",
+    "scientificName": "Seriola rivoliana",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez"
+    ],
+    "season": "Year-round, warm-water peak Feb to May",
+    "marquee": false,
+    "baits": [
+      "live caballito (mackerel)",
+      "live sardina",
+      "live bonito strip",
+      "cut bait"
+    ],
+    "lures": [
+      "yo-yo iron (heavy jig)",
+      "knife/butterfly jigs",
+      "vertical jigs",
+      "trolled Rapalas"
+    ],
+    "technique": "Yo-yo iron dropped to deep reef/seamount structure and ripped back fast; also slow-troll or fly-line live bait over the same structure. Around Cerralvo and Las Animas these are the '100-lb-pulling toads'.",
+    "notes": "Same fish as the 'amberjack' key (Seriola rivoliana). Classic deep-jig fish on Gulf reefs and seamounts.",
+    "img": "/site/img/species/pez-fuerte.jpg"
+  },
+  {
+    "key": "amberjack",
+    "commonName": "Amberjack (Almaco)",
+    "spanishName": "Medregal / Pez Fuerte",
+    "scientificName": "Seriola rivoliana",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez"
+    ],
+    "season": "Feb to May peak (East Cape / Cerralvo)",
+    "marquee": false,
+    "baits": [
+      "live caballito (mackerel)",
+      "live sardina",
+      "cut bait"
+    ],
+    "lures": [
+      "yo-yo iron (heavy jig)",
+      "knife/butterfly jigs",
+      "vertical jigs"
+    ],
+    "technique": "Vertical yo-yo / knife jigging over deep reef and seamounts; fly-line live bait down to marked fish. They bulldog straight for the rocks, so heavy gear is the rule.",
+    "notes": "DUPLICATE of pez-fuerte (both Seriola rivoliana). Identical catch profile; merge keys.",
+    "img": "/site/img/species/amberjack.jpg"
+  },
+  {
+    "key": "dorado",
+    "commonName": "Dorado / Mahi-Mahi",
+    "spanishName": "Dorado",
+    "scientificName": "Coryphaena hippurus",
+    "category": "Pelagic",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Jun to Nov (summer peak)",
+    "marquee": true,
+    "baits": [
+      "live sardina",
+      "live caballito (mackerel)",
+      "rigged ballyhoo",
+      "flying-fish/strip bait",
+      "cut bait"
+    ],
+    "lures": [
+      "cedar plugs",
+      "skirted trolling lures",
+      "feathers",
+      "poppers",
+      "surface stickbaits",
+      "flies"
+    ],
+    "technique": "Troll skirts/cedar plugs/feathers along weed lines, floating debris, buoys and porpoise; once a school is raised, stop and pitch live sardina or cast poppers for a wide-open bite. A flagship summer panga target on both coasts.",
+    "notes": "2/day, 2.5 pts. The classic 'find the kelp paddy / find the school' summer fish.",
+    "img": "/site/img/species/dorado.jpg"
+  },
+  {
+    "key": "yellowfin",
+    "commonName": "Yellowfin Tuna",
+    "spanishName": "Atún Aleta Amarilla",
+    "scientificName": "Thunnus albacares",
+    "category": "Tuna",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Jun to Dec (Jul to Nov peak)",
+    "marquee": true,
+    "baits": [
+      "live sardina",
+      "live caballito (mackerel)",
+      "live skipjack/chunk",
+      "cut/chunk bait",
+      "flat-fall sardine"
+    ],
+    "lures": [
+      "cedar plugs",
+      "feathers",
+      "skirted trolling lures",
+      "poppers/stickbaits",
+      "flat-fall & knife jigs"
+    ],
+    "technique": "Troll cedar plugs and feathers to locate; run under porpoise schools, then fly-line live sardina, cast poppers into the boil, or drop knife/flat-fall jigs. Mag Bay 'cows' (200 lb+) are the signature.",
+    "notes": "Mag Bay and East Cape are the marquee grounds. Live-bait fly-lining is the bread-and-butter.",
+    "img": "/site/img/species/yellowfin.jpg"
+  },
+  {
+    "key": "bluefin-tuna",
+    "commonName": "Pacific Bluefin Tuna",
+    "spanishName": "Atún Aleta Azul",
+    "scientificName": "Thunnus orientalis",
+    "category": "Tuna",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "May to Oct (spring to summer)",
+    "marquee": true,
+    "baits": [
+      "live sardina",
+      "live mackerel",
+      "flat-fall sardine",
+      "small live bait (fly-lined)"
+    ],
+    "lures": [
+      "flat-fall jigs",
+      "knife jigs",
+      "surface stickbaits/poppers",
+      "Madmac/Nomad trolling plugs",
+      "Colt Sniper jigs"
+    ],
+    "technique": "Troll big Madmac-style plugs to find boiling/foaming schools, then sink flat-fall jigs, fly-line light fluoro sardina, or cast stickbaits. Finicky, line-shy fish that demand long fluorocarbon leaders. North Pacific (Coronados, Todos Santos) in spring-summer.",
+    "notes": "Gallery key 'bluefin'; canonical 'bluefin-tuna'. Notoriously leader-shy.",
+    "img": "/site/img/species/bluefin-tuna.jpg"
+  },
+  {
+    "key": "bigeye-tuna",
+    "commonName": "Bigeye Tuna",
+    "spanishName": "Atún Ojo Grande / Patudo",
+    "scientificName": "Thunnus obesus",
+    "category": "Tuna",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Offshore, year-round (night/grey-light bite)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "chunk/cut bait",
+      "rigged squid"
+    ],
+    "lures": [
+      "deep-set knife jigs",
+      "cedar plugs",
+      "skirted trolling lures (deep)"
+    ],
+    "technique": "Mostly an offshore-bank fish taken on the grey-light/night bite by deep-trolling skirts or sinking jigs and chunk bait down to the thermocline. Not a typical inshore panga catch.",
+    "notes": "Gallery only. Deep-set, dawn/dusk fishery off the offshore banks.",
+    "img": "/site/img/species/bigeye-tuna.jpg"
+  },
+  {
+    "key": "bonito",
+    "commonName": "Pacific Bonito",
+    "spanishName": "Bonito",
+    "scientificName": "Sarda chiliensis",
+    "category": "Pelagic",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Apr to Oct; year-round",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut bait",
+      "feathers tipped with bait"
+    ],
+    "lures": [
+      "small metal jigs",
+      "feathers",
+      "Rapalas",
+      "cast iron",
+      "trolled spoons"
+    ],
+    "technique": "Troll feathers/small jigs or cast metal into surface schools busting on bait; will also hit fly-lined sardina. Often caught while making bait or working a kelp edge, and themselves make prime marlin/dorado bait.",
+    "notes": "Abundant Pacific schooling fish; doubles as top live/cut bait for billfish.",
+    "img": "/site/img/species/bonito.jpg"
+  },
+  {
+    "key": "wahoo",
+    "commonName": "Wahoo",
+    "spanishName": "Peto / Guaju",
+    "scientificName": "Acanthocybium solandri",
+    "category": "Pelagic",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Jun to Nov (summer to fall)",
+    "marquee": true,
+    "baits": [
+      "rigged ballyhoo (Ilander/Sea Witch)",
+      "live caballito",
+      "cut bonito/strip bait"
+    ],
+    "lures": [
+      "wahoo bombs",
+      "high-speed bullet/lead-head jigs",
+      "deep-diving plugs (Rapala X-Rap Magnum)",
+      "Marauders",
+      "skirted trolling lures"
+    ],
+    "technique": "High-speed troll (12 to 16 kt) wahoo bombs and lead-heads on wire leader; or slow-troll rigged ballyhoo with planers/trolling weights to get deep. When a school is found, slide to a stop and cast heavy iron. Wire leader is mandatory for the teeth. Cerralvo and offshore banks.",
+    "notes": "Fastest gamefish; wire leader essential. Speed-trolling is the staple.",
+    "img": "/site/img/species/wahoo.jpg"
+  },
+  {
+    "key": "skipjack-tuna",
+    "commonName": "Skipjack Tuna",
+    "spanishName": "Barrilete",
+    "scientificName": "Katsuwonus pelamis",
+    "category": "Tuna",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Feb to Nov",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut bait",
+      "small strip bait"
+    ],
+    "lures": [
+      "feathers",
+      "cedar plugs",
+      "small metal jigs",
+      "trolled spoons",
+      "Rapalas"
+    ],
+    "technique": "Troll feathers/cedar plugs through breaking schools and current lines, or cast small metal into the boils; readily takes fly-lined sardina. A reliable Gulf schooling tuna and prime live/strip bait for marlin and dorado.",
+    "notes": "On every La Paz species chart. Often caught en route and recycled as billfish bait.",
+    "img": "/site/img/species/skipjack-tuna.jpg"
+  },
+  {
+    "key": "sierra",
+    "commonName": "Pacific Sierra (Sierra Mackerel)",
+    "spanishName": "Sierra",
+    "scientificName": "Scomberomorus sierra",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Nov to Apr (winter peak)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut bait/strip"
+    ],
+    "lures": [
+      "small trolling spoons (Krocodile)",
+      "Rapala CD-7",
+      "gold/silver spoons",
+      "small Clark spoons",
+      "casting jigs"
+    ],
+    "technique": "Troll or cast small flashy spoons and Rapalas along beaches, bays and inlets just off the sand; light wire or heavy fluoro helps against the sharp teeth. A winter inshore staple, smoked or grilled.",
+    "notes": "Both coasts. Toothy; light wire shock leader saves lures.",
+    "img": "/site/img/species/sierra.jpg"
+  },
+  {
+    "key": "striped-marlin",
+    "commonName": "Striped Marlin",
+    "spanishName": "Marlín Rayado",
+    "scientificName": "Kajikia audax",
+    "category": "Billfish",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Nov to Apr (Mag Bay run Oct to Feb)",
+    "marquee": true,
+    "baits": [
+      "live caballito (mackerel)",
+      "live mackerel/sardina",
+      "rigged ballyhoo",
+      "live skipjack"
+    ],
+    "lures": [
+      "skirted trolling lures",
+      "teasers (hookless, for bait-and-switch)",
+      "rigged ballyhoo",
+      "casting plugs/flies (sight casting)"
+    ],
+    "technique": "Troll lures and rigged ballyhoo at 7 to 9 knots along temperature breaks and banks; bait-and-switch with hookless teasers then drop back a live caballito. On the Mag Bay fall run, sight-cast live mackerel or flies to tailing/balling fish. Mostly catch-and-release.",
+    "notes": "Baja billfish king; Mag Bay fall run is world-class. Predominantly C&R.",
+    "img": "/site/img/species/striped-marlin.jpg"
+  },
+  {
+    "key": "blue-marlin",
+    "commonName": "Blue Marlin",
+    "spanishName": "Marlín Azul",
+    "scientificName": "Makaira nigricans",
+    "category": "Billfish",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Jun to Nov (summer peak)",
+    "marquee": true,
+    "baits": [
+      "live skipjack (whole)",
+      "live bonito",
+      "rigged horse ballyhoo",
+      "rigged mackerel"
+    ],
+    "lures": [
+      "large skirted trolling lures",
+      "big bullet/plunger heads",
+      "Marlin teasers"
+    ],
+    "technique": "Troll big skirted lures and bridled live skipjack/bonito at the offshore banks and drop-offs in summer; the East Cape and Cabo grounds hold grander (1,000 lb+) potential. Heavy stand-up or chair tackle, mostly C&R.",
+    "notes": "Grander potential; summer offshore. Predominantly released.",
+    "img": "/site/img/species/blue-marlin.jpg"
+  },
+  {
+    "key": "black-marlin",
+    "commonName": "Black Marlin",
+    "spanishName": "Marlín Negro",
+    "scientificName": "Istiompax indica",
+    "category": "Billfish",
+    "coasts": [
+      "Sea of Cortez"
+    ],
+    "season": "Jun to Nov (summer)",
+    "marquee": true,
+    "baits": [
+      "live skipjack (whole)",
+      "live bonito",
+      "rigged mackerel/ballyhoo"
+    ],
+    "lures": [
+      "large skirted trolling lures",
+      "big plunger/bullet heads"
+    ],
+    "technique": "Slow-troll bridled live skipjack/bonito or pull big skirts over offshore structure in summer; heaviest billfish tackle of the bunch. Rarer than blue but a recognized Gulf trophy.",
+    "notes": "On Gulf billfish charts. Heavy tackle, C&R-oriented.",
+    "img": "/site/img/species/black-marlin.jpg"
+  },
+  {
+    "key": "sailfish",
+    "commonName": "Pacific Sailfish",
+    "spanishName": "Pez Vela",
+    "scientificName": "Istiophorus platypterus",
+    "category": "Billfish",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Jun to Nov (warm months)",
+    "marquee": true,
+    "baits": [
+      "live caballito (mackerel)",
+      "live sardina",
+      "rigged ballyhoo"
+    ],
+    "lures": [
+      "skirted trolling lures",
+      "hookless teasers (bait-and-switch)",
+      "rigged ballyhoo",
+      "flies"
+    ],
+    "technique": "Troll small skirts and ballyhoo with hookless teasers; raise the fish, then bait-and-switch a live caballito or pitch a fly. Lighter billfish tackle than marlin. Full catch-and-release recommended.",
+    "notes": "Gallery only. Classic teaser-and-switch fishery; release.",
+    "img": "/site/img/species/sailfish.jpg"
+  },
+  {
+    "key": "swordfish",
+    "commonName": "Swordfish (Broadbill)",
+    "spanishName": "Pez Espada",
+    "scientificName": "Xiphias gladius",
+    "category": "Billfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Offshore; year-round (deep-drop)",
+    "marquee": true,
+    "baits": [
+      "rigged squid",
+      "rigged mackerel/bonito belly",
+      "rigged tinker mackerel"
+    ],
+    "lures": [
+      "deep-drop LED-lit rigs",
+      "weighted swimbaits (deep)"
+    ],
+    "technique": "Specialized daytime deep-drop: sink a rigged squid/bonito belly with a light and breakaway weight to 1,000 to 1,800 ft over offshore canyons, or night-drift baits near the surface. Not a typical panga fishery.",
+    "notes": "Gallery only. Deep-drop/long-range specialty, not a standard panga catch.",
+    "img": "/site/img/species/swordfish.jpg"
+  },
+  {
+    "key": "roosterfish",
+    "commonName": "Roosterfish",
+    "spanishName": "Pez Gallo / Papagayo",
+    "scientificName": "Nematistius pectoralis",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "May to Nov (Jun to Oct peak)",
+    "marquee": true,
+    "baits": [
+      "live mullet (lisa)",
+      "live ladyfish (machete)",
+      "live caballito (mackerel)",
+      "live sardina",
+      "small live bonito"
+    ],
+    "lures": [
+      "large poppers",
+      "surface stickbaits",
+      "subsurface swimbaits",
+      "big flies (fly rod)"
+    ],
+    "technique": "Slow-troll or fly-line a live mullet/ladyfish just off the beach; or sight-cast poppers/stickbaits and flies to fish cruising the surf zone with their combs up. Let them eat before coming tight. Heavy fluoro leader for the abrasive mouth. Almost entirely catch-and-release.",
+    "notes": "Ultimate inshore trophy. Surf-zone sight casting is the iconic method. Mostly C&R.",
+    "img": "/site/img/species/roosterfish.jpg"
+  },
+  {
+    "key": "cabrilla",
+    "commonName": "Leopard Grouper (Cabrilla)",
+    "spanishName": "Cabrilla Sardinera",
+    "scientificName": "Mycteroperca rosacea",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut bait/strip",
+      "whole dead bait",
+      "dropper-loop bait"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "yo-yo iron",
+      "vertical jigs",
+      "bucktails"
+    ],
+    "technique": "Drop live or cut bait to rocky reef and ledges, or bounce leadhead plastics/iron off the structure; pull hard immediately to keep them out of the rocks. The default Gulf reef grouper from any panga over structure.",
+    "notes": "Endemic Gulf grouper; xanthic golden phase = 'golden grouper'. Get them off the bottom fast.",
+    "img": "/site/img/species/cabrilla.jpg"
+  },
+  {
+    "key": "golden-grouper",
+    "commonName": "Golden Grouper (xanthic Leopard Grouper)",
+    "spanishName": "Cabrilla Dorada",
+    "scientificName": "Mycteroperca rosacea",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez"
+    ],
+    "season": "May to Sep",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut bait/strip",
+      "dropper-loop bait"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "yo-yo iron",
+      "vertical jigs"
+    ],
+    "technique": "Same as leopard grouper, bait or jig the reef and lift hard. This is the rare golden (xanthic) color morph of the same species, caught over the same Gulf structure.",
+    "notes": "Color phase of cabrilla, not a separate species. Identical catch method.",
+    "img": "/site/img/species/golden-grouper.jpg"
+  },
+  {
+    "key": "gulf-grouper",
+    "commonName": "Gulf Grouper",
+    "spanishName": "Baya / Garropa",
+    "scientificName": "Mycteroperca jordani",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Spring to early summer",
+    "marquee": false,
+    "baits": [
+      "live whole mackerel/caballito",
+      "live bonito",
+      "large cut bait"
+    ],
+    "lures": [
+      "heavy yo-yo iron",
+      "large leadhead swimbaits",
+      "deep vertical jigs"
+    ],
+    "technique": "Drop big live or cut bait to deep rocky structure on heavy tackle and winch hard, or rip heavy iron off the bottom. An endemic Gulf apex grouper to ~200 lb. IUCN Endangered, ESA-listed and the flagship recovery species of Cabo Pulmo (treat as catch-and-release).",
+    "notes": "Protected/endangered. Cabo Pulmo no-take refuge species. C&R only.",
+    "img": "/site/img/species/gulf-grouper.jpg"
+  },
+  {
+    "key": "broomtail-grouper",
+    "commonName": "Broomtail Grouper",
+    "spanishName": "Garropa Cola de Escoba",
+    "scientificName": "Mycteroperca xenarcha",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round, warm-water peak",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live mackerel",
+      "large cut bait",
+      "whole dead bait"
+    ],
+    "lures": [
+      "yo-yo iron",
+      "leadhead swimbaits / plastics",
+      "deep jigs"
+    ],
+    "technique": "Bait or jig deep reef and rocky ledges of southern Baja and lift them off the structure fast on heavy gear. A genuine East Cape / Cabo Pulmo reef grouper, often confused with the Gulf grouper.",
+    "notes": "Large southern-Baja reef grouper. Heavy bottom tackle over structure.",
+    "img": "/site/img/species/broomtail-grouper.jpg"
+  },
+  {
+    "key": "grouper",
+    "commonName": "Grouper (generic / Spotted Cabrilla)",
+    "spanishName": "Garropa / Cabrilla",
+    "scientificName": "Epinephelus / Mycteroperca spp.",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live mackerel",
+      "cut bait",
+      "dropper-loop/whole dead bait"
+    ],
+    "lures": [
+      "yo-yo iron",
+      "leadhead swimbaits / plastics",
+      "deep jigs"
+    ],
+    "technique": "Drop bait or jig the reef and pull hard off the bottom. Generic placeholder key, recommend resolving to specific species (gulf-grouper, broomtail-grouper, cabrilla).",
+    "notes": "Ambiguous catch-all key in SPECIES_INFO/GUIDE. Catch method shared with the named groupers.",
+    "img": "/site/img/species/grouper.jpg"
+  },
+  {
+    "key": "calico-bass",
+    "commonName": "Kelp Bass (Calico Bass)",
+    "spanishName": "Cabrilla de Kelp / Verdillo",
+    "scientificName": "Paralabrax clathratus",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (summer at Cedros)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live mackerel",
+      "cut squid",
+      "cut bait"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "surface iron",
+      "jerkbaits",
+      "small jigs"
+    ],
+    "technique": "Fly-line live sardina into the kelp stringers and rock edges, or grind swimbaits and surface iron over the structure; turn their head immediately to stop them holing up. A top Cedros and north-Pacific target.",
+    "notes": "High-priority Pacific reef target; heavily used across northern zones. Kelp-edge fishing.",
+    "img": "/site/img/species/calico-bass.jpg"
+  },
+  {
+    "key": "sand-bass",
+    "commonName": "Barred Sand Bass",
+    "spanishName": "Cabrilla de Arena / Verdillo",
+    "scientificName": "Paralabrax nebulifer",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Summer (spawn aggregations)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut squid",
+      "ghost shrimp",
+      "cut bait"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "dropper-loop rigs",
+      "small jigs"
+    ],
+    "technique": "Drift live bait or cut squid on a dropper loop over sand-and-structure transitions, or slow-roll swimbaits along the bottom; best on summer spawning flats. Common north-Pacific bass alongside calico.",
+    "notes": "Summer-spawn flat-and-sand fish. Light tackle, bottom presentation.",
+    "img": "/site/img/species/sand-bass.jpg"
+  },
+  {
+    "key": "spotted-bay-bass",
+    "commonName": "Spotted Bay Bass",
+    "spanishName": "Cabrilla de Bahía / Extranjero",
+    "scientificName": "Paralabrax maculatofasciatus",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "ghost shrimp",
+      "cut squid",
+      "cut bait"
+    ],
+    "lures": [
+      "small leadhead swimbaits / plastics",
+      "dropshot plastics",
+      "small jigs"
+    ],
+    "technique": "Light-tackle bay/estuary fishing, work small swimbaits, dropshot and plastics around eelgrass, channels and structure in San Quintín, Mag Bay and the upper Gulf. A fun light-tackle bay fish.",
+    "notes": "Bay/estuary light-tackle fish. Lower priority than calico/sand bass.",
+    "img": "/site/img/species/spotted-bay-bass.jpg"
+  },
+  {
+    "key": "pargo",
+    "commonName": "Pargo / Snapper (generic)",
+    "spanishName": "Pargo",
+    "scientificName": "Lutjanus spp.",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Year-round (Apr to Jul peak)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live caballito (mackerel)",
+      "cut bait",
+      "whole dead bait"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "yo-yo iron",
+      "trolled diving plugs",
+      "poppers (shallow)"
+    ],
+    "technique": "Drop bait to rocky reef/ledges or troll diving plugs along the structure edge; pargo bolt straight for the rocks, so heavy line and immediate pressure are essential. Generic key, resolve into the named snappers.",
+    "notes": "Catch-all 'pargo' key. Shared rock-snapper tactics; resolve to colorado/yellow/barred/dog snapper.",
+    "img": "/site/img/species/pargo.jpg"
+  },
+  {
+    "key": "pargo-colorado",
+    "commonName": "Colorado Snapper (Pargo Colorado)",
+    "spanishName": "Pargo Colorado",
+    "scientificName": "Lutjanus colorado",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round (Apr to Jul peak)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live caballito (mackerel)",
+      "cut bait",
+      "whole dead bait"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "yo-yo iron",
+      "trolled diving plugs"
+    ],
+    "technique": "Fly-line or drop live sardina/mackerel to rocky reef and mangrove edges, or troll diving plugs the structure line; lock the drag and pull them off the rocks. The 'pargo' everyone targets, best eating on the Cortez side.",
+    "notes": "Gallery card exists. Premier eating snapper of the Gulf.",
+    "img": "/site/img/species/pargo-colorado.jpg"
+  },
+  {
+    "key": "yellow-snapper",
+    "commonName": "Yellow Snapper (Pargo Amarillo)",
+    "spanishName": "Pargo Amarillo",
+    "scientificName": "Lutjanus argentiventris",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round (Apr to Jul peak)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut bait",
+      "whole dead bait",
+      "shrimp"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "yo-yo iron",
+      "trolled diving plugs"
+    ],
+    "technique": "Bait or jig the reef, rock piles and island ledges and pull hard off the bottom; one of the commonest reef snappers around the southern Gulf islands. Excellent table fare.",
+    "notes": "Very common reef snapper around La Paz islands and East Cape. Bottom/structure fish.",
+    "img": "/site/img/species/yellow-snapper.jpg"
+  },
+  {
+    "key": "barred-pargo",
+    "commonName": "Barred Pargo (Mexican Barred Snapper)",
+    "spanishName": "Pargo Coconaco / Pargo Mexicano",
+    "scientificName": "Hoplopagrus guentherii",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round (Apr to Jul peak)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live caballito (mackerel)",
+      "cut bait",
+      "shrimp",
+      "whole dead bait"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "yo-yo iron",
+      "deep diving plugs"
+    ],
+    "technique": "Drop live/cut bait tight to rocky reef and lift hard; a bruising near-shore reef snapper that fights well above its weight at the East Cape and islands. Heavy fluoro and a stout rod.",
+    "notes": "Distinct genus (Hoplopagrus). Pound-for-pound brawler on the rocks.",
+    "img": "/site/img/species/barred-pargo.jpg"
+  },
+  {
+    "key": "dog-snapper",
+    "commonName": "Pacific Dog Snapper / Cubera (Pargo Prieto)",
+    "spanishName": "Pargo Prieto / Pargo Negro",
+    "scientificName": "Lutjanus novemfasciatus",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round (Jun to Oct summer peak)",
+    "marquee": true,
+    "baits": [
+      "large fly-lined live mullet",
+      "whole live mackerel/caballito",
+      "live ladyfish",
+      "bonito head/belly",
+      "large cut bait"
+    ],
+    "lures": [
+      "heavy yo-yo iron",
+      "large leadhead swimbaits",
+      "deep diving plugs",
+      "poppers (shallow rock)"
+    ],
+    "technique": "Find rocky structure in 150 ft or less, drop a big fly-lined live bait right on the bottom and clamp down. These are the strongest reef snapper in Baja and always run for the rocks. 80 lb braid and 80 lb fluoro is the rule. The East Cape / Cabo Pulmo 'big toad' / Pacific cubera.",
+    "notes": "Marquee reef trophy. Heaviest snapper tackle; the Pacific cubera.",
+    "img": "/site/img/species/dog-snapper.jpg"
+  },
+  {
+    "key": "mullet-snapper",
+    "commonName": "Mullet Snapper (Pargo Mulato)",
+    "spanishName": "Pargo Mulato / Pargo Lisa",
+    "scientificName": "Lutjanus aratus",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez"
+    ],
+    "season": "Year-round (warm months)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live mullet",
+      "cut bait"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "poppers (shallow rock)",
+      "yo-yo iron",
+      "trolled diving plugs"
+    ],
+    "technique": "Work live bait, plastics or poppers along rocky reef and island walls; a hard-pulling schooling reef snapper cited specifically around Espíritu Santo. Pull them off the structure immediately.",
+    "notes": "Schooling reef snapper at Espíritu Santo. Overlaps the snapper group.",
+    "img": "/site/img/species/mullet-snapper.jpg"
+  },
+  {
+    "key": "corvina",
+    "commonName": "Corvina / Gulf Corvina",
+    "spanishName": "Corvina Golfina",
+    "scientificName": "Cynoscion othonopterus",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Feb to Apr (upper Gulf spawning run)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut bait",
+      "shrimp",
+      "clams (Pacific lagoons)"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "Rapalas",
+      "small spoons",
+      "soft plastics on jigheads"
+    ],
+    "technique": "Cast or troll swimbaits/Rapalas and soak cut bait around channels, drop-offs and the upper-Gulf spawning aggregations (San Felipe, El Golfo); on Pacific lagoons, fish clams and cut bait inside the bays. Listen for the croaking spawn run.",
+    "notes": "Gulf corvina (C. othonopterus) spawning run is the famous fishery. Pacific lagoon 'corvina' may be orangemouth (C. xanthulus).",
+    "img": "/site/img/species/corvina.jpg"
+  },
+  {
+    "key": "white-seabass",
+    "commonName": "White Seabass",
+    "spanishName": "Corvina Blanca / Corvinata",
+    "scientificName": "Atractoscion nobilis",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Mar to Jul (spring spawn)",
+    "marquee": true,
+    "baits": [
+      "live squid (dropper loop)",
+      "live mackerel (fly-lined)",
+      "live sardina",
+      "cut squid"
+    ],
+    "lures": [
+      "surface iron",
+      "Krocodile spoons",
+      "knife/vertical jigs"
+    ],
+    "technique": "Fish live squid on a high dropper loop on the bottom, fly-line a live mackerel through the kelp, or cast surface iron / Krocodile at grey light when squid is around. 'Ghost of the kelp forest', best at dawn on the squid spawn.",
+    "notes": "Premier Pacific croaker. Live squid on the dropper loop is the money rig; live mackerel is the #1 bait in Baja. 2/day, 2.5 pts.",
+    "img": "/site/img/species/white-seabass.jpg"
+  },
+  {
+    "key": "halibut",
+    "commonName": "California Halibut",
+    "spanishName": "Lenguado de California",
+    "scientificName": "Paralichthys californicus",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Mar to Sep (summer flatties); year-round",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live anchovy",
+      "live/fresh squid",
+      "cut bait"
+    ],
+    "lures": [
+      "leadhead swimbaits (3 to 5 in)",
+      "bucktail jigs",
+      "drift/trap-rig live bait"
+    ],
+    "technique": "Drift live sardina or squid near the bottom on a trap/Carolina rig over sand flats and the sand-structure edge, or bounce a swimbait slowly along the bottom at ~1 knot. Sandy-bottom ambush flatfish, fish the sand at the base of the reef.",
+    "notes": "Gallery key 'california-halibut'. Drift-the-sand fishery; swimbaits and live bait.",
+    "img": "/site/img/species/halibut.jpg"
+  },
+  {
+    "key": "lingcod",
+    "commonName": "Lingcod",
+    "spanishName": "Bacalao / Lorcha",
+    "scientificName": "Ophiodon elongatus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Nov to Mar (cold water)",
+    "marquee": false,
+    "baits": [
+      "live mackerel",
+      "whole/cut squid",
+      "live sanddab",
+      "cut bait (dropper loop)"
+    ],
+    "lures": [
+      "heavy leadhead swimbaits",
+      "shrimp/scampi flies",
+      "yo-yo iron",
+      "double-dropper bottom rigs"
+    ],
+    "technique": "Drop big swimbaits, bait or iron to deep rocky reef and pinnacles and work it just off the bottom; lingcod often grab a hooked rockfish on the way up, keep cranking. Northern Pacific cold-water reef predator with blue flesh.",
+    "notes": "Deep rocky-reef ambush predator. 2/day, 2.5 pts. Often eats a hooked rockfish.",
+    "img": "/site/img/species/lingcod.jpg"
+  },
+  {
+    "key": "pacific-barracuda",
+    "commonName": "Pacific Barracuda",
+    "spanishName": "Barracuda / Picuda",
+    "scientificName": "Sphyraena argentea",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (warm-water peak)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live anchovy",
+      "cut bait"
+    ],
+    "lures": [
+      "chrome/blue surface iron",
+      "spoons",
+      "Rapalas",
+      "casting jigs"
+    ],
+    "technique": "Cast flashy surface iron and spoons or fly-line live sardina along the kelp edge and current lines; a wire or heavy fluoro shock leader stops the bite-offs. Light-tackle schooling sport fish.",
+    "notes": "Gallery only. Kelp-edge schooler; toothy, use a shock leader.",
+    "img": "/site/img/species/pacific-barracuda.jpg"
+  },
+  {
+    "key": "jack-crevalle",
+    "commonName": "Pacific Crevalle Jack (Toro)",
+    "spanishName": "Toro / Jurel Toro / Cocinero",
+    "scientificName": "Caranx caninus",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "May to Nov (warm bays)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live mullet",
+      "cut bait"
+    ],
+    "lures": [
+      "poppers",
+      "surface stickbaits",
+      "swimbaits",
+      "spoons",
+      "flies"
+    ],
+    "technique": "Cast poppers and stickbaits into surface-busting schools or fly-line live bait around bays, river mouths and beaches; a brawling, never-quit topwater fighter. Will crash a popper hard.",
+    "notes": "Pacific crevalle jack (correct sci-name Caranx caninus, not C. hippos). Topwater bruiser.",
+    "img": "/site/img/species/jack-crevalle.jpg"
+  },
+  {
+    "key": "bigeye-trevally",
+    "commonName": "Bigeye Trevally (Big-Eye Jack)",
+    "spanishName": "Jurel Ojón / Ojotón",
+    "scientificName": "Caranx sexfasciatus",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez"
+    ],
+    "season": "Summer to fall (warm water)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live caballito (mackerel)",
+      "cut bait"
+    ],
+    "lures": [
+      "poppers",
+      "surface stickbaits",
+      "yo-yo iron",
+      "swimbaits",
+      "vertical jigs"
+    ],
+    "technique": "Cast topwater or drop iron to schooling fish around island walls and reefs near La Paz, especially at grey light; or fly-line live bait. A strong schooling jack that often holds deeper than crevalle.",
+    "notes": "Schooling jack around La Paz islands. Overlaps jack-crevalle in feel.",
+    "img": "/site/img/species/bigeye-trevally.jpg"
+  },
+  {
+    "key": "pompano",
+    "commonName": "Gafftopsail Pompano / Paloma Pompano",
+    "spanishName": "Pámpano / Palometa",
+    "scientificName": "Trachinotus rhodopus",
+    "category": "Surf",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Summer to fall",
+    "marquee": false,
+    "baits": [
+      "sand crabs",
+      "shrimp",
+      "cut bait",
+      "live sardina"
+    ],
+    "lures": [
+      "small spoons",
+      "small swimbaits/plastics",
+      "pompano jigs",
+      "flies"
+    ],
+    "technique": "Surf-cast small baits and jigs or work spoons/flies in the wash off La Paz / island and East Cape beaches; a fun light-tackle surf-zone fish that travels in small schools.",
+    "notes": "Surf-zone light-tackle catch. Small offerings in the wash.",
+    "img": "/site/img/species/pompano.jpg"
+  },
+  {
+    "key": "ladyfish",
+    "commonName": "Pacific Ladyfish (Machete)",
+    "spanishName": "Machete / Sábalo",
+    "scientificName": "Elops affinis",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round (warm months)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "small cut bait",
+      "shrimp"
+    ],
+    "lures": [
+      "small spoons",
+      "small jigs/plastics",
+      "Rapalas",
+      "flies"
+    ],
+    "technique": "Cast small spoons, jigs or flies around estuaries, beaches and harbor mouths for fast strikes and acrobatic jumps; also caught (and kept) as prime live bait for roosterfish. Fun light-tackle and fly target.",
+    "notes": "Light-tackle/fly fish; doubles as top roosterfish bait.",
+    "img": "/site/img/species/ladyfish.jpg"
+  },
+  {
+    "key": "snook",
+    "commonName": "Black Snook",
+    "spanishName": "Robalo Prieto / Robalo Negro",
+    "scientificName": "Centropomus nigrescens",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (May to Oct peak)",
+    "marquee": true,
+    "baits": [
+      "live mullet (lisa)",
+      "live sardina",
+      "live ladyfish/croaker",
+      "shrimp"
+    ],
+    "lures": [
+      "swimbaits",
+      "jerkbaits",
+      "soft plastics",
+      "topwater walkers",
+      "flies"
+    ],
+    "technique": "Work live bait, swimbaits and jerkbaits along the mangrove edges, channel mouths and current breaks of Mag Bay / Lopez Mateos, often at dawn and dusk; heavy fluoro for the mangrove roots and gill-plate. A prized mangrove ambush trophy.",
+    "notes": "Mangrove trophy (consolidate 'snook' + 'black-snook' keys). Esteros of Mag Bay.",
+    "img": "/site/img/species/snook.jpg"
+  },
+  {
+    "key": "triggerfish",
+    "commonName": "Finescale Triggerfish",
+    "spanishName": "Cochito / Puerco",
+    "scientificName": "Balistes polylepis",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "shrimp",
+      "cut bait/strips",
+      "clams"
+    ],
+    "lures": [
+      "small leadhead jigs (bait-tipped)",
+      "dropper-loop bottom rigs"
+    ],
+    "technique": "Drop small bits of cut squid/shrimp on a small strong hook to reef and rock structure; they nibble, so a sharp small hook and a quick set are key. Upper-Gulf and reef staple, excellent eating despite the tough hide.",
+    "notes": "Light-bite bottom fish on small baits. Great table fare.",
+    "img": "/site/img/species/triggerfish.jpg"
+  },
+  {
+    "key": "sheephead",
+    "commonName": "California Sheephead",
+    "spanishName": "Vieja de California / Pez Perro",
+    "scientificName": "Bodianus pulcher",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "live/fresh squid",
+      "shrimp",
+      "cut bait",
+      "ghost shrimp"
+    ],
+    "lures": [
+      "leadhead jigs (bait-tipped)",
+      "dropper-loop bottom rigs"
+    ],
+    "technique": "Drop squid or shrimp to rocky reef and kelp-bed bottom and let them crush it with their canine/molar teeth; a structure-oriented wrasse. Common Pacific reef/kelp bycatch and a fine eating fish.",
+    "notes": "Kelp-forest wrasse with crushing teeth (correct sci-name Bodianus pulcher). Bottom bait fish.",
+    "img": "/site/img/species/sheephead.jpg"
+  },
+  {
+    "key": "ocean-whitefish",
+    "commonName": "Ocean Whitefish",
+    "spanishName": "Pierna / Blanquillo",
+    "scientificName": "Caulolatilus princeps",
+    "category": "Bottomfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strips",
+      "live sardina",
+      "shrimp"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "yo-yo iron",
+      "dropper-loop bottom rigs"
+    ],
+    "technique": "Drop cut squid/strip bait or bounce a leadhead and iron over rocky reef and hard bottom around Cedros, the Coronados and all north-Pacific structure; an aggressive, near-constant reef biter and underrated table fish.",
+    "notes": "Extremely common north-Pacific reef catch. Bottom bait or iron over structure.",
+    "img": "/site/img/species/ocean-whitefish.jpg"
+  },
+  {
+    "key": "giant-sea-bass",
+    "commonName": "Giant Sea Bass",
+    "spanishName": "Mero Gigante / Pez Negro",
+    "scientificName": "Stereolepis gigas",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (protected)",
+    "marquee": true,
+    "baits": [
+      "incidental on live mackerel/squid (released)"
+    ],
+    "lures": [
+      "incidental on iron/swimbaits (released)"
+    ],
+    "technique": "Fully protected, not legally targeted. Occasionally hooked incidentally on live bait or iron near kelp reefs and must be released. A 500 to 600+ lb kelp-forest giant; strict catch-and-release.",
+    "notes": "Gallery only. Fully protected C&R. Pairs with gulf-grouper as a protected entry.",
+    "img": "/site/img/species/giant-sea-bass.jpg"
+  },
+  {
+    "key": "vermilion-rockfish",
+    "commonName": "Vermilion Rockfish",
+    "spanishName": "Rocote Bermellón",
+    "scientificName": "Sebastes miniatus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (deep structure)",
+    "marquee": true,
+    "baits": [
+      "cut squid",
+      "cut mackerel/strip bait",
+      "shrimp"
+    ],
+    "lures": [
+      "shrimp/scampi flies (gangion)",
+      "leadhead swimbaits",
+      "diamond/metal jigs",
+      "double-dropper bottom rigs"
+    ],
+    "technique": "Drop a multi-hook dropper-loop / shrimp-fly gangion with a heavy sinker to deep rocky structure (often 200 to 600 ft) and bounce the bottom; bring up multiples. The classic deep-water red rockcod.",
+    "notes": "Gallery hero species. Deep bottom-fishing on gangion rigs.",
+    "img": "/site/img/species/vermilion-rockfish.jpg"
+  },
+  {
+    "key": "bocaccio",
+    "commonName": "Bocaccio",
+    "spanishName": "Rocote Bocaccio",
+    "scientificName": "Sebastes paucispinis",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (deep structure)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp"
+    ],
+    "lures": [
+      "shrimp/scampi flies (gangion)",
+      "leadhead swimbaits",
+      "diamond jigs",
+      "double-dropper bottom rigs"
+    ],
+    "technique": "Deep-drop dropper-loop/shrimp-fly gangions or swimbaits to deep reef and mud-rock edges; a big-mouthed deep-water rockfish caught in the rockfish complex.",
+    "notes": "Gallery only. Deep rockfish-complex bottom fish.",
+    "img": "/site/img/species/bocaccio.jpg"
+  },
+  {
+    "key": "chilipepper",
+    "commonName": "Chilipepper Rockfish",
+    "spanishName": "Rocote Chilipepper",
+    "scientificName": "Sebastes goodei",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (mid-water)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip"
+    ],
+    "lures": [
+      "shrimp/scampi flies (gangion)",
+      "small diamond jigs",
+      "double-dropper bottom rigs"
+    ],
+    "technique": "Drop a shrimp-fly gangion or bait rig to mid-water and deep structure; a pink-red schooling rockfish often caught in numbers on the same drops as vermilion and bocaccio.",
+    "notes": "Gallery only. Mid-water/deep schooling rockfish on gangions.",
+    "img": "/site/img/species/chilipepper.jpg"
+  },
+  {
+    "key": "canary-rockfish",
+    "commonName": "Canary Rockfish",
+    "spanishName": "Rocote Canario",
+    "scientificName": "Sebastes pinniger",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Seasonal (rocky reef)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp"
+    ],
+    "lures": [
+      "shrimp/scampi flies (gangion)",
+      "leadhead swimbaits",
+      "diamond jigs",
+      "double-dropper bottom rigs"
+    ],
+    "technique": "Bottom-fish dropper-loop/shrimp-fly rigs over deep rocky reef; a bright orange-yellow rockfish taken in the rockfish complex on north-Pacific structure.",
+    "notes": "Gallery only. Deep rocky-reef bottom fish.",
+    "img": "/site/img/species/canary-rockfish.jpg"
+  },
+  {
+    "key": "copper-rockfish",
+    "commonName": "Copper Rockfish",
+    "spanishName": "Rocote Cobrizo",
+    "scientificName": "Sebastes caurinus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (kelp & rocks)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp",
+      "live sardina"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "shrimp flies (gangion)",
+      "small jigs"
+    ],
+    "technique": "Fish bait or swimbaits near kelp-bed and rocky-reef bottom in moderate depth; a copper-brown mottled reef rockfish caught shallower than the deep-water reds.",
+    "notes": "Gallery only. Kelp-and-rock rockfish; takes swimbaits shallower.",
+    "img": "/site/img/species/copper-rockfish.jpg"
+  },
+  {
+    "key": "blue-rockfish",
+    "commonName": "Blue Rockfish",
+    "spanishName": "Rocote Azul",
+    "scientificName": "Sebastes mystinus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (kelp beds)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "live sardina"
+    ],
+    "lures": [
+      "shrimp flies (gangion)",
+      "small leadhead swimbaits",
+      "small jigs"
+    ],
+    "technique": "Work shrimp-fly rigs and small jigs/swimbaits up off the bottom around kelp beds and rocky structure; a dark blue-grey schooling kelp rockfish that often suspends above the reef.",
+    "notes": "Gallery only. Suspending kelp-bed rockfish on shrimp flies/small jigs.",
+    "img": "/site/img/species/blue-rockfish.jpg"
+  },
+  {
+    "key": "starry-rockfish",
+    "commonName": "Starry Rockfish",
+    "spanishName": "Rocote Estrellado",
+    "scientificName": "Sebastes constellatus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (deep structure)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp"
+    ],
+    "lures": [
+      "shrimp/scampi flies (gangion)",
+      "diamond jigs",
+      "double-dropper bottom rigs"
+    ],
+    "technique": "Deep-drop dropper-loop / shrimp-fly gangions to deep high-relief rock; a distinctively white-spotted ('starry') deep rockfish caught in the same complex as vermilion and bocaccio.",
+    "notes": "In SPECIES_INFO hunt-planner block (not in species-list.json). Deep rockfish-complex bottom fish.",
+    "img": "/fish/starry-rockfish.jpg"
+  }
+];
+window.CATCH_BY_KEY = window.CATCH.reduce(function (acc, s) { acc[s.key] = s; return acc; }, {});

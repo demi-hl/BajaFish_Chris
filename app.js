@@ -181,7 +181,16 @@
       localStorage.removeItem('baja_account_type');
       showLoginScreen();
     },
-    get plan() { return PLAN_CONFIG[this.tier] || PLAN_CONFIG.free; },
+    // PREVIEW: paywalls disabled — every feature unlocked for all tiers, no report delay.
+    // Revert to ship monetization: return PLAN_CONFIG[this.tier] || PLAN_CONFIG.free;
+    get plan() {
+      const base = PLAN_CONFIG[this.tier] || PLAN_CONFIG.unlimited;
+      const p = Object.assign({}, PLAN_CONFIG.unlimited, base);
+      Object.keys(p).forEach(k => { if (k.indexOf('can') === 0 && typeof p[k] === 'boolean') p[k] = true; });
+      p.canSeeDelayedReportsOnly = false;
+      p.delayedDays = 0; p.reportLimit = 999; p.captainSlots = 999;
+      return p;
+    },
     can(permission) { return !!this.plan[permission]; },
   };
 
@@ -695,7 +704,7 @@
             <span class="profile-plan-name" id="profile-plan-name">${plan.name}</span>
           </div>
         </div>
-        ${profile.homeRegion ? `<div class="prof-region">📍 ${escapeHtml(profile.homeRegion)}</div>` : ''}
+        ${profile.homeRegion ? `<div class="prof-region">${ICON('pin')} ${escapeHtml(profile.homeRegion)}</div>` : ''}
       `;
     }
 
@@ -726,8 +735,8 @@
       </button>`;
     }).join('');
     const styleLabels = {
-      'light-tackle':'🪶 Light Tackle','deep-sea':'🌊 Deep Sea',
-      'fly':'🎣 Fly Fishing','mixed':'⚡ Mixed Bag','inshore':'🏖 Inshore',
+      'light-tackle':'Light Tackle','deep-sea':'Deep Sea',
+      'fly':'Fly Fishing','mixed':'Mixed Bag','inshore':'Inshore',
     };
     editEl.innerHTML = `
       <div class="prof-section-head">Your Angler Identity</div>
@@ -937,7 +946,7 @@
     el.innerHTML = rows.map((row, i) => {
       const coastCls = row.info.coast === 'Pacific' ? 'ir-coast--pac' : 'ir-coast--cor';
       const barW = Math.round((row.count / max) * 100);
-      const medals = ['🥇', '🥈', '🥉'];
+      const medals = [ICON('medal','ow-ico--gold'), ICON('medal','ow-ico--gold'), ICON('medal','ow-ico--gold')];
       return `
         <div class="intel-row">
           <span class="intel-rank">${medals[i] || i + 1}</span>
@@ -979,7 +988,7 @@
             <div class="intel-row-primary">${escapeHtml(clean)}</div>
           </div>
           <div class="intel-captain-badge ${isHot ? 'intel-captain-badge--hot' : ''}">
-            ${isHot ? '🔥' : ''} ${row.count} trip${row.count !== 1 ? 's' : ''}
+            ${isHot ? ICON('flame','ow-ico--gold') : ''} ${row.count} trip${row.count !== 1 ? 's' : ''}
           </div>
         </div>`;
     }).join('');
@@ -1028,15 +1037,15 @@
     const el = document.getElementById('profile-permissions');
     if (!el) return;
     const checks = [
-      { key: 'canSeeLiveReports',   label: 'Live reports',              icon: '📡' },
-      { key: 'canSeeTopHotspots',   label: 'Top hot spots',             icon: '🔥' },
-      { key: 'canSeeTopCaptains',   label: 'Captain rankings',          icon: '⚓' },
-      { key: 'canUseLiveHeatMaps',  label: 'Live heat maps',            icon: '🗺' },
-      { key: 'canContactCaptains',  label: 'Captain contact & booking', icon: '📞' },
-      { key: 'canUseCommunity',     label: 'Community & Pool a Panga',  icon: '🤝' },
-      { key: 'canUseMeetups',       label: 'Meetups',                   icon: '📅' },
-      { key: 'canUseForums',        label: 'Forums',                    icon: '💬' },
-      { key: 'canSearchFishermen',  label: 'Search anglers',            icon: '🔍' },
+      { key: 'canSeeLiveReports',   label: 'Live reports',              icon: ICON('signal') },
+      { key: 'canSeeTopHotspots',   label: 'Top hot spots',             icon: ICON('flame','ow-ico--gold') },
+      { key: 'canSeeTopCaptains',   label: 'Captain rankings',          icon: ICON('anchor') },
+      { key: 'canUseLiveHeatMaps',  label: 'Live heat maps',            icon: ICON('map') },
+      { key: 'canContactCaptains',  label: 'Captain contact & booking', icon: ICON('phone') },
+      { key: 'canUseCommunity',     label: 'Community & Pool a Panga',  icon: ICON('users') },
+      { key: 'canUseMeetups',       label: 'Meetups',                   icon: ICON('calendar') },
+      { key: 'canUseForums',        label: 'Forums',                    icon: ICON('chat') },
+      { key: 'canSearchFishermen',  label: 'Search anglers',            icon: ICON('search') },
     ];
     const on  = checks.filter(c => BajaAuth.can(c.key));
     const off = checks.filter(c => !BajaAuth.can(c.key));
@@ -1122,7 +1131,7 @@
       .sort((a, b) => b[1] - a[1]).slice(0, 2)
       .map(([s]) => (SPECIES_INFO[s] || { name: s }).name);
     if (topSpecies.length) {
-      insights.push({ icon: '🎯', text: `${topSpecies.join(' & ')} leading this week's action` });
+      insights.push({ icon: ICON('target'), text: `${topSpecies.join(' & ')} leading this week's action` });
     }
 
     // Hottest zone
@@ -1131,14 +1140,14 @@
     const topZone = Object.entries(zoneCounts).sort((a, b) => b[1] - a[1])[0];
     if (topZone) {
       const zInfo = ZONES[topZone[0]] || { name: topZone[0], coast: '' };
-      insights.push({ icon: '📍', text: `${zInfo.name} most active · ${topZone[1]} reports` });
+      insights.push({ icon: ICON('pin'), text: `${zInfo.name} most active · ${topZone[1]} reports` });
     }
 
     // Hot bite ratio
     const hotCount = reports.filter(r => r.rating === 'hot').length;
     const hotPct   = Math.round((hotCount / reports.length) * 100);
     if (hotPct >= 30) {
-      insights.push({ icon: '🔥', text: `${hotPct}% of reports rated Hot this week` });
+      insights.push({ icon: ICON('flame','ow-ico--gold'), text: `${hotPct}% of reports rated Hot this week` });
     }
 
     // Captain on a streak
@@ -1148,7 +1157,7 @@
     });
     const topCaptain = Object.entries(captainCounts).sort((a, b) => b[1] - a[1])[0];
     if (topCaptain && topCaptain[1] >= 2) {
-      insights.push({ icon: '⚓', text: `${topCaptain[0].replace(/Capit[aá]n\s*/i, 'Capt. ')} on a ${topCaptain[1]}-trip streak` });
+      insights.push({ icon: ICON('anchor'), text: `${topCaptain[0].replace(/Capit[aá]n\s*/i, 'Capt. ')} on a ${topCaptain[1]}-trip streak` });
     }
 
     return insights.slice(0, 3);
@@ -1192,7 +1201,7 @@
       } else if (!BajaAuth.can('canSeeLiveReports')) {
         summaryEl.innerHTML = `
           <div class="intel-summary-inner intel-summary-inner--locked">
-            <span class="intel-summary-icon">🔒</span>
+            <span class="intel-summary-icon">${ICON('lock')}</span>
             <span class="intel-summary-text">Live bite intelligence — <button class="intel-summary-upgrade" data-open-upgrade>Upgrade to unlock</button></span>
           </div>`;
         summaryEl.classList.remove('hidden');
@@ -1372,10 +1381,10 @@
     const lastWeek  = new Date(today); lastWeek.setDate(lastWeek.getDate() - 7);
 
     const groups = [
-      { label: 'Today',      icon: '🟢', items: shown.filter(r => new Date(r.date+'T00:00:00') >= today) },
-      { label: 'Yesterday',  icon: '🟡', items: shown.filter(r => { const d = new Date(r.date+'T00:00:00'); return d >= yesterday && d < today; }) },
-      { label: 'This Week',  icon: '📅', items: shown.filter(r => { const d = new Date(r.date+'T00:00:00'); return d >= lastWeek && d < yesterday; }) },
-      { label: 'Earlier',    icon: '🗓',  items: shown.filter(r => new Date(r.date+'T00:00:00') < lastWeek) },
+      { label: 'Today',      icon: DOT('green'), items: shown.filter(r => new Date(r.date+'T00:00:00') >= today) },
+      { label: 'Yesterday',  icon: DOT('amber'), items: shown.filter(r => { const d = new Date(r.date+'T00:00:00'); return d >= yesterday && d < today; }) },
+      { label: 'This Week',  icon: ICON('calendar'), items: shown.filter(r => { const d = new Date(r.date+'T00:00:00'); return d >= lastWeek && d < yesterday; }) },
+      { label: 'Earlier',    icon: ICON('calendar'),  items: shown.filter(r => new Date(r.date+'T00:00:00') < lastWeek) },
     ].filter(g => g.items.length);
 
     container.innerHTML = groups.map(g => buildRptSection(g.label, g.icon, g.items)).join('')
@@ -1398,10 +1407,10 @@
     const topSp = Object.entries(spCounts).sort((a,b)=>b[1]-a[1]).slice(0,3);
 
     let html = '';
-    if (hot.length) html += buildRptSection('Wide Open Bites', '🔥', hot.sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0, Math.min(hot.length, limit)));
+    if (hot.length) html += buildRptSection('Wide Open Bites', ICON('flame','ow-ico--gold'), hot.sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0, Math.min(hot.length, limit)));
     if (good.length) html += buildRptSection('Good Action', '✓', good.sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0, Math.min(good.length, Math.max(0, limit - hot.length))));
     if (topSp.length && BajaAuth.can('canSeePremiumInsights')) {
-      html += `<div class="rpt-section-header"><span class="rpt-section-icon">🎯</span><span class="rpt-section-label">Species Momentum</span></div>
+      html += `<div class="rpt-section-header"><span class="rpt-section-icon">${ICON('target')}</span><span class="rpt-section-label">Species Momentum</span></div>
         <div class="rpt-species-chips">${topSp.map(([s,n])=>`<div class="rpt-species-chip"><img src="${(SPECIES_INFO[s]||{}).img||''}" alt=""><span>${(SPECIES_INFO[s]||{name:s}).name}</span><span class="rpt-species-chip-count">${n}</span></div>`).join('')}</div>`;
     }
     html += hidden > 0 ? buildRptUpgradeRow(hidden) : '';
@@ -1431,14 +1440,14 @@
       html += `<div class="rpt-coast-header rpt-coast-header--pac"><span class="coast-dot" style="background:#1a6ea8;flex-shrink:0"></span> Pacific Coast · ${pacific.length} reports</div>`;
       html += pacZones.map(([zone, rpts]) => {
         const zInfo = ZONES[zone] || { name: zone };
-        return buildRptSection(zInfo.name, '📍', rpts.slice(0, 3), true);
+        return buildRptSection(zInfo.name, ICON('pin'), rpts.slice(0, 3), true);
       }).join('');
     }
     if (corZones.length) {
       html += `<div class="rpt-coast-header rpt-coast-header--cor"><span class="coast-dot" style="background:#c94040;flex-shrink:0"></span> Sea of Cortez · ${cortez.length} reports</div>`;
       html += corZones.map(([zone, rpts]) => {
         const zInfo = ZONES[zone] || { name: zone };
-        return buildRptSection(zInfo.name, '📍', rpts.slice(0, 3), true);
+        return buildRptSection(zInfo.name, ICON('pin'), rpts.slice(0, 3), true);
       }).join('');
     }
     html += hidden > 0 ? buildRptUpgradeRow(hidden) : '';
@@ -1471,7 +1480,7 @@
     const shown  = reports.slice(0, limit);
     const hidden = Math.max(0, reports.length - limit);
 
-    let html = `<div class="rpt-section-header"><span class="rpt-section-icon">⚓</span><span class="rpt-section-label">Captain Rankings This Week</span></div>`;
+    let html = `<div class="rpt-section-header"><span class="rpt-section-icon">${ICON('anchor')}</span><span class="rpt-section-label">Captain Rankings This Week</span></div>`;
     html += ranked.map(([captain, rpts], idx) => {
       const hot  = rpts.filter(r => r.rating === 'hot').length;
       const zone = (ZONES[rpts[0]?.zone] || {}).name || '—';
@@ -1482,7 +1491,7 @@
           <div class="rpt-captain-avatar">${cleanName[0] || '?'}</div>
           <div class="rpt-captain-info">
             <div class="rpt-captain-name">${escapeHtml(captain)}</div>
-            <div class="rpt-captain-meta">${zone} · ${rpts.length} trips${hot > 0 ? ` · ${hot} 🔥 hot` : ''}</div>
+            <div class="rpt-captain-meta">${zone} · ${rpts.length} trips${hot > 0 ? ` · ${hot} ${ICON('flame','ow-ico--gold')} hot` : ''}</div>
           </div>
           <div class="rpt-captain-streak rpt-captain-streak--${rpts[0]?.rating||'good'}">${rpts.length}</div>
         </div>`;
@@ -1534,7 +1543,7 @@
           <div class="rpt-card-species">${escapeHtml(speciesNames)}</div>
           <div class="rpt-card-meta">${metaParts}</div>
           <p class="rpt-card-notes">${escapeHtml(r.notes.length > 120 ? r.notes.slice(0, 118) + '…' : r.notes)}</p>
-          ${r.bait ? `<div class="rpt-card-bait">🪝 ${escapeHtml(r.bait)}</div>` : ''}
+          ${r.bait ? `<div class="rpt-card-bait">${ICON('hook')} ${escapeHtml(r.bait)}</div>` : ''}
         </div>
       </article>`;
   }
@@ -1644,7 +1653,7 @@
     const isTopRated = c.rating >= 5;
     const reportsWk  = getReportsThisWeek(c.name);
     const unlocked   = BajaAuth.can('canSeeAllCaptains') || cardIndex < BajaAuth.plan.captainSlots;
-    const stars      = '★'.repeat(c.rating) + '☆'.repeat(5 - c.rating);
+    const stars      = ICON('star','ow-ico--fill ow-ico--gold').repeat(c.rating) + ICON('star').repeat(5 - c.rating);
     const isOnStreak = reportsWk >= 2;
 
     const maxChips = 3;
@@ -1658,7 +1667,7 @@
     // and a rebook chip scaled off rating. Keeps gold scarce to a single chip.
     const trustChips = [];
     if (c.rating >= 4) trustChips.push('<span class="cap-trust-chip cap-trust-chip--verified">✓ Verified</span>');
-    if (c.whatsapp)    trustChips.push('<span class="cap-trust-chip cap-trust-chip--fast">⚡ Responds fast</span>');
+    if (c.whatsapp)    trustChips.push(`<span class="cap-trust-chip cap-trust-chip--fast">${ICON('zap')} Responds fast</span>`);
     trustChips.push(`<span class="cap-trust-chip cap-trust-chip--rebook">${Math.min(99, 80 + c.rating * 3)}% rebook</span>`);
     const trustRowHTML = `<div class="cap-trust-row">${trustChips.join('')}</div>`;
 
@@ -1700,7 +1709,7 @@
             <div class="cap-stars">${stars} ${c.rating}.0</div>
           </div>
           <div class="cap-card-badges">
-            ${isOnStreak ? `<div class="cap-streak-badge">🔥 ${reportsWk}/wk</div>` : ''}
+            ${isOnStreak ? `<div class="cap-streak-badge">${ICON('flame','ow-ico--gold')} ${reportsWk}/wk</div>` : ''}
             ${!unlocked ? `<div class="cap-lock-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Pro</div>` : ''}
           </div>
         </div>
@@ -1867,7 +1876,7 @@
     const spCounts    = {};
     reports.slice(0, 30).forEach(r => r.species.forEach(s => spCounts[s] = (spCounts[s]||0)+1));
     const topSpecies  = Object.entries(spCounts).sort((a,b)=>b[1]-a[1]).slice(0,4);
-    const availBadge  = { accepting: '🟢 Accepting Trips', limited: '🟡 Limited Availability', closed: '🔴 Not Accepting' };
+    const availBadge  = { accepting: DOT('green') + ' Accepting Trips', limited: DOT('amber') + ' Limited Availability', closed: DOT('red') + ' Not Accepting' };
     const leads       = getCaptainLeads(email);
     const newLeads    = leads.filter(l => l.status === 'new').length;
     const topSp0      = topSpecies[0] ? (SPECIES_INFO[topSpecies[0][0]] || { name: topSpecies[0][0] }).name.split(' ')[0] : '—';
@@ -1879,7 +1888,7 @@
           <div class="cdash-name">${escapeHtml(profile.name)}</div>
           <div class="cdash-headline">${escapeHtml(profile.headline)}</div>
           <div class="cdash-meta-row">
-            <span class="cdash-port">📍 ${escapeHtml(profile.homePort)}</span>
+            <span class="cdash-port">${ICON('pin')} ${escapeHtml(profile.homePort)}</span>
             ${profile.verified ? '<span class="cdash-verified-badge">✓ Verified</span>' : ''}
           </div>
           <div class="cdash-avail-badge cdash-avail--${profile.availability}">${availBadge[profile.availability] || profile.availability}</div>
@@ -1988,10 +1997,10 @@
             <div class="cap-identity">
               <div class="cap-name">${escapeHtml(profile.name)}</div>
               <div class="cap-region">${escapeHtml(profile.homePort)} · ${escapeHtml(profile.coast)}</div>
-              <div class="cap-stars">${'★'.repeat(Math.round(profile.rating))}${'☆'.repeat(5-Math.round(profile.rating))}</div>
+              <div class="cap-stars">${ICON('star','ow-ico--fill ow-ico--gold').repeat(Math.round(profile.rating))}${ICON('star').repeat(5-Math.round(profile.rating))}</div>
             </div>
             <div class="cap-card-badges">
-              <div class="cap-streak-badge">🔥 ${profile.tripsThisYear}/yr</div>
+              <div class="cap-streak-badge">${ICON('flame','ow-ico--gold')} ${profile.tripsThisYear}/yr</div>
             </div>
           </div>
           <div class="cap-species-row">
@@ -2028,7 +2037,7 @@
         ${recent.map(r => {
           const zn = (ZONES[r.zone]||{}).name || r.zone;
           const sp = r.species.map(s=>(SPECIES_INFO[s]||{name:s}).name).join(', ');
-          const rm = {hot:'🔥',good:'✓',slow:'—'};
+          const rm = {hot:ICON('flame','ow-ico--gold'),good:'✓',slow:'—'};
           return `<div class="cap-dash-report-row">
             <span class="cap-dash-report-rating">${rm[r.rating]||''}</span>
             <div class="cap-dash-report-info">
@@ -2134,17 +2143,17 @@
         </div>`;
     }).join('') : `
       <div class="cdash-leads-empty">
-        <div class="cdash-leads-icon">📬</div>
+        <div class="cdash-leads-icon">${ICON('inbox')}</div>
         <div class="cdash-leads-sub">No inquiries yet. Your listing is live — leads arrive as your zone gets traffic.</div>
       </div>`;
 
     return `
       <div class="cdash-section">
-        <div class="cdash-section-head">📥 Inquiries <span class="cdash-lead-count">${leads.length}</span></div>
+        <div class="cdash-section-head">${ICON('inbox')} Inquiries <span class="cdash-lead-count">${leads.length}</span></div>
         <div class="cdash-leads-list">${leadCards}</div>
       </div>
       <div class="cdash-section">
-        <div class="cdash-section-head">📈 Listing</div>
+        <div class="cdash-section-head">${ICON('trending')} Listing</div>
         <div class="cdash-perf-row"><span>Response time</span><span class="cdash-perf-val">${escapeHtml(profile.responseTime)}</span></div>
         <div class="cdash-perf-row"><span>Verification</span><span class="cdash-perf-val">${profile.verified ? '✓ Verified' : 'Pending'}</span></div>
         <div class="cdash-perf-row"><span>New / Replied / Booked</span><span class="cdash-perf-val">${leads.filter(l=>l.status==='new').length} / ${leads.filter(l=>l.status==='replied').length} / ${leads.filter(l=>l.status==='booked').length}</span></div>
@@ -2170,9 +2179,9 @@
       <div class="cdash-section">
         <div class="cdash-section-head">Availability</div>
         <select id="cdash-avail-select" class="cdash-edit-input">
-          <option value="accepting" ${profile.availability==='accepting'?'selected':''}>🟢 Accepting Trips</option>
-          <option value="limited"   ${profile.availability==='limited'  ?'selected':''}>🟡 Limited Availability</option>
-          <option value="closed"    ${profile.availability==='closed'   ?'selected':''}>🔴 Not Accepting</option>
+          <option value="accepting" ${profile.availability==='accepting'?'selected':''}>Accepting Trips</option>
+          <option value="limited"   ${profile.availability==='limited'  ?'selected':''}>Limited Availability</option>
+          <option value="closed"    ${profile.availability==='closed'   ?'selected':''}>Not Accepting</option>
         </select>
       </div>
 
@@ -2370,7 +2379,7 @@
     if (!total) return '';
     const active = Object.entries(counts).filter(([,n])=>n>0).map(([k])=>k);
     const labels = { light: 'Light  ≤8 lb', medium: 'Medium  9–20 lb', heavy: 'Heavy  21+ lb' };
-    const icons  = { light: '🪶', medium: '⚖️', heavy: '🏋️' };
+    const icons  = { light: ICON('feather'), medium: ICON('scale'), heavy: ICON('dumbbell') };
     return `<div class="mpd-section">
       <div class="mpd-section-head">Tackle Profile</div>
       <div class="tackle-row">
@@ -2429,7 +2438,7 @@
       sunrise:    live?.sunrise    || '—',
       sunset:     live?.sunset     || '—',
       tide:       live?.tide       || '— (coming soon)',
-      moon:       moonInfo?.label  || '🌙 Moon',
+      moon:       moonInfo?.label  || 'Moon',
       moonSub:    moonInfo?.sublabel || '',
     };
 
@@ -2477,7 +2486,7 @@
       sunrise:    live?.sunrise    || '—',
       sunset:     live?.sunset     || '—',
       tide:       live?.tide       || '— (coming soon)',
-      moon:       moonInfo?.label  || '🌙 Moon',
+      moon:       moonInfo?.label  || 'Moon',
       moonSub:    moonInfo?.sublabel || '',
     };
 
@@ -3094,7 +3103,7 @@
         CAPTAINS.forEach(c => c.species.forEach(s => all.add(s)));
         items = [{ value: 'all', label: 'All Species' }, ...[...all].sort().map(s => ({ value: s, label: s }))];
       } else if (type === 'rating') {
-        items = [{ value: 0, label: 'Any Rating' }, { value: 5, label: '★★★★★  5.0 only' }, { value: 4, label: '★★★★☆  4+ Stars' }, { value: 3, label: '★★★☆☆  3+ Stars' }];
+        items = [{ value: 0, label: 'Any Rating' }, { value: 5, label: '5.0 only' }, { value: 4, label: '4.0 & up' }, { value: 3, label: '3.0 & up' }];
       } else if (type === 'specialty') {
         items = [{ value: 'all', label: 'All Captains' }, { value: 'whatsapp', label: 'WhatsApp Available' }, { value: 'offshore', label: 'Offshore / Pelagic' }, { value: 'inshore', label: 'Inshore / Reef' }];
       }
@@ -3239,7 +3248,7 @@
 
     const recent = [...reports].sort((a, b) => new Date(b.date) - new Date(a.date))[0];
     if (recent) {
-      const biteLabels = { hot: '🔥 Hot Bite', good: '✓ Good Action', slow: '— Slow' };
+      const biteLabels = { hot: ICON('flame','ow-ico--gold') + ' Hot Bite', good: '✓ Good Action', slow: '— Slow' };
       const biteCls    = { hot: 'mpb--hot', good: 'mpb--good', slow: 'mpb--slow' };
       biteEl.innerHTML = `<span class="map-panel-bite-badge ${biteCls[recent.rating] || ''}">${biteLabels[recent.rating] || recent.rating}</span>`;
     } else {
@@ -3277,7 +3286,7 @@
 
     if (lodging?.length) {
       html += `<div class="mpd-section">
-        <div class="mpd-section-head">🏠 Stay</div>
+        <div class="mpd-section-head">${ICON('home')} Stay</div>
         ${lodging.slice(0, 3).map(l =>
           `<div class="mpd-listing"><span class="mpd-listing-name">${escapeHtml(l.name)}</span><span class="mpd-listing-sub">${escapeHtml(l.type)}</span></div>`
         ).join('')}
@@ -3286,7 +3295,7 @@
 
     if (restaurants?.length) {
       html += `<div class="mpd-section">
-        <div class="mpd-section-head">🍽 Eat</div>
+        <div class="mpd-section-head">${ICON('utensils')} Eat</div>
         ${restaurants.slice(0, 2).map(r =>
           `<div class="mpd-listing"><span class="mpd-listing-name">${escapeHtml(r.name)}</span><span class="mpd-listing-sub">${escapeHtml(r.cuisine)}</span></div>`
         ).join('')}
@@ -3295,7 +3304,7 @@
 
     if (species?.length > 5) {
       html += `<div class="mpd-section">
-        <div class="mpd-section-head">🐟 More Species</div>
+        <div class="mpd-section-head">${ICON('fish')} More Species</div>
         <div class="mpd-species-list">${species.slice(5).map(sp =>
           `<span class="mpd-species-tag">${escapeHtml(sp.name)}</span>`
         ).join('')}</div>
@@ -3987,7 +3996,7 @@
           m.rsvps.push({ email: user.email, name: user.name, initials: user.initials, ts: Date.now() });
           saveMeetup(m);
         }
-        toast('You\'re going! 🎣', 'premium');
+        toast('You\'re going!', 'premium');
         renderMeetupsContent();
       });
     });
@@ -4119,7 +4128,7 @@
         </div>
         ${p.body ? `<div class="forum-post-body">${escapeHtml(p.body)}</div>` : ''}
         <div class="forum-post-footer">
-          <button class="forum-toggle-replies" data-post-toggle="${escapeHtml(p.id)}">${isOpen ? '▲ Collapse' : `💬 ${replies.length ? replies.length + ' repl' + (replies.length!==1?'ies':'y') : 'Read thread'}`}</button>
+          <button class="forum-toggle-replies" data-post-toggle="${escapeHtml(p.id)}">${isOpen ? '▲ Collapse' : `${ICON('chat')} ${replies.length ? replies.length + ' repl' + (replies.length!==1?'ies':'y') : 'Read thread'}`}</button>
         </div>
         ${replySection}
       </div>`;
@@ -4180,7 +4189,7 @@
         </div>
         ${p.body ? `<div class="forum-post-body">${escapeHtml(p.body)}</div>` : ''}
         <div class="forum-post-footer">
-          <button class="forum-toggle-replies" data-post-toggle="${escapeHtml(p.id)}">${isOpen ? '▲ Collapse' : `💬 ${replies.length ? replies.length + ' repl' + (replies.length!==1?'ies':'y') : 'Reply'}`}</button>
+          <button class="forum-toggle-replies" data-post-toggle="${escapeHtml(p.id)}">${isOpen ? '▲ Collapse' : `${ICON('chat')} ${replies.length ? replies.length + ' repl' + (replies.length!==1?'ies':'y') : 'Reply'}`}</button>
         </div>
         ${replySection}
       </div>`;
@@ -4495,7 +4504,7 @@
     if (totalPoints > 10) {
       const el = document.getElementById('count-limit-check');
       if (el) {
-        el.textContent = `⚠️ Your selected species exceed the 10-point CONAPESCA daily limit (${totalPoints.toFixed(1)} pts). Please reduce your selection.`;
+        el.textContent = `Your selected species exceed the 10-point CONAPESCA daily limit (${totalPoints.toFixed(1)} pts). Please reduce your selection.`;
         el.className = 'count-limit-check count-limit-check--error';
         el.classList.remove('hidden');
       }
@@ -4516,7 +4525,7 @@
     const el = document.getElementById('count-limit-check');
     if (!el) return;
     el.innerHTML = `
-      <strong>⚠️ Legal Limit Exceeded</strong><br>
+      <strong>${ICON('alert','ow-ico--gold')} Legal Limit Exceeded</strong><br>
       You entered ${count} ${escapeHtml(speciesName)}, but the legal limit is ${limit}/day.<br>
       <span class="limit-note">${escapeHtml(note)}</span>
     `;
@@ -4648,7 +4657,7 @@
     });
 
     if (totalPoints > 10) {
-      el.innerHTML = `⚠️ Species selection exceeds the 10-point CONAPESCA daily limit (${totalPoints.toFixed(1)} pts). Please reduce.`;
+      el.innerHTML = `${ICON('alert','ow-ico--gold')} Species selection exceeds the 10-point CONAPESCA daily limit (${totalPoints.toFixed(1)} pts). Please reduce.`;
       el.className = 'legal-limit-warning legal-limit-warning--error';
       el.classList.remove('hidden');
     } else if (limitInfo.length > 0) {

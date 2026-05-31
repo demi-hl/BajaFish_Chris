@@ -37,10 +37,10 @@ function msToKts(v) { return v  != null ? (v  * 1.94384).toFixed(1)  : null; }
 // ─── USNO Moon Data ─────────────────────────
 
 const PHASE_ICONS = {
-  'New Moon':      '🌑',
-  'First Quarter': '🌓',
-  'Full Moon':     '🌕',
-  'Last Quarter':  '🌗',
+  'New Moon':      '',
+  'First Quarter': '',
+  'Full Moon':     '',
+  'Last Quarter':  '',
 };
 
 const PHASE_ORDER = ['New Moon', 'First Quarter', 'Full Moon', 'Last Quarter'];
@@ -66,7 +66,7 @@ async function fetchUSNOMoonPhases() {
   const phases = data.phasedata.map(p => ({
     date:  new Date(p.year, p.month - 1, p.day, ...p.time.split(':').map(Number)),
     phase: p.phase,
-    icon:  PHASE_ICONS[p.phase] || '🌙',
+    icon:  PHASE_ICONS[p.phase] || '',
   }));
 
   // Cache it
@@ -108,7 +108,7 @@ function buildMoonInfo(phases) {
 
   if (!lastPhase || !nextPhase) {
     // Fallback if something goes wrong
-    return { icon: '🌙', name: 'Moon', illumination: null, nextName: null, nextDays: null, label: '🌙 Moon' };
+    return { icon: '', name: 'Moon', illumination: null, nextName: null, nextDays: null, label: 'Moon' };
   }
 
   const lastDate   = new Date(lastPhase.date);
@@ -124,7 +124,7 @@ function buildMoonInfo(phases) {
     'Waning Gibbous',    // after Full Moon
     'Waning Crescent',   // after Last Quarter
   ];
-  const betweenIcons = ['🌒', '🌔', '🌖', '🌘'];
+  const betweenIcons = ['', '', '', ''];
 
   // If we're right on a phase event (within 12 hours), show that phase
   const hoursAgo = (now - lastDate) / 3600000;
@@ -137,7 +137,7 @@ function buildMoonInfo(phases) {
     phaseIcon = nextPhase.icon;
   } else {
     phaseName = betweenNames[lastIdx] || 'Waxing Crescent';
-    phaseIcon = betweenIcons[lastIdx] || '🌒';
+    phaseIcon = betweenIcons[lastIdx] || '';
   }
 
   // Illumination — find last New Moon for calculation
@@ -147,10 +147,10 @@ function buildMoonInfo(phases) {
 
   // Build the next phase string
   const nextLabel = daysUntil === 0
-    ? `${nextPhase.icon} ${nextPhase.phase} tonight`
+    ? `${nextPhase.phase} tonight`
     : daysUntil === 1
-    ? `${nextPhase.icon} ${nextPhase.phase} tomorrow`
-    : `${nextPhase.icon} ${nextPhase.phase} in ${daysUntil} days`;
+    ? `${nextPhase.phase} tomorrow`
+    : `${nextPhase.phase} in ${daysUntil} days`;
 
   return {
     icon:         phaseIcon,
@@ -160,7 +160,7 @@ function buildMoonInfo(phases) {
     nextDays:     daysUntil,
     nextLabel,
     daysSince,
-    label:        `${phaseIcon} ${phaseName} · ${illumination}% lit`,
+    label:        `${phaseName} · ${illumination}% lit`,
     sublabel:     `Next: ${nextLabel}`,
   };
 }
@@ -176,7 +176,7 @@ async function getMoonInfo() {
   } catch (err) {
     console.warn('[Moon] USNO fetch failed, falling back to computed phase:', err.message);
     // Fallback: simple computed phase
-    _moonInfoCache = { icon: '🌙', name: 'Moon', illumination: null, nextName: null, nextDays: null, label: '🌙 Moon', sublabel: null };
+    _moonInfoCache = { icon: '', name: 'Moon', illumination: null, nextName: null, nextDays: null, label: 'Moon', sublabel: null };
   }
   return _moonInfoCache;
 }
