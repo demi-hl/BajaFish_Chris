@@ -301,8 +301,8 @@
    'pacific-barracuda','gulf-grouper','grouper','broomtail-grouper','giant-sea-bass',
    'copper-rockfish','blue-rockfish','canary-rockfish','pargo','pargo-colorado','yellow-snapper',
    'dog-snapper','mullet-snapper','yellowtail','amberjack','lingcod','sheephead','triggerfish'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.png?v=2'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.png?v=2'; // almaco jack, same fish as amberjack plate
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.png?v=3'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.png?v=3'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
