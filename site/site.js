@@ -1011,4 +1011,11 @@
 
   function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); captains(); capJoin(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+
+  // register the service worker (installable PWA + offline shell)
+  if ('serviceWorker' in navigator) {
+    addEventListener('load', function () {
+      navigator.serviceWorker.register('/site/sw.js', { scope: '/site/' }).catch(function () {});
+    });
+  }
 })();
