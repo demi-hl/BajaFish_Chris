@@ -233,12 +233,13 @@
   }
 
   /* ---- "What's biting now" live-reports strip (driven by data.js REPORTS) ---- */
-  function biting() {
+  function biting(data) {
     var rail = $('#bitingRail');
-    if (!rail || !REPS || !REPS.length) return;
+    var src = (data && data.length) ? data : REPS;
+    if (!rail || !src || !src.length) return;
 
     // most recent first, then biggest catch as the tiebreaker
-    var reps = REPS.slice().sort(function (a, b) {
+    var reps = src.slice().sort(function (a, b) {
       var d = String(b.date || '').localeCompare(String(a.date || ''));
       return d || ((b.count || 0) - (a.count || 0));
     }).slice(0, 14);
@@ -318,6 +319,7 @@
     var animate = !reduce && reps.length > 3;
     var sets = animate ? 2 : 1; // duplicate for seamless marquee loop
     rail.classList.toggle('is-marquee', animate); // CSS animation only runs when both sets exist
+    while (rail.firstChild) rail.removeChild(rail.firstChild); // clear so live data can re-render
     for (var s = 0; s < sets; s++) {
       reps.forEach(function (r) {
         var c = card(r);
@@ -325,6 +327,64 @@
         rail.appendChild(c);
       });
     }
+  }
+
+  /* ---- live captain reports from a published Google Sheet (no backend) ----
+     Lowest-friction pipeline: captains WhatsApp their updates, you paste rows into a
+     Google Sheet, then File > Share > Publish to web > CSV, and paste that URL below.
+     Header row columns (any order): date, port, captain, species, count, rating, note.
+     date is YYYY-MM-DD; species comma-separated; rating is hot, good, or slow.
+     Until a URL is set the static REPORTS data is used. */
+  var LIVE_REPORTS_CSV = '';
+
+  function parseCSV(text) {
+    var rows = [], row = [], field = '', q = false, i, c;
+    for (i = 0; i < text.length; i++) {
+      c = text[i];
+      if (q) {
+        if (c === '"') { if (text[i + 1] === '"') { field += '"'; i++; } else q = false; }
+        else field += c;
+      } else if (c === '"') q = true;
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && text[i + 1] === '\n') i++;
+        row.push(field); field = '';
+        if (row.length > 1 || row[0] !== '') rows.push(row);
+        row = [];
+      } else field += c;
+    }
+    if (field !== '' || row.length) { row.push(field); rows.push(row); }
+    return rows;
+  }
+
+  function liveReports() {
+    if (!LIVE_REPORTS_CSV || typeof fetch !== 'function') return;
+    var name2zone = {};
+    Object.keys(ZN).forEach(function (k) { name2zone[(ZN[k].name || '').toLowerCase()] = k; name2zone[k] = k; });
+    fetch(LIVE_REPORTS_CSV, { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('sheet'); return r.text();
+    }).then(function (text) {
+      var rows = parseCSV(text);
+      if (rows.length < 2) return;
+      var head = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+      var ix = function (n) { return head.indexOf(n); };
+      var di = ix('date'), pi = ix('port') !== -1 ? ix('port') : ix('zone'), ci = ix('captain'),
+          si = ix('species'), ni = ix('count'), ri = ix('rating'), oi = ix('note');
+      var reps = [];
+      rows.slice(1).forEach(function (cols) {
+        var port = (pi !== -1 ? cols[pi] : '') || '';
+        reps.push({
+          date: di !== -1 ? (cols[di] || '').trim() : '',
+          zone: name2zone[port.trim().toLowerCase()] || port.trim(),
+          captain: ci !== -1 ? (cols[ci] || '').trim() : '',
+          species: si !== -1 ? (cols[si] || '').split(/[,;]/).map(function (s) { return s.trim(); }).filter(Boolean) : [],
+          count: ni !== -1 ? parseInt(cols[ni], 10) || 0 : 0,
+          rating: ri !== -1 ? (cols[ri] || '').trim().toLowerCase() : 'good',
+          note: oi !== -1 ? (cols[oi] || '').trim() : ''
+        });
+      });
+      if (reps.length) biting(reps);
+    }).catch(function () { /* network or parse error: keep the static reports */ });
   }
 
   // Species with a transparent field-guide illustration in /site/img/illus/<key>.png
@@ -949,6 +1009,6 @@
     });
   }
 
-  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); coasts(); coastsLive(); captains(); capJoin(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
+  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); captains(); capJoin(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
