@@ -387,7 +387,7 @@
     }).catch(function () { /* network or parse error: keep the static reports */ });
   }
 
-  // Species with a transparent field-guide illustration in /site/img/illus/<key>.png
+  // Species with a transparent field-guide illustration in /site/img/illus/<key>.webp
   // render as drawn specimen plates; the rest fall back to a color photo.
   var ILLUS = {};
   ['dorado','bonito','wahoo','yellowfin','bluefin-tuna','bigeye-tuna','skipjack-tuna',
@@ -396,8 +396,8 @@
    'pacific-barracuda','gulf-grouper','grouper','broomtail-grouper','giant-sea-bass',
    'copper-rockfish','blue-rockfish','canary-rockfish','pargo','pargo-colorado','yellow-snapper',
    'dog-snapper','mullet-snapper','yellowtail','amberjack','lingcod','sheephead','triggerfish'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.png?v=3'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.png?v=3'; // almaco jack, same fish as amberjack plate
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=4'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=4'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
