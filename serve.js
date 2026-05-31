@@ -32,14 +32,34 @@ const server = http.createServer((req, res) => {
   const ext = path.extname(filePath);
   const contentType = MIME[ext] || 'application/octet-stream';
 
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
+  fs.stat(filePath, (err, stat) => {
+    if (err || !stat.isFile()) {
       res.writeHead(404);
       res.end('Not found');
       return;
     }
-    res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': 'no-store' });
-    res.end(data);
+    const total = stat.size;
+    const headers = { 'Content-Type': contentType, 'Cache-Control': 'no-store', 'Accept-Ranges': 'bytes' };
+    const range = req.headers.range;
+    const m = range ? range.match(/bytes=(\d*)-(\d*)/) : null;
+    if (m) {
+      // partial content (lets Safari and others stream the hero video)
+      const start = m[1] ? parseInt(m[1], 10) : 0;
+      const end = m[2] ? parseInt(m[2], 10) : total - 1;
+      if (isNaN(start) || isNaN(end) || start > end || end >= total) {
+        res.writeHead(416, { 'Content-Range': 'bytes */' + total });
+        res.end();
+        return;
+      }
+      headers['Content-Range'] = 'bytes ' + start + '-' + end + '/' + total;
+      headers['Content-Length'] = end - start + 1;
+      res.writeHead(206, headers);
+      fs.createReadStream(filePath, { start: start, end: end }).pipe(res);
+    } else {
+      headers['Content-Length'] = total;
+      res.writeHead(200, headers);
+      fs.createReadStream(filePath).pipe(res);
+    }
   });
 });
 

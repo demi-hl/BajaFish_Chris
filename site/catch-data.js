@@ -32,7 +32,7 @@ window.CATCH = [
       "metal jigs"
     ],
     "technique": "Throw surface iron in the wind lane or depth-charge yo-yo iron to the bottom and crank fast; fly-line or slow-troll live mackerel/sardina along kelp and high spots for the bigger 'mossbacks'. Cedros is the iron-throwing capital.",
-    "notes": "App flagship Pacific panger fish. Almost all yellowtail over 40 lb come on bait; surface iron and yo-yo iron carry the numbers.",
+    "notes": "App flagship Pacific panga fish. Almost all yellowtail over 40 lb come on bait; surface iron and yo-yo iron carry the numbers.",
     "img": "/site/img/species/yellowtail.jpg"
   },
   {

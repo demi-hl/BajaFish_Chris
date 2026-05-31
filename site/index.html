@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.basemaps.cartocdn.com https://unpkg.com; media-src 'self'; connect-src 'self' https://formspree.io https://docs.google.com; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self' https://formspree.io">
   <title>BajaFish, Panga Sportfishing in Baja California</title>
   <meta name="description" content="Live fishing intelligence and the local panga captains who put you on fish, across the Pacific and the Sea of Cortez.">
   <link rel="manifest" href="/site/manifest.webmanifest">
   <meta name="theme-color" content="#05121A">
   <link rel="apple-touch-icon" href="/site/img/icon-180.png">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="icon" sizes="192x192" href="/site/img/icon-192.png">
+  <link rel="canonical" href="/site/index.html">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -26,7 +30,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/site/site.css?v=16">
+  <link rel="stylesheet" href="/site/site.css?v=17">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "BajaFish",
+    "description": "Live panga fishing intelligence and verified local captains across Baja California, the Pacific and the Sea of Cortez.",
+    "url": "/site/index.html",
+    "logo": "/site/img/icon-512.png",
+    "image": "/site/img/og.jpg",
+    "areaServed": ["Baja California", "Pacific Ocean", "Sea of Cortez"],
+    "knowsAbout": ["Panga sportfishing", "Yellowtail", "Dorado", "Marlin", "Roosterfish"]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -358,7 +375,7 @@
 
       <ul class="trust__stats" id="trustStats" aria-label="BajaFish coverage at a glance" data-reveal data-reveal-d="1">
         <li class="trust-stat">
-          <div class="trust-stat__n"><span class="count" data-stat="captains" data-to="50">0</span><span class="trust-stat__suffix">+</span></div>
+          <div class="trust-stat__n"><span class="count" data-stat="captains" data-to="50">0</span></div>
           <div class="trust-stat__label">Local captains</div>
           <p class="trust-stat__note">Vetted pangueros, both coasts</p>
         </li>
@@ -485,7 +502,7 @@
       <div class="getapp__device" data-reveal data-reveal-d="1">
         <div class="phone">
           <div class="phone__island" aria-hidden="true"></div>
-          <img class="phone__screen" src="/site/img/app-screen.png?v=3" alt="BajaFish on iPhone" loading="lazy">
+          <img class="phone__screen" src="/site/img/app-screen.webp?v=4" width="600" height="1298" alt="BajaFish on iPhone" loading="lazy">
           <div class="phone__glare" aria-hidden="true"></div>
         </div>
       </div>
@@ -529,8 +546,8 @@
 
   <script src="/data.js?v=20260529-4"></script>
   <script src="/site/departures.js?v=1"></script>
-  <script src="/site/catch-data.js?v=2"></script>
+  <script src="/site/catch-data.js?v=3"></script>
   <script src="/site/hero-video.js?v=2"></script>
-  <script src="/site/site.js?v=22"></script>
+  <script src="/site/site.js?v=23"></script>
 </body>
 </html>

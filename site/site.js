@@ -643,7 +643,7 @@
 
       if (s.technique) {
         var tb = E('div', 'sp-block');
-        tb.appendChild(E('span', 'eyebrow', 'How it’s caught'));
+        tb.appendChild(E('span', 'eyebrow', "How it's caught"));
         tb.appendChild(E('p', null, s.technique));
         body.appendChild(tb);
       }
@@ -939,10 +939,8 @@
     var CATCH = (typeof window.CATCH !== 'undefined') ? window.CATCH : null;
     if (!CATCH || !CATCH.length) { openBtn.style.display = 'none'; return; }
     var data = CATCH.filter(function (s) { return !(s.notes && /^DUPLICATE/.test(s.notes)) && ILLUS[s.key]; });
-    // illustrated species only, one consistent drawn style
+    // illustrated species only (already filtered above), sorted by name
     data.sort(function (a, b) {
-      var ai = ILLUS[a.key] ? 0 : 1, bi = ILLUS[b.key] ? 0 : 1;
-      if (ai !== bi) return ai - bi;
       return (a.commonName || '').localeCompare(b.commonName || '');
     });
     var built = false;
