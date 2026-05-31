@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="/site/site.css?v=11">
+  <link rel="stylesheet" href="/site/site.css?v=12">
 </head>
 <body>
 
@@ -170,7 +170,22 @@
       <h2 class="section-title">Captains who know<br>their water.</h2>
       <p class="section-lede">Generations of local knowledge. These are the pangueros who'll put you on fish.</p>
     </div>
-    <div class="cap-rail" id="capRail" aria-label="Featured captains"></div>
+    <div class="cap-controls" data-reveal>
+      <div class="cap-search">
+        <input id="capSearch" type="search" placeholder="Search captains or ports" aria-label="Search captains or ports">
+      </div>
+      <div class="cap-filters" role="group" aria-label="Filter by coast">
+        <button type="button" class="cap-filter is-active" data-coast="all">All coasts</button>
+        <button type="button" class="cap-filter" data-coast="Pacific">Pacific</button>
+        <button type="button" class="cap-filter" data-coast="Sea of Cortez">Sea of Cortez</button>
+      </div>
+      <select id="capSpecies" class="cap-select" aria-label="Filter by target species">
+        <option value="">All species</option>
+      </select>
+    </div>
+    <p class="cap-count" id="capCount" aria-live="polite"></p>
+    <div class="cap-grid" id="capGrid" aria-label="Captains"></div>
+    <p class="cap-empty" id="capEmpty" hidden>No captains match those filters.</p>
   </section>
 
   <!-- ░░ ZONE MAP ░░ -->
@@ -416,6 +431,6 @@
   <script src="/site/catch-data.js?v=1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="/site/hero-video.js?v=1"></script>
-  <script src="/site/site.js?v=14"></script>
+  <script src="/site/site.js?v=15"></script>
 </body>
 </html>

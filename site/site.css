@@ -185,6 +185,28 @@ section{position:relative}
 .cap__sp span{font-size:12.5px;color:var(--fg-2);border:1px solid var(--line);border-radius:100px;padding:5px 11px}
 .cap__verified{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:13px;color:var(--aqua)}
 .cap__verified .ico{width:15px;height:15px}
+/* captains: search + filter controls and responsive grid */
+.cap-controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+  max-width:1200px;margin:0 auto;padding:clamp(34px,5vw,56px) var(--pad) 0}
+.cap-search{position:relative;flex:1 1 240px;min-width:200px}
+.cap-search input{width:100%;background:rgba(243,236,221,.04);border:1px solid var(--line);border-radius:100px;
+  padding:13px 20px;color:var(--fg);font:inherit;font-size:15px}
+.cap-search input::placeholder{color:var(--muted)}
+.cap-search input:focus{outline:none;border-color:var(--gold)}
+.cap-filters{display:inline-flex;gap:5px;background:rgba(243,236,221,.04);border:1px solid var(--line);border-radius:100px;padding:5px}
+.cap-filter{border:0;background:transparent;color:var(--fg-2);font:inherit;font-size:14px;font-weight:600;
+  padding:9px 16px;border-radius:100px;cursor:pointer;transition:color .3s var(--ease),background .3s var(--ease)}
+.cap-filter:hover{color:var(--fg)}
+.cap-filter.is-active{background:var(--gold);color:var(--ink)}
+.cap-select{background:rgba(243,236,221,.04);border:1px solid var(--line);border-radius:100px;
+  padding:12px 18px;color:var(--fg);font:inherit;font-size:14px;cursor:pointer}
+.cap-select:focus{outline:none;border-color:var(--gold)}
+.cap-count{max-width:1200px;margin:18px auto 0;padding:0 var(--pad);color:var(--fg-2);font-size:14px;letter-spacing:.02em}
+.cap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;
+  max-width:1200px;margin:0 auto;padding:18px var(--pad) 14px}
+.cap.is-hidden{display:none}
+.cap-empty{text-align:center;color:var(--fg-2);padding:50px var(--pad)}
+@media (max-width:640px){.cap-controls{flex-direction:column;align-items:stretch}.cap-filters,.cap-select{width:100%}.cap-filters{justify-content:center}}
 
 /* ============================================================ WHAT'S BITING (live reports strip) */
 .biting__live{display:inline-flex;align-items:center;gap:9px}

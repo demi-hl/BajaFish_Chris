@@ -154,28 +154,28 @@
 
   /* ---- featured captains ---- */
   function captains() {
-    var rail = $('#capRail'); if (!rail || !CAPS) return;
+    var grid = $('#capGrid'); if (!grid || !CAPS) return;
 
-    // rank by rating, then interleave Pacific + Cortez so the rail visibly mixes both coasts
-    var ranked = CAPS.slice().sort(function (a, b) { return (b.rating || 0) - (a.rating || 0); });
-    var coastOf = function (c) { return (ZN[c.zone] || {}).coast; };
-    var pac = ranked.filter(function (c) { return coastOf(c) !== 'Sea of Cortez'; });
-    var cor = ranked.filter(function (c) { return coastOf(c) === 'Sea of Cortez'; });
-    var picks = [], i = 0;
-    while (picks.length < 8 && (i < pac.length || i < cor.length)) {
-      if (i < pac.length) picks.push(pac[i]);
-      if (picks.length < 8 && i < cor.length) picks.push(cor[i]);
-      i++;
-    }
+    // show every captain, ranked by rating then experience
+    var ranked = CAPS.slice().sort(function (a, b) {
+      return (b.rating || 0) - (a.rating || 0) || (b.years || 0) - (a.years || 0);
+    });
 
-    picks.forEach(function (c) {
+    var cards = [], speciesSet = {};
+    ranked.forEach(function (c) {
       var zone = ZN[c.zone] || {};
-      var cortez = zone.coast === 'Sea of Cortez';
-      var port = (c.homePort || zone.name || c.region || 'Baja California') + (zone.coast ? ' · ' + zone.coast : '');
+      var coast = zone.coast || 'Pacific';
+      var cortez = coast === 'Sea of Cortez';
+      var port = (c.homePort || zone.name || c.region || 'Baja California') + ' · ' + coast;
       var initials = (c.name || '?').replace(/Capit[aá]n\s*/i, '').split(' ').map(function (w) { return w[0]; }).slice(0, 2).join('');
       var rate = (c.rating != null) ? Number(c.rating).toFixed(1) : '5.0';
+      var sps = (c.specialtySpecies || c.species || []).map(function (s) { return nm(s); });
 
       var art = E('article', 'cap ' + (cortez ? 'is-cortez' : 'is-pac'));
+      art.setAttribute('data-coast', coast);
+      art.setAttribute('data-species', sps.join('|'));
+      art.setAttribute('data-text', ((c.name || '') + ' ' + (zone.name || '')).toLowerCase());
+
       var photo = E('div', 'cap__photo');
       photo.appendChild(E('div', 'cap__avatar', initials));
       var rateEl = E('div', 'cap__rate'); rateEl.appendChild(ico('star')); rateEl.appendChild(document.createTextNode(rate));
@@ -188,13 +188,48 @@
       var portEl = E('div', 'cap__port'); portEl.appendChild(ico('pin')); portEl.appendChild(document.createTextNode(port));
       body.appendChild(portEl);
       var sp = E('div', 'cap__sp');
-      (c.specialtySpecies || c.species || []).slice(0, 3).forEach(function (k) { sp.appendChild(E('span', null, nm(k))); });
+      sps.slice(0, 3).forEach(function (k) { sp.appendChild(E('span', null, k)); });
       body.appendChild(sp);
       var ver = E('div', 'cap__verified'); ver.appendChild(ico('check')); ver.appendChild(document.createTextNode('Verified local captain'));
       body.appendChild(ver);
       art.appendChild(body);
-      rail.appendChild(art);
+      grid.appendChild(art);
+      cards.push(art);
+      sps.forEach(function (s) { speciesSet[s] = true; });
     });
+
+    // populate the species filter
+    var sel = $('#capSpecies');
+    if (sel) Object.keys(speciesSet).sort().forEach(function (s) { var o = E('option', null, s); o.value = s; sel.appendChild(o); });
+
+    // filtering (coast buttons + species select + text search)
+    var coast = 'all', species = '', query = '';
+    var countEl = $('#capCount'), emptyEl = $('#capEmpty');
+    function apply() {
+      var shown = 0;
+      cards.forEach(function (art) {
+        var okCoast = coast === 'all' || art.getAttribute('data-coast') === coast;
+        var okSp = !species || art.getAttribute('data-species').split('|').indexOf(species) !== -1;
+        var okQ = !query || art.getAttribute('data-text').indexOf(query) !== -1;
+        var show = okCoast && okSp && okQ;
+        art.classList.toggle('is-hidden', !show);
+        if (show) shown++;
+      });
+      if (countEl) countEl.textContent = shown + (shown === 1 ? ' captain' : ' captains');
+      if (emptyEl) emptyEl.hidden = shown !== 0;
+    }
+    document.querySelectorAll('.cap-filter').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('.cap-filter').forEach(function (x) { x.classList.remove('is-active'); });
+        b.classList.add('is-active');
+        coast = b.getAttribute('data-coast');
+        apply();
+      });
+    });
+    if (sel) sel.addEventListener('change', function () { species = sel.value; apply(); });
+    var search = $('#capSearch');
+    if (search) search.addEventListener('input', function () { query = search.value.trim().toLowerCase(); apply(); });
+    apply();
   }
 
   /* ---- "What's biting now" live-reports strip (driven by data.js REPORTS) ---- */
