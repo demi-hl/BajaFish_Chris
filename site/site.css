@@ -191,6 +191,10 @@ section{position:relative}
 .cap__sp span{font-size:12.5px;color:var(--fg-2);border:1px solid var(--line);border-radius:100px;padding:5px 11px}
 .cap__verified{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:13px;color:var(--aqua)}
 .cap__verified .ico{width:15px;height:15px}
+.cap__cta{margin-top:18px;width:100%;background:transparent;border:1px solid var(--line-2);color:var(--fg);
+  border-radius:100px;padding:11px 16px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;
+  transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.cap__cta:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
 /* captains: search + filter controls and responsive grid */
 .cap-controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
   max-width:1200px;margin:0 auto;padding:clamp(34px,5vw,56px) var(--pad) 0}
@@ -557,7 +561,7 @@ section{position:relative}
 .zmark:hover .zmark__dot,.zmark.is-active .zmark__dot{transform:scale(1.35)}
 .zmark.is-active .zmark__dot{box-shadow:0 0 0 3px var(--ink),0 0 26px 2px currentColor}
 /* filtered-out markers fade back */
-.zmark.is-dim{opacity:.12;filter:grayscale(.6)}
+.zmark.is-dim{opacity:.12;filter:grayscale(.6);pointer-events:none}
 .zmark.is-dim .zmark__pulse{display:none}
 
 /* hover tooltips, restyled on-brand */

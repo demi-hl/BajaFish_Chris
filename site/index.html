@@ -26,8 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="/site/site.css?v=15">
+  <link rel="stylesheet" href="/site/site.css?v=16">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -57,7 +56,7 @@
   <!-- ░░ HERO ░░ -->
   <section class="hero" id="hero">
     <div class="hero__media" data-parallax aria-hidden="true">
-      <img src="/img/hero-main.jpg" alt="" class="hero__img" fetchpriority="high">
+      <img src="/img/hero-main.jpg" srcset="/img/hero-main-1000.jpg 1000w, /img/hero-main.jpg 2000w" sizes="100vw" width="2000" height="1500" alt="" class="hero__img" fetchpriority="high">
       <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true" poster="/site/img/hero-ocean-poster.jpg?v=1">
         <source data-src="/site/img/hero-ocean.mp4?v=4" type="video/mp4">
       </video>
@@ -431,6 +430,7 @@
         </button>
       </div>
       <form class="join-form" id="tripForm" action="https://formspree.io/f/your-form-id" method="POST">
+        <input type="hidden" name="captain" value="">
         <div class="join-grid">
           <label class="field"><span>Your name</span><input name="name" type="text" required autocomplete="name"></label>
           <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email"></label>
@@ -529,9 +529,8 @@
 
   <script src="/data.js?v=20260529-4"></script>
   <script src="/site/departures.js?v=1"></script>
-  <script src="/site/catch-data.js?v=1"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="/site/catch-data.js?v=2"></script>
   <script src="/site/hero-video.js?v=2"></script>
-  <script src="/site/site.js?v=21"></script>
+  <script src="/site/site.js?v=22"></script>
 </body>
 </html>

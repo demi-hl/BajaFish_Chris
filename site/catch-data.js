@@ -59,7 +59,7 @@ window.CATCH = [
       "trolled Rapalas"
     ],
     "technique": "Yo-yo iron dropped to deep reef/seamount structure and ripped back fast; also slow-troll or fly-line live bait over the same structure. Around Cerralvo and Las Animas these are the '100-lb-pulling toads'.",
-    "notes": "Same fish as the 'amberjack' key (Seriola rivoliana). Classic deep-jig fish on Gulf reefs and seamounts.",
+    "notes": "Almaco jack (Seriola rivoliana). Classic deep-jig fish on Gulf reefs and seamounts.",
     "img": "/site/img/species/pez-fuerte.jpg"
   },
   {
@@ -173,7 +173,7 @@ window.CATCH = [
       "Colt Sniper jigs"
     ],
     "technique": "Troll big Madmac-style plugs to find boiling/foaming schools, then sink flat-fall jigs, fly-line light fluoro sardina, or cast stickbaits. Finicky, line-shy fish that demand long fluorocarbon leaders. North Pacific (Coronados, Todos Santos) in spring-summer.",
-    "notes": "Gallery key 'bluefin'; canonical 'bluefin-tuna'. Notoriously leader-shy.",
+    "notes": "Notoriously leader-shy.",
     "img": "/site/img/species/bluefin-tuna.jpg"
   },
   {
@@ -199,7 +199,7 @@ window.CATCH = [
       "skirted trolling lures (deep)"
     ],
     "technique": "Mostly an offshore-bank fish taken on the grey-light/night bite by deep-trolling skirts or sinking jigs and chunk bait down to the thermocline. Not a typical inshore panga catch.",
-    "notes": "Gallery only. Deep-set, dawn/dusk fishery off the offshore banks.",
+    "notes": "Deep-set, dawn/dusk fishery off the offshore banks.",
     "img": "/site/img/species/bigeye-tuna.jpg"
   },
   {
@@ -415,7 +415,7 @@ window.CATCH = [
       "flies"
     ],
     "technique": "Troll small skirts and ballyhoo with hookless teasers; raise the fish, then bait-and-switch a live caballito or pitch a fly. Lighter billfish tackle than marlin. Full catch-and-release recommended.",
-    "notes": "Gallery only. Classic teaser-and-switch fishery; release.",
+    "notes": "Classic teaser-and-switch fishery; release.",
     "img": "/site/img/species/sailfish.jpg"
   },
   {
@@ -439,7 +439,7 @@ window.CATCH = [
       "weighted swimbaits (deep)"
     ],
     "technique": "Specialized daytime deep-drop: sink a rigged squid/bonito belly with a light and breakaway weight to 1,000 to 1,800 ft over offshore canyons, or night-drift baits near the surface. Not a typical panga fishery.",
-    "notes": "Gallery only. Deep-drop/long-range specialty, not a standard panga catch.",
+    "notes": "Deep-drop/long-range specialty, not a standard panga catch.",
     "img": "/site/img/species/swordfish.jpg"
   },
   {
@@ -600,8 +600,8 @@ window.CATCH = [
       "leadhead swimbaits / plastics",
       "deep jigs"
     ],
-    "technique": "Drop bait or jig the reef and pull hard off the bottom. Generic placeholder key, recommend resolving to specific species (gulf-grouper, broomtail-grouper, cabrilla).",
-    "notes": "Ambiguous catch-all key in SPECIES_INFO/GUIDE. Catch method shared with the named groupers.",
+    "technique": "Drop bait or jig the reef and pull hard off the bottom.",
+    "notes": "A catch-all for the groupers; the tactics match the named species.",
     "img": "/site/img/species/grouper.jpg"
   },
   {
@@ -708,8 +708,8 @@ window.CATCH = [
       "trolled diving plugs",
       "poppers (shallow)"
     ],
-    "technique": "Drop bait to rocky reef/ledges or troll diving plugs along the structure edge; pargo bolt straight for the rocks, so heavy line and immediate pressure are essential. Generic key, resolve into the named snappers.",
-    "notes": "Catch-all 'pargo' key. Shared rock-snapper tactics; resolve to colorado/yellow/barred/dog snapper.",
+    "technique": "Drop bait to rocky reef/ledges or troll diving plugs along the structure edge; pargo bolt straight for the rocks, so heavy line and immediate pressure are essential.",
+    "notes": "A catch-all for the rock snappers; the tactics match the colorado, yellow, barred, and dog snapper.",
     "img": "/site/img/species/pargo.jpg"
   },
   {
@@ -736,7 +736,7 @@ window.CATCH = [
       "trolled diving plugs"
     ],
     "technique": "Fly-line or drop live sardina/mackerel to rocky reef and mangrove edges, or troll diving plugs the structure line; lock the drag and pull them off the rocks. The 'pargo' everyone targets, best eating on the Cortez side.",
-    "notes": "Gallery card exists. Premier eating snapper of the Gulf.",
+    "notes": "Premier eating snapper of the Gulf.",
     "img": "/site/img/species/pargo-colorado.jpg"
   },
   {
@@ -926,7 +926,7 @@ window.CATCH = [
       "drift/trap-rig live bait"
     ],
     "technique": "Drift live sardina or squid near the bottom on a trap/Carolina rig over sand flats and the sand-structure edge, or bounce a swimbait slowly along the bottom at ~1 knot. Sandy-bottom ambush flatfish, fish the sand at the base of the reef.",
-    "notes": "Gallery key 'california-halibut'. Drift-the-sand fishery; swimbaits and live bait.",
+    "notes": "Drift-the-sand fishery; swimbaits and live bait.",
     "img": "/site/img/species/halibut.jpg"
   },
   {
@@ -979,7 +979,7 @@ window.CATCH = [
       "casting jigs"
     ],
     "technique": "Cast flashy surface iron and spoons or fly-line live sardina along the kelp edge and current lines; a wire or heavy fluoro shock leader stops the bite-offs. Light-tackle schooling sport fish.",
-    "notes": "Gallery only. Kelp-edge schooler; toothy, use a shock leader.",
+    "notes": "Kelp-edge schooler; toothy, use a shock leader.",
     "img": "/site/img/species/pacific-barracuda.jpg"
   },
   {
@@ -1117,7 +1117,7 @@ window.CATCH = [
       "flies"
     ],
     "technique": "Work live bait, swimbaits and jerkbaits along the mangrove edges, channel mouths and current breaks of Mag Bay / Lopez Mateos, often at dawn and dusk; heavy fluoro for the mangrove roots and gill-plate. A prized mangrove ambush trophy.",
-    "notes": "Mangrove trophy (consolidate 'snook' + 'black-snook' keys). Esteros of Mag Bay.",
+    "notes": "Mangrove trophy. Esteros of Mag Bay.",
     "img": "/site/img/species/snook.jpg"
   },
   {
@@ -1215,7 +1215,7 @@ window.CATCH = [
       "incidental on iron/swimbaits (released)"
     ],
     "technique": "Fully protected, not legally targeted. Occasionally hooked incidentally on live bait or iron near kelp reefs and must be released. A 500 to 600+ lb kelp-forest giant; strict catch-and-release.",
-    "notes": "Gallery only. Fully protected C&R. Pairs with gulf-grouper as a protected entry.",
+    "notes": "Fully protected C&R. Pairs with gulf-grouper as a protected entry.",
     "img": "/site/img/species/giant-sea-bass.jpg"
   },
   {
@@ -1267,7 +1267,7 @@ window.CATCH = [
       "double-dropper bottom rigs"
     ],
     "technique": "Deep-drop dropper-loop/shrimp-fly gangions or swimbaits to deep reef and mud-rock edges; a big-mouthed deep-water rockfish caught in the rockfish complex.",
-    "notes": "Gallery only. Deep rockfish-complex bottom fish.",
+    "notes": "Deep rockfish-complex bottom fish.",
     "img": "/site/img/species/bocaccio.jpg"
   },
   {
@@ -1291,7 +1291,7 @@ window.CATCH = [
       "double-dropper bottom rigs"
     ],
     "technique": "Drop a shrimp-fly gangion or bait rig to mid-water and deep structure; a pink-red schooling rockfish often caught in numbers on the same drops as vermilion and bocaccio.",
-    "notes": "Gallery only. Mid-water/deep schooling rockfish on gangions.",
+    "notes": "Mid-water/deep schooling rockfish on gangions.",
     "img": "/site/img/species/chilipepper.jpg"
   },
   {
@@ -1317,7 +1317,7 @@ window.CATCH = [
       "double-dropper bottom rigs"
     ],
     "technique": "Bottom-fish dropper-loop/shrimp-fly rigs over deep rocky reef; a bright orange-yellow rockfish taken in the rockfish complex on north-Pacific structure.",
-    "notes": "Gallery only. Deep rocky-reef bottom fish.",
+    "notes": "Deep rocky-reef bottom fish.",
     "img": "/site/img/species/canary-rockfish.jpg"
   },
   {
@@ -1343,7 +1343,7 @@ window.CATCH = [
       "small jigs"
     ],
     "technique": "Fish bait or swimbaits near kelp-bed and rocky-reef bottom in moderate depth; a copper-brown mottled reef rockfish caught shallower than the deep-water reds.",
-    "notes": "Gallery only. Kelp-and-rock rockfish; takes swimbaits shallower.",
+    "notes": "Kelp-and-rock rockfish; takes swimbaits shallower.",
     "img": "/site/img/species/copper-rockfish.jpg"
   },
   {
@@ -1368,7 +1368,7 @@ window.CATCH = [
       "small jigs"
     ],
     "technique": "Work shrimp-fly rigs and small jigs/swimbaits up off the bottom around kelp beds and rocky structure; a dark blue-grey schooling kelp rockfish that often suspends above the reef.",
-    "notes": "Gallery only. Suspending kelp-bed rockfish on shrimp flies/small jigs.",
+    "notes": "Suspending kelp-bed rockfish on shrimp flies/small jigs.",
     "img": "/site/img/species/blue-rockfish.jpg"
   },
   {

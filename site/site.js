@@ -9,6 +9,7 @@
   var DEP  = (typeof DEPARTURES !== 'undefined') ? DEPARTURES : {};
   var LODG = (typeof LODGING !== 'undefined') ? LODGING : {};
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var _lastFocus = null; // element to restore focus to when a modal closes
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var nm = function (k) { return (SPI && SPI[k] && SPI[k].name) || k; };
   var fixImg = function (p) { return p ? (p[0] === '/' ? p : '/' + p) : ''; };
@@ -192,6 +193,11 @@
       body.appendChild(sp);
       var ver = E('div', 'cap__verified'); ver.appendChild(ico('check')); ver.appendChild(document.createTextNode('Verified local captain'));
       body.appendChild(ver);
+      var act = E('button', 'cap__cta', 'Request a trip');
+      act.type = 'button';
+      act.setAttribute('data-trip', '');
+      act.setAttribute('data-captain', c.name || '');
+      body.appendChild(act);
       art.appendChild(body);
       grid.appendChild(art);
       cards.push(art);
@@ -648,6 +654,7 @@
         body.appendChild(note);
       }
 
+      _lastFocus = document.activeElement;
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.documentElement.style.overflow = 'hidden';
@@ -663,6 +670,7 @@
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
       document.documentElement.style.overflow = '';
+      if (_lastFocus && _lastFocus.focus) _lastFocus.focus();
     }
     $('#spModalClose').addEventListener('click', close);
     Array.prototype.forEach.call(modal.querySelectorAll('[data-modal-close]'), function (el) {
@@ -702,7 +710,7 @@
   /* ---- premium Baja zone map (Leaflet) ---- */
   function zonemap() {
     var host = $('#baja-map');
-    if (!host || typeof L === 'undefined' || !Object.keys(ZN).length) return;
+    if (!host || !Object.keys(ZN).length) return; // Leaflet is loaded on demand below
 
     var built = false;
     function build() {
@@ -896,11 +904,30 @@
       setTimeout(function () { map.invalidateSize(); }, 80);
     }
 
+    // load Leaflet (css + js) on demand, only when the map is about to come into view
+    function ensureLeaflet(cb) {
+      if (typeof L !== 'undefined') { cb(); return; }
+      if (!document.querySelector('link[data-leaflet]')) {
+        var css = document.createElement('link');
+        css.rel = 'stylesheet'; css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        css.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY='; css.crossOrigin = '';
+        css.setAttribute('data-leaflet', ''); document.head.appendChild(css);
+      }
+      var s = document.querySelector('script[data-leaflet]');
+      if (!s) {
+        s = document.createElement('script');
+        s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        s.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo='; s.crossOrigin = '';
+        s.setAttribute('data-leaflet', ''); document.head.appendChild(s);
+      }
+      s.addEventListener('load', cb, { once: true });
+    }
+
     // lazy-init when the section first scrolls into view
-    if (!('IntersectionObserver' in window)) { build(); return; }
+    if (!('IntersectionObserver' in window)) { ensureLeaflet(build); return; }
     var io = new IntersectionObserver(function (ents) {
-      ents.forEach(function (e) { if (e.isIntersecting) { build(); io.disconnect(); } });
-    }, { rootMargin: '200px 0px' });
+      ents.forEach(function (e) { if (e.isIntersecting) { ensureLeaflet(build); io.disconnect(); } });
+    }, { rootMargin: '500px 0px' });
     io.observe(host);
   }
 
@@ -944,13 +971,14 @@
       });
     }
     function open() {
+      _lastFocus = document.activeElement;
       buildGrid();
       overlay.classList.add('is-open');
       overlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       requestAnimationFrame(staggerCells); // run after the sheet's own open transition kicks off
     }
-    function close() { overlay.classList.remove('is-open'); overlay.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+    function close() { overlay.classList.remove('is-open'); overlay.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; if (_lastFocus && _lastFocus.focus) _lastFocus.focus(); }
     openBtn.addEventListener('click', open);
     if (closeBtn) closeBtn.addEventListener('click', close);
     overlay.querySelectorAll('[data-plate-close]').forEach(function (e) { e.addEventListener('click', close); });
@@ -978,6 +1006,7 @@
     }
 
     var open = function () {
+      _lastFocus = document.activeElement;
       modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       var first = form && form.querySelector('input,select'); if (first) first.focus();
@@ -985,6 +1014,7 @@
     var close = function () {
       modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      if (_lastFocus && _lastFocus.focus) _lastFocus.focus();
     };
     document.querySelectorAll('[data-join]').forEach(function (b) { b.addEventListener('click', open); });
     modal.querySelectorAll('[data-join-close]').forEach(function (b) { b.addEventListener('click', close); });
@@ -1013,7 +1043,12 @@
   function tripInquiry() {
     var modal = $('#tripModal'); if (!modal) return;
     var form = $('#tripForm');
-    function open() {
+    var capField = form && form.querySelector('[name="captain"]');
+    var titleEl = $('#tripTitle');
+    function open(captain) {
+      _lastFocus = document.activeElement;
+      if (capField) capField.value = captain || '';
+      if (titleEl) titleEl.textContent = captain ? ('Request a trip with ' + captain) : 'Tell us when you are coming';
       modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       var f = form && form.querySelector('input,select'); if (f) f.focus();
@@ -1021,10 +1056,11 @@
     function close() {
       modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      if (_lastFocus && _lastFocus.focus) _lastFocus.focus();
     }
     document.addEventListener('click', function (e) {
       var t = e.target && e.target.closest ? e.target.closest('[data-trip]') : null;
-      if (t) { e.preventDefault(); open(); }
+      if (t) { e.preventDefault(); open(t.getAttribute('data-captain')); }
     });
     modal.querySelectorAll('[data-trip-close]').forEach(function (b) { b.addEventListener('click', close); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
