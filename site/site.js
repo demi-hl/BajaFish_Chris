@@ -863,6 +863,7 @@
         // CTA back into the trip flow
         var cta = E('a', 'btn btn--gold zone-panel__cta', 'Plan a trip from ' + z.name);
         cta.href = '#cta';
+        cta.setAttribute('data-trip', ''); // opens the angler trip-inquiry modal (delegated)
         cta.appendChild(ico('arrow'));
         panelBody.appendChild(cta);
       }
@@ -1009,7 +1010,46 @@
     });
   }
 
-  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); captains(); capJoin(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
+  /* ---- angler trip inquiry (modal); CTAs open it via delegated [data-trip] ---- */
+  function tripInquiry() {
+    var modal = $('#tripModal'); if (!modal) return;
+    var form = $('#tripForm');
+    function open() {
+      modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      var f = form && form.querySelector('input,select'); if (f) f.focus();
+    }
+    function close() {
+      modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('click', function (e) {
+      var t = e.target && e.target.closest ? e.target.closest('[data-trip]') : null;
+      if (t) { e.preventDefault(); open(); }
+    });
+    modal.querySelectorAll('[data-trip-close]').forEach(function (b) { b.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
+
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var done = modal.querySelector('.join-done'), err = form.querySelector('.join-error'), btn = form.querySelector('.join-submit');
+      if (err) err.hidden = true;
+      var action = form.getAttribute('action') || '';
+      var live = /^https?:\/\//.test(action) && action.indexOf('your-form-id') === -1;
+      var showDone = function () { form.hidden = true; if (done) done.hidden = false; };
+      if (!live) {
+        if (window.console && console.warn) console.warn('[BajaFish] Trip form not connected: set the form action to your Formspree (or Basin) endpoint to receive requests.');
+        showDone(); return;
+      }
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+      fetch(action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+        .then(function (r) { if (!r.ok) throw new Error('bad'); showDone(); })
+        .catch(function () { if (err) err.hidden = false; if (btn) { btn.disabled = false; btn.textContent = 'Send my trip request'; } });
+    });
+  }
+
+  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); captains(); capJoin(); tripInquiry(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
   // register the service worker (installable PWA + offline shell)

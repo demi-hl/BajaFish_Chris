@@ -35,7 +35,7 @@
       <a href="#species">Species</a>
       <span class="nav__live" id="navLive" hidden><span class="pulse"></span><b>0</b>&nbsp;hot</span>
     </nav>
-    <a class="btn btn--gold nav__cta" href="#cta">Plan a trip</a>
+    <a class="btn btn--gold nav__cta" href="#cta" data-trip>Plan a trip</a>
     <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
       <span></span><span></span>
     </button>
@@ -62,7 +62,7 @@
         across the Pacific and the Sea of Cortez.
       </p>
       <div class="hero__actions" data-rise data-rise-d="3">
-        <a class="btn btn--gold btn--lg" href="#cta">Plan your trip
+        <a class="btn btn--gold btn--lg" href="#cta" data-trip>Plan your trip
           <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
         <a class="btn btn--ghost btn--lg" href="#captains">Meet the captains</a>
@@ -395,14 +395,49 @@
       <h2 class="cta__title">Your panga is waiting.</h2>
       <p class="cta__sub">Tell us when you're coming. We'll have the bite, the boat and the captain ready.</p>
       <div class="cta__actions">
-        <a class="btn btn--gold btn--lg" href="#map">Find your launch
+        <button type="button" class="btn btn--gold btn--lg" data-trip>Plan your trip
           <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
+        </button>
         <a class="btn btn--ghost btn--lg" href="#captains">Meet the captains</a>
       </div>
       <p class="cta__trust">CONAPESCA-licensed · Verified captains · Pacific &amp; Sea of Cortez</p>
     </div>
   </section>
+
+  <!-- ANGLER TRIP INQUIRY (modal) -->
+  <div class="join" id="tripModal" aria-hidden="true">
+    <div class="join__backdrop" data-trip-close></div>
+    <div class="join__sheet" role="dialog" aria-modal="true" aria-labelledby="tripTitle">
+      <div class="join__head">
+        <div>
+          <p class="eyebrow eyebrow--gold">Plan a trip</p>
+          <h2 class="join__title" id="tripTitle">Tell us when you are coming</h2>
+        </div>
+        <button type="button" class="join__x" data-trip-close aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <form class="join-form" id="tripForm" action="https://formspree.io/f/your-form-id" method="POST">
+        <div class="join-grid">
+          <label class="field"><span>Your name</span><input name="name" type="text" required autocomplete="name"></label>
+          <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email"></label>
+          <label class="field"><span>WhatsApp or phone</span><input name="whatsapp" type="tel" autocomplete="tel"></label>
+          <label class="field"><span>When (month or dates)</span><input name="when" type="text" placeholder="e.g. October 2026"></label>
+          <label class="field"><span>Where</span><select name="where"><option value="">Any coast</option><option>Pacific</option><option>Sea of Cortez</option></select></label>
+          <label class="field"><span>Anglers in your party</span><input name="party" type="number" min="1" max="20" inputmode="numeric" placeholder="2"></label>
+          <label class="field field--wide"><span>Target species (optional)</span><input name="species" type="text" placeholder="Yellowtail, Dorado, Marlin"></label>
+          <label class="field field--wide"><span>Anything else</span><textarea name="message" rows="3" placeholder="Experience level, mothership or day trip, any questions."></textarea></label>
+        </div>
+        <button type="submit" class="btn btn--gold btn--lg join-submit">Send my trip request</button>
+        <p class="join-error" hidden>Something went wrong. Please WhatsApp us instead.</p>
+      </form>
+      <div class="join-done" hidden>
+        <h3>Request received.</h3>
+        <p>Thanks. We will match you with a verified local captain for your dates and reply by email or WhatsApp.</p>
+        <button type="button" class="btn btn--ghost" data-trip-close>Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ░░ GET THE APP ░░ -->
   <section class="getapp" id="app">
@@ -460,7 +495,7 @@
       <div class="foot__col">
         <h4>Trips</h4>
         <a href="#biting">What's biting</a>
-        <a href="#cta">Plan a trip</a>
+        <a href="#cta" data-trip>Plan a trip</a>
         <a href="#how">How it works</a>
       </div>
       <div class="foot__col">
@@ -482,6 +517,6 @@
   <script src="/site/catch-data.js?v=1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="/site/hero-video.js?v=2"></script>
-  <script src="/site/site.js?v=19"></script>
+  <script src="/site/site.js?v=20"></script>
 </body>
 </html>
