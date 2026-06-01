@@ -4,6 +4,14 @@ Panga fishing intelligence app for Baja California. Covers both the Pacific coas
 
 ---
 
+## Content Rules (enforced)
+
+- Never use emojis anywhere in the product. Use inline SVG icons instead.
+- Never use em dashes or en dashes in copy or data. Use commas, periods, or parentheses, and the word "to" for ranges (write "Dec to Jun", never a long dash). A plain hyphen is allowed only inside code identifiers, CSS, and URLs.
+- Enforced by a PreToolUse hook at `.claude/hooks/no-emoji-em-dash.js` (wired in `.claude/settings.json`) that blocks any Write or Edit whose content contains an emoji or an em or en dash.
+
+---
+
 ## Running the App
 
 ```bash

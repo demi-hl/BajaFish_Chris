@@ -6,10 +6,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>BAJAFISH — Know Before You Go</title>
-  <link rel="stylesheet" href="style.css?v=20260427-6">
+  <link rel="stylesheet" href="style.css?v=20260529-4">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="openwater.css?v=20260529-4">
 </head>
 <body>
 
@@ -58,7 +59,7 @@
             <div id="login-error" class="ls-error hidden">Incorrect email or password.</div>
             <button type="submit" class="ls-submit">
               <span class="ls-submit-label">Sign In</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </form>
           <div class="ls-switch-hint">No account? <button class="ls-switch-link" data-ls-mode="create">Create one →</button></div>
@@ -68,12 +69,12 @@
         <div class="ls-panel" id="ls-panel-create">
           <div class="ls-account-type-row">
             <button class="ls-acct-btn ls-acct-btn--active" data-acct-type="angler">
-              <span class="ls-acct-icon">🎣</span>
+              <span class="ls-acct-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 12c1-3.5 5-6 8.5-6s6 2.5 7 6c-1 3.5-3.5 6-7 6s-7.5-2.5-8.5-6z"/><circle cx="16" cy="11" r=".8" fill="currentColor" stroke="none"/><path d="M6.5 12c-1.5 0-3-1-4-2 .5 2 .5 2 0 4 1-1 2.5-2 4-2z"/></svg></span>
               <span class="ls-acct-label">Angler</span>
               <span class="ls-acct-sub">Fish the Baja</span>
             </button>
             <button class="ls-acct-btn" data-acct-type="captain">
-              <span class="ls-acct-icon">⚓</span>
+              <span class="ls-acct-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg></span>
               <span class="ls-acct-label">Captain</span>
               <span class="ls-acct-sub">List your panga</span>
             </button>
@@ -121,7 +122,7 @@
             <div id="create-angler-error" class="ls-error hidden">Please fill in name, email, and a password (6+ chars).</div>
             <button type="submit" class="ls-submit">
               <span class="ls-submit-label">Create Angler Account</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </form>
           <!-- Captain form -->
@@ -151,8 +152,8 @@
             </div>
             <div id="create-captain-error" class="ls-error hidden">Please fill in name, email, password, and home port.</div>
             <button type="submit" class="ls-submit ls-submit--captain">
-              <span class="ls-submit-label">⚓ Create Captain Account</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <span class="ls-submit-label"><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg> Create Captain Account</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
             <p class="ls-captain-free-note">Captains list for free. Anglers pay to reach you.</p>
           </form>
@@ -164,7 +165,7 @@
           <button class="ls-dev-toggle" id="ls-dev-toggle">
             <span class="ls-dev-dot"></span>
             Dev Access
-            <svg class="ls-dev-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg class="ls-dev-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="ls-dev-body hidden" id="ls-dev-body">
             <div class="ls-tier-pills">
@@ -172,7 +173,7 @@
               <button class="ls-tier-pill" data-tier="scout">Scout</button>
               <button class="ls-tier-pill" data-tier="pro">Pro</button>
               <button class="ls-tier-pill" data-tier="unlimited">Unlimited</button>
-              <button class="ls-tier-pill ls-tier-pill--captain" data-tier="captain">⚓ Captain</button>
+              <button class="ls-tier-pill ls-tier-pill--captain" data-tier="captain"><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg> Captain</button>
             </div>
             <p class="ls-dev-note">Password: <strong>BajaFish123!</strong></p>
           </div>
@@ -187,10 +188,10 @@
   <div id="app-shell" class="app-shell hidden">
 
     <!-- TOP BAR -->
-    <header class="top-bar">
+    <header class="top-bar" role="banner">
       <div class="top-bar-left">
-        <img src="logo-icon.png" alt="" class="top-logo-icon">
-        <img src="wordmark.png" alt="BAJAFISH" class="top-wordmark">
+        <img src="logo-icon.png" alt="" class="top-logo-icon" aria-hidden="true">
+        <img src="wordmark.png" alt="BajaFish" class="top-wordmark">
       </div>
       <div class="top-bar-right">
         <div class="plan-chip" id="plan-chip">
@@ -204,30 +205,34 @@
     </header>
 
     <!-- SCREENS -->
-    <div class="screen-container">
+    <main class="screen-container" id="screen-container" role="main">
 
       <!-- ── HOME — What's Biting + Nav Grid (merged) ── -->
-      <div class="screen active" id="screen-home">
+      <section class="screen active" id="screen-home" aria-label="Home — what's biting today">
+
+        <!-- Scroll sentinel — drives the .scrolled top bar + traveling CTA (§7.2/§7.3) -->
+        <div class="scroll-sentinel" data-scroll-sentinel aria-hidden="true" style="height:1px;width:100%;pointer-events:none;margin:0;"></div>
 
         <!-- Cinematic hero -->
-        <div class="home-hero">
-          <div class="home-hero-glow"></div>
+        <header class="home-hero">
+          <div class="ow-hero-media" data-ow-parallax aria-hidden="true"></div>
+          <div class="home-hero-glow" aria-hidden="true"></div>
           <div class="home-hero-inner">
-            <div class="hub-live-badge">
-              <span class="live-dot"></span>
+            <p class="hub-live-badge eyebrow">
+              <span class="live-dot" aria-hidden="true"></span>
               <span id="hub-live-label">Live Intelligence</span>
-            </div>
+            </p>
             <h1 class="home-hero-title">What's Biting Today?</h1>
             <p class="home-hero-sub">Baja California · Pacific &amp; Sea of Cortez</p>
-            <div class="home-stats-row">
-              <button class="home-stat" data-stat-dest="reports"><span class="home-stat-num" id="stat-reports">—</span><span class="home-stat-lbl">Reports</span></button>
-              <div class="home-stat-divider"></div>
-              <button class="home-stat" data-stat-dest="species"><span class="home-stat-num" id="stat-species">—</span><span class="home-stat-lbl">Species</span></button>
-              <div class="home-stat-divider"></div>
-              <button class="home-stat" data-stat-dest="maps"><span class="home-stat-num" id="stat-zones">—</span><span class="home-stat-lbl">Active Zones</span></button>
+            <div class="home-stats-row" role="group" aria-label="Live coverage stats">
+              <button class="home-stat" data-stat-dest="reports" aria-label="View reports"><span class="home-stat-num" id="stat-reports">—</span><span class="home-stat-lbl">Reports</span></button>
+              <div class="home-stat-divider" aria-hidden="true"></div>
+              <button class="home-stat" data-stat-dest="species" aria-label="View species"><span class="home-stat-num" id="stat-species">—</span><span class="home-stat-lbl">Species</span></button>
+              <div class="home-stat-divider" aria-hidden="true"></div>
+              <button class="home-stat" data-stat-dest="maps" aria-label="View active zones on map"><span class="home-stat-num" id="stat-zones">—</span><span class="home-stat-lbl">Active Zones</span></button>
             </div>
           </div>
-        </div>
+        </header>
 
         <!-- Species Hunt Map — above action row, below stats -->
         <div class="home-module hidden" id="hunt-map-module"></div>
@@ -235,25 +240,25 @@
         <!-- Primary action row: Hot Spots · Reports · Submit -->
         <div class="hub-action-row" id="hub-grid">
 
-          <button class="hub-action-btn" data-hub-dest="hotspots" data-requires="canSeeTopHotspots">
-            <div class="hub-action-icon hub-action-icon--gold">
+          <button class="hub-action-btn" data-hub-dest="hotspots" data-requires="canSeeTopHotspots" aria-label="Hot Spots — top 5 zones">
+            <div class="hub-action-icon hub-action-icon--gold" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             </div>
             <span class="hub-action-label">Hot Spots</span>
             <span class="hub-action-sub">Top 5 zones</span>
-            <div class="hub-card-lock hidden"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <div class="hub-card-lock hidden" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
           </button>
 
-          <button class="hub-action-btn hub-action-btn--reports" data-hub-dest="reports" data-requires="">
-            <div class="hub-action-icon hub-action-icon--gold">
+          <button class="hub-action-btn hub-action-btn--reports" data-hub-dest="reports" data-requires="" aria-label="Reports">
+            <div class="hub-action-icon hub-action-icon--gold" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12C6.5 12 4 9 2 9c0 4 2.5 6 4.5 6s4-1 5.5-3"/><path d="M22 12c-2 0-4.5-3-4.5-3S15 12 15 12s2.5 3 2.5 3S20 12 22 12z"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/></svg>
             </div>
             <span class="hub-action-label">Reports</span>
             <span class="hub-action-sub" id="hub-report-count-label">— this week</span>
           </button>
 
-          <button class="hub-action-btn" id="hub-submit-btn" data-requires="">
-            <div class="hub-action-icon hub-action-icon--gold">
+          <button class="hub-action-btn" id="hub-submit-btn" data-requires="" aria-label="Submit a catch report">
+            <div class="hub-action-icon hub-action-icon--gold" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </div>
             <span class="hub-action-label">Submit</span>
@@ -272,76 +277,79 @@
         </div>
 
         <!-- Hot Spots module -->
-        <div class="home-module" id="hotspots-module">
+        <section class="home-module" id="hotspots-module" data-reveal aria-label="Top hot spots">
           <div class="module-header">
             <span class="module-eyebrow">Intelligence</span>
             <h2 class="module-title">Top Hot Spots</h2>
           </div>
           <div id="hotspots-content" class="module-body"></div>
-        </div>
+        </section>
 
         <!-- Hottest Captains module -->
-        <div class="home-module" id="captains-module">
+        <section class="home-module" id="captains-module" data-reveal aria-label="Hottest captains this week">
           <div class="module-header">
             <span class="module-eyebrow">This Week</span>
             <h2 class="module-title">Hottest Captains</h2>
           </div>
           <div id="top-captains-content" class="module-body"></div>
-        </div>
+        </section>
 
         <!-- Latest Reports preview (3 cards max) -->
-        <div class="home-module">
+        <section class="home-module" data-reveal aria-label="Latest reports">
           <div class="module-header">
             <span class="module-eyebrow">Recent</span>
             <h2 class="module-title">Latest Reports</h2>
             <span class="module-tier-badge" id="reports-tier-badge"></span>
           </div>
-        </div>
-        <div id="home-reports-preview" class="home-reports-preview"></div>
+          <div id="home-reports-preview" class="home-reports-preview"></div>
+        </section>
 
         <!-- Browse all CTA -->
         <div class="home-browse-cta" id="home-browse-cta">
           <button class="home-browse-btn" data-screen="reports">
             Browse All Reports
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
         </div>
 
         <!-- Hidden selects kept for JS compat -->
-        <select id="zone-filter" style="display:none"><option value="all">All Zones</option></select>
-        <select id="species-filter" style="display:none"></select>
-        <select id="rating-filter" style="display:none"><option value="all">Any</option><option value="hot">Hot</option><option value="good">Good</option><option value="slow">Slow</option></select>
+        <select id="zone-filter" style="display:none" aria-hidden="true" tabindex="-1"><option value="all">All Zones</option></select>
+        <select id="species-filter" style="display:none" aria-hidden="true" tabindex="-1"></select>
+        <select id="rating-filter" style="display:none" aria-hidden="true" tabindex="-1"><option value="all">Any</option><option value="hot">Hot</option><option value="good">Good</option><option value="slow">Slow</option></select>
 
-      </div>
+      </section>
 
 
       <!-- ── CAPTAIN DASHBOARD ── -->
-      <div class="screen" id="screen-captain-dash">
-        <div class="cap-dash-header">
-          <div class="hub-live-badge"><span class="live-dot live-dot--green"></span><span>Captain Mode</span></div>
+      <section class="screen" id="screen-captain-dash" aria-label="Captain dashboard">
+        <header class="cap-dash-header">
+          <p class="hub-live-badge eyebrow"><span class="live-dot live-dot--green" aria-hidden="true"></span><span>Captain Mode</span></p>
           <h2 class="cap-dash-title">Captain Dashboard</h2>
           <p class="cap-dash-subtitle">Fishing intelligence for working captains</p>
-        </div>
+        </header>
         <div id="captain-dash-content" class="cap-dash-content"></div>
-      </div>
+      </section>
 
       <!-- ── REPORTS — Intelligence Browser ── -->
-      <div class="screen" id="screen-reports">
+      <section class="screen" id="screen-reports" aria-label="Fishing reports">
+
+        <!-- Scroll sentinel -->
+        <div class="scroll-sentinel" data-scroll-sentinel aria-hidden="true" style="height:1px;width:100%;pointer-events:none;margin:0;"></div>
 
         <!-- Header -->
-        <div class="rpt-header">
+        <header class="rpt-header">
           <div class="rpt-header-inner">
-            <div class="hub-live-badge">
-              <span class="live-dot"></span>
+            <p class="hub-live-badge eyebrow">
+              <span class="live-dot" aria-hidden="true"></span>
               <span id="rpt-live-label">Live Reports</span>
-            </div>
+            </p>
             <h2 class="rpt-header-title">Fishing Reports</h2>
             <p class="rpt-header-sub" id="rpt-sub-line">Baja California · Pacific &amp; Sea of Cortez</p>
           </div>
-        </div>
+        </header>
 
         <!-- Segmented mode control -->
-        <div class="rpt-modes">
+        <div class="rpt-modes" role="tablist" aria-label="Report view mode">
           <button class="rpt-mode rpt-mode--active" data-rpt-mode="now">Now</button>
           <button class="rpt-mode" data-rpt-mode="hot">Hot</button>
           <button class="rpt-mode" data-rpt-mode="zones">Zones</button>
@@ -350,7 +358,7 @@
 
         <!-- Zone + species quick filters (visible in Now/Hot modes) -->
         <div class="rpt-filters" id="rpt-filters">
-          <div class="rpt-filter-scroll">
+          <div class="rpt-filter-scroll" role="group" aria-label="Filter reports by coast">
             <button class="rpt-filter-pill rpt-filter-pill--active" data-rpt-coast="all">All</button>
             <button class="rpt-filter-pill" data-rpt-coast="Pacific">Pacific</button>
             <button class="rpt-filter-pill" data-rpt-coast="Sea of Cortez">Sea of Cortez</button>
@@ -363,36 +371,36 @@
         <!-- Report content area — filled by JS based on mode -->
         <div id="rpt-content" class="rpt-content"></div>
 
-      </div>
+      </section>
 
       <!-- ── MAPS ── -->
-      <div class="screen" id="screen-maps">
-        <div class="map-header">
+      <section class="screen" id="screen-maps" aria-label="Fishing zone map">
+        <header class="map-header">
           <div class="map-header-inner">
-            <div class="live-badge"><span class="live-dot live-dot--green"></span><span>44 Panga Villages</span></div>
+            <p class="hub-live-badge eyebrow"><span class="live-dot live-dot--green" aria-hidden="true"></span><span>44 Panga Villages</span></p>
             <h2 class="map-header-title">Fishing Zone Map</h2>
             <div class="map-coast-pills">
-              <span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span>
-              <span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span>
+              <span class="coast-pill coast-pill--pac"><span class="coast-dot" aria-hidden="true"></span>Pacific</span>
+              <span class="coast-pill coast-pill--cor"><span class="coast-dot" aria-hidden="true"></span>Sea of Cortez</span>
             </div>
           </div>
-          <div class="map-layer-bar" id="map-layer-bar">
+          <div class="map-layer-bar" id="map-layer-bar" role="tablist" aria-label="Map layer">
             <button class="map-layer-btn map-layer-btn--active" data-layer="zones">Zones</button>
-            <button class="map-layer-btn" data-layer="heat" id="heat-map-btn">🔥 Heat Map</button>
+            <button class="map-layer-btn" data-layer="heat" id="heat-map-btn"><svg class="ow-ico ow-ico--gold" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> Heat Map</button>
             <button class="map-layer-btn" data-layer="conditions">Conditions</button>
           </div>
-        </div>
+        </header>
         <div class="heat-search-bar hidden" id="heat-search-bar">
-          <svg class="heat-search-icon" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <input type="text" id="heat-species-search" class="heat-search-input" placeholder="Search by species — Yellowtail, Dorado…">
+          <svg class="heat-search-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input type="text" id="heat-species-search" class="heat-search-input" placeholder="Search by species — Yellowtail, Dorado…" aria-label="Search heat map by species">
         </div>
 
         <!-- Map — fills its own flex row, never shrunk by panel -->
         <div class="map-wrap">
-          <div id="baja-map" class="baja-map"></div>
+          <div id="baja-map" class="baja-map" role="application" aria-label="Interactive map of Baja California panga villages"></div>
           <div class="map-lock-overlay hidden" id="map-lock-overlay">
             <div class="map-lock-card">
-              <div class="lock-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+              <div class="lock-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
               <h3 class="lock-title">Live Heat Maps</h3>
               <p class="lock-body">See where fish are biting right now — by species, zone, and captain activity. Pro and Unlimited only.</p>
               <button class="lock-upgrade-btn" data-open-upgrade>Unlock Heat Maps</button>
@@ -419,7 +427,7 @@
             </div>
             <div class="map-panel-bite" id="mpz-bite"></div>
             <button class="map-panel-close" id="map-panel-close" aria-label="Close panel">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
           </div>
 
@@ -431,33 +439,33 @@
 
         </div>
 
-      </div>
+      </section>
 
       <!-- ── CAPTAINS ── -->
-      <div class="screen" id="screen-captains">
-        <div class="cap-hero">
-          <div class="cap-hero-glow"></div>
+      <section class="screen" id="screen-captains" aria-label="Find your captain">
+        <header class="cap-hero">
+          <div class="cap-hero-glow" aria-hidden="true"></div>
           <div class="cap-hero-inner">
-            <div class="live-badge"><span class="live-dot"></span><span>Verified Captains</span></div>
+            <p class="hub-live-badge eyebrow"><span class="live-dot" aria-hidden="true"></span><span>Verified Captains</span></p>
             <h2 class="cap-hero-title">Find Your Captain</h2>
             <p class="cap-hero-sub">44 fishing zones · Pacific &amp; Sea of Cortez</p>
-            <div class="cap-stats-row">
+            <div class="cap-stats-row" role="group" aria-label="Captain fleet stats">
               <div class="cap-stat"><span class="cap-stat-num" id="stat-captains">—</span><span class="cap-stat-lbl">Captains</span></div>
-              <div class="cap-stat-div"></div>
+              <div class="cap-stat-div" aria-hidden="true"></div>
               <div class="cap-stat"><span class="cap-stat-num" id="stat-cap-zones">—</span><span class="cap-stat-lbl">Zones</span></div>
-              <div class="cap-stat-div"></div>
+              <div class="cap-stat-div" aria-hidden="true"></div>
               <div class="cap-stat"><span class="cap-stat-num" id="stat-cap-rating">—</span><span class="cap-stat-lbl">Avg Rating</span></div>
             </div>
           </div>
-        </div>
+        </header>
 
         <div class="cap-controls">
           <div class="cap-search-wrap">
-            <svg class="cap-search-icon" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            <input id="captain-search" class="cap-search-input" type="text" placeholder="Search captains, zones, species…" autocomplete="off">
-            <button class="cap-search-clear hidden" id="captain-search-clear">✕</button>
+            <svg class="cap-search-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input id="captain-search" class="cap-search-input" type="text" placeholder="Search captains, zones, species…" autocomplete="off" aria-label="Search captains, zones, or species">
+            <button class="cap-search-clear hidden" id="captain-search-clear" aria-label="Clear search">✕</button>
           </div>
-          <div class="loc-scroll"><div class="loc-chips" id="cap-location-chips">
+          <div class="loc-scroll"><div class="loc-chips" id="cap-location-chips" role="group" aria-label="Filter by location">
             <button class="loc-chip loc-chip--active" data-zone="all">All</button>
             <button class="loc-chip" data-zone="popotla">Popotla</button>
             <button class="loc-chip" data-zone="ensenada">Ensenada</button>
@@ -465,7 +473,7 @@
             <button class="loc-chip" data-zone="la-paz">La Paz</button>
             <button class="loc-chip loc-chip--more" id="loc-more-btn">＋ More</button>
           </div></div>
-          <div class="sort-scroll"><div class="sort-pills" id="cap-sort-strip">
+          <div class="sort-scroll"><div class="sort-pills" id="cap-sort-strip" role="group" aria-label="Sort captains">
             <button class="sort-pill sort-pill--active" data-sort="rated">Top Rated</button>
             <button class="sort-pill" data-sort="active">Most Active</button>
             <button class="sort-pill" data-sort="experience">Most Experience</button>
@@ -474,45 +482,45 @@
           </div></div>
         </div>
 
-        <div class="cap-filter-row">
-          <button class="cap-filter-btn" data-filter="location"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="cap-filter-label">Location</span></button>
-          <button class="cap-filter-btn" data-filter="species"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="11" cy="12" rx="7" ry="5"/><circle cx="9" cy="11" r="1" fill="currentColor" stroke="none"/></svg><span class="cap-filter-label">Species</span></button>
-          <button class="cap-filter-btn" data-filter="rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span class="cap-filter-label">Rating</span></button>
-          <button class="cap-filter-btn" data-filter="specialty"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg><span class="cap-filter-label">Specialty</span></button>
+        <div class="cap-filter-row" role="group" aria-label="Refine captains">
+          <button class="cap-filter-btn" data-filter="location" aria-label="Filter by location"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="cap-filter-label">Location</span></button>
+          <button class="cap-filter-btn" data-filter="species" aria-label="Filter by species"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="11" cy="12" rx="7" ry="5"/><circle cx="9" cy="11" r="1" fill="currentColor" stroke="none"/></svg><span class="cap-filter-label">Species</span></button>
+          <button class="cap-filter-btn" data-filter="rating" aria-label="Filter by rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span class="cap-filter-label">Rating</span></button>
+          <button class="cap-filter-btn" data-filter="specialty" aria-label="Filter by specialty"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg><span class="cap-filter-label">Specialty</span></button>
         </div>
 
-        <div class="cap-results-label" id="captains-count"></div>
+        <div class="cap-results-label" id="captains-count" aria-live="polite"></div>
         <div id="captains-list" class="cap-list"></div>
-      </div>
+      </section>
 
       <!-- ── COMMUNITY ── -->
-      <div class="screen" id="screen-community">
-        <div class="community-hero">
-          <div class="community-hero-glow"></div>
+      <section class="screen" id="screen-community" aria-label="The Baja community">
+        <header class="community-hero">
+          <div class="community-hero-glow" aria-hidden="true"></div>
           <div class="community-hero-inner">
-            <div class="live-badge"><span class="live-dot live-dot--green"></span><span>Anglers Connecting</span></div>
+            <p class="hub-live-badge eyebrow"><span class="live-dot live-dot--green" aria-hidden="true"></span><span>Anglers Connecting</span></p>
             <h2 class="community-hero-title">The Baja Community</h2>
             <p class="community-hero-sub">Pool pangas, plan meetups, connect with serious anglers.</p>
           </div>
-        </div>
-        <div class="community-tabs">
+        </header>
+        <div class="community-tabs" role="tablist" aria-label="Community sections">
           <button class="community-tab community-tab--active" data-ctab="pool">Pool a Panga</button>
           <button class="community-tab" data-ctab="meetups">Meetups</button>
           <button class="community-tab" data-ctab="forum">Forum</button>
         </div>
-        <div class="community-panel active" id="ctab-pool">
+        <div class="community-panel active" id="ctab-pool" role="tabpanel" aria-label="Pool a panga">
           <div class="crew-actions">
-            <div class="crew-action-stats">
+            <div class="crew-action-stats" role="group" aria-label="Trip pool stats">
               <div class="crew-astat"><span id="stat-open-trips">—</span><span>Open Trips</span></div>
               <div class="crew-astat"><span id="stat-crew-spots">—</span><span>Spots Available</span></div>
               <div class="crew-astat"><span id="stat-avg-split">—</span><span>Avg Per Person</span></div>
             </div>
             <button class="crew-post-btn" id="crew-post-btn">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Post a Trip
             </button>
           </div>
-          <div class="filter-pills crew-filter-pills">
+          <div class="filter-pills crew-filter-pills" role="group" aria-label="Filter trips">
             <button class="fpill fpill--active" data-crew-filter="all">All</button>
             <button class="fpill" data-crew-filter="pacific">Pacific</button>
             <button class="fpill" data-crew-filter="cortez">Sea of Cortez</button>
@@ -520,23 +528,23 @@
           </div>
           <div id="crew-trips-list" class="crew-trips-list"></div>
         </div>
-        <div class="community-panel" id="ctab-meetups">
+        <div class="community-panel" id="ctab-meetups" role="tabpanel" aria-label="Meetups">
           <div id="meetups-content" class="community-locked-content"></div>
         </div>
-        <div class="community-panel" id="ctab-forum">
+        <div class="community-panel" id="ctab-forum" role="tabpanel" aria-label="Forum">
           <div id="forum-content" class="community-locked-content"></div>
         </div>
-      </div>
+      </section>
 
       <!-- ── PROFILE ── -->
-      <div class="screen" id="screen-profile">
+      <section class="screen" id="screen-profile" aria-label="Your profile">
         <!-- Identity hero -->
-        <div class="profile-hero" id="profile-hero">
+        <header class="profile-hero" id="profile-hero">
           <!-- Filled by renderUserProfile() -->
-          <div class="profile-avatar" id="profile-avatar">?</div>
+          <div class="profile-avatar" id="profile-avatar" aria-hidden="true">?</div>
           <div class="profile-email" id="profile-email-display">—</div>
           <div class="profile-plan-badge" id="profile-plan-badge"><span class="profile-plan-name" id="profile-plan-name">—</span></div>
-        </div>
+        </header>
 
         <!-- Trust / activity strip -->
         <div id="profile-trust"></div>
@@ -556,58 +564,63 @@
 
           <!-- Access overview -->
           <div class="profile-section">
-            <div class="profile-section-title">Access Overview</div>
+            <h2 class="profile-section-title">Access Overview</h2>
             <div id="profile-permissions" class="profile-permissions"></div>
           </div>
 
           <!-- Compare Plans -->
           <div class="profile-section">
-            <div class="profile-section-title">Compare Plans</div>
+            <h2 class="profile-section-title">Compare Plans</h2>
             <div class="plan-comparison" id="plan-comparison"></div>
           </div>
 
           <!-- Settings -->
           <div class="profile-section">
-            <div class="profile-section-title">Settings</div>
+            <h2 class="profile-section-title">Settings</h2>
             <div class="profile-settings">
-              <div class="setting-row"><span>Dark Mode</span><button class="setting-toggle active" id="theme-toggle-profile"><span class="toggle-track"><span class="toggle-thumb"></span></span></button></div>
+              <div class="setting-row"><span>Dark Mode</span><button class="setting-toggle active" id="theme-toggle-profile" aria-label="Toggle dark mode" aria-pressed="true"><span class="toggle-track" aria-hidden="true"><span class="toggle-thumb"></span></span></button></div>
               <div class="setting-row"><span>Version</span><span class="setting-value">3.4 Premium</span></div>
             </div>
           </div>
 
           <button class="profile-upgrade-btn hidden" id="profile-upgrade-btn" data-open-upgrade>Upgrade Plan →</button>
         </div>
-      </div>
+      </section>
 
-    </div><!-- /screen-container -->
+    </main><!-- /screen-container -->
 
     <!-- BOTTOM NAV -->
-    <nav class="bottom-nav">
+    <nav class="bottom-nav" aria-label="Primary">
       <button class="bnav-item active" data-screen="home">
-        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span class="bnav-label">Home</span>
       </button>
       <button class="bnav-item" data-screen="community">
-        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <span class="bnav-label">Community</span>
       </button>
       <button class="bnav-item" data-screen="maps">
-        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
         <span class="bnav-label">Maps</span>
       </button>
       <button class="bnav-item" data-screen="captains">
-        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
         <span class="bnav-label">Captains</span>
       </button>
       <button class="bnav-item" data-screen="reports">
-        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12C6.5 12 4 9 2 9c0 4 2.5 6 4.5 6s4-1 5.5-3"/><path d="M22 12c-2 0-4.5-3-4.5-3S15 12 15 12s2.5 3 2.5 3S20 12 22 12z"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/></svg>
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 12C6.5 12 4 9 2 9c0 4 2.5 6 4.5 6s4-1 5.5-3"/><path d="M22 12c-2 0-4.5-3-4.5-3S15 12 15 12s2.5 3 2.5 3S20 12 22 12z"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/></svg>
         <span class="bnav-label">Reports</span>
       </button>
       <button class="bnav-item" data-screen="profile">
-        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
         <span class="bnav-label">Profile</span>
       </button>
     </nav>
+
+    <!-- Traveling CTA — mobile sticky book bar (§5/§6.2). Hands off from the home stat row -->
+    <div class="book-bar" id="book-bar" aria-hidden="true">
+      <button class="book-bar-btn" data-screen="reports">Browse Live Reports</button>
+    </div>
 
   </div><!-- /app-shell -->
 
@@ -616,7 +629,7 @@
 
   <div class="bottom-sheet" id="bs-locations" role="dialog" aria-modal="true">
     <div class="bs-handle"></div>
-    <div class="bs-header"><h3 class="bs-title">Select Location</h3><button class="bs-close" id="bs-close">✕</button></div>
+    <div class="bs-header"><h3 class="bs-title">Select Location</h3><button class="bs-close" id="bs-close" aria-label="Close">✕</button></div>
     <div class="bs-search-wrap"><input class="bs-search" id="bs-location-search" type="text" placeholder="Search locations…" autocomplete="off"></div>
     <div class="bs-list" id="bs-location-list"></div>
     <div class="bs-footer"><button class="bs-apply-btn" id="bs-apply">Show Captains</button></div>
@@ -624,7 +637,7 @@
 
   <div class="bottom-sheet" id="bs-filter" role="dialog" aria-modal="true">
     <div class="bs-handle"></div>
-    <div class="bs-header"><h3 class="bs-title" id="bs-filter-title">Filter</h3><button class="bs-close" id="bs-filter-close">✕</button></div>
+    <div class="bs-header"><h3 class="bs-title" id="bs-filter-title">Filter</h3><button class="bs-close" id="bs-filter-close" aria-label="Close">✕</button></div>
     <div class="bs-list" id="bs-filter-list"></div>
     <div class="bs-footer"><button class="bs-apply-btn" id="bs-filter-apply">Apply Filter</button></div>
   </div>
@@ -632,7 +645,7 @@
   <!-- UPGRADE MODAL -->
   <div id="upgrade-modal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-card upgrade-modal-card">
-      <button class="modal-close" id="upgrade-modal-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button class="modal-close" id="upgrade-modal-close" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div class="upgrade-modal-logo">
         <img src="logo-icon.png" alt="BajaFish" class="upgrade-logo-icon">
         <img src="wordmark.png" alt="BAJAFISH" class="upgrade-logo-wordmark">
@@ -690,7 +703,7 @@
           <h2 class="modal-title">Submit a Report</h2>
           <p class="modal-sub">Your report helps every angler planning a Baja trip.</p>
         </div>
-        <button class="modal-close" id="submit-modal-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <button class="modal-close" id="submit-modal-close" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
       <div class="submit-steps">
         <div class="submit-step submit-step--active" id="step-indicator-1"><span class="step-num">1</span><span class="step-label">Species</span></div>
@@ -743,7 +756,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <div><h3 class="modal-title">Post a Trip</h3><p class="modal-sub">Match with anglers heading the same direction.</p></div>
-        <button class="modal-close" id="crew-modal-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <button class="modal-close" id="crew-modal-close" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
       <form id="crew-post-form" class="submit-form" novalidate>
         <div class="submit-form-row">
@@ -766,15 +779,107 @@
 
   <!-- FAB -->
   <button class="fab hidden" id="fab-submit" aria-label="Submit a fishing report" title="Submit Report">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
   </button>
 
   <!-- Toast -->
-  <div id="toast-container" class="toast-container"></div>
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="data.js?v=20260427-6"></script>
-  <script src="weather.js?v=20260427-6"></script>
-  <script src="app.js?v=20260427-6"></script>
+  <script src="config.js?v=20260529-4"></script>
+  <script src="icons.js?v=20260529-4"></script>
+  <script src="data.js?v=20260529-4"></script>
+  <script src="weather.js?v=20260529-4"></script>
+  <script src="app.js?v=20260529-4"></script>
+  <script src="openwater.js?v=20260529-4"></script>
+
+  <!-- ── OVERHAUL §7 — additive presentation JS (no logic changes to app.js handlers) ── -->
+  <script>
+  (function () {
+    'use strict';
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var hasIO = 'IntersectionObserver' in window;
+
+    // Helper: find the scrollable .screen ancestor (the SPA scroll root)
+    function screenOf(el) { return el ? el.closest('.screen') : null; }
+
+    // §7.1 Scroll reveal — rise + fade once, then unobserve.
+    // Fallback: if no IO or reduced motion, reveal everything immediately so nothing stays hidden.
+    function revealAll() {
+      document.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('in-view'); });
+    }
+    if (!hasIO || reduceMotion) {
+      revealAll();
+    } else {
+      var revealObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in-view'); revealObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+      document.querySelectorAll('[data-reveal]').forEach(function (el) { revealObs.observe(el); });
+    }
+
+    // §7.2 / §7.3 — scroll-aware top bar + traveling CTA, driven by a 1px sentinel
+    // per screen. When the home sentinel scrolls out of view: top bar gets glass,
+    // and the mobile book bar slides in.
+    var topBar = document.querySelector('.top-bar');
+    var bookBar = document.getElementById('book-bar');
+
+    function applyScrolled(scrolled, screen) {
+      if (topBar) topBar.classList.toggle('scrolled', scrolled);
+      // Book bar only travels on the Home screen (where the primary CTA lives)
+      var onHome = screen && screen.id === 'screen-home';
+      if (bookBar) {
+        var show = scrolled && onHome;
+        bookBar.classList.toggle('in-view', show);
+        bookBar.setAttribute('aria-hidden', show ? 'false' : 'true');
+      }
+    }
+
+    if (hasIO) {
+      document.querySelectorAll('[data-scroll-sentinel]').forEach(function (sentinel) {
+        var screen = screenOf(sentinel);
+        var obs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            // Only react for the currently active screen
+            if (!screen || !screen.classList.contains('active')) return;
+            applyScrolled(!e.isIntersecting, screen);
+          });
+        }, { root: screen, threshold: 0 });
+        obs.observe(sentinel);
+      });
+    }
+
+    // §7.6 — mirror the JS-managed .active state onto aria-current="page" for nav.
+    // Purely additive: observes the class app.js already toggles; no logic change.
+    function syncAriaCurrent() {
+      document.querySelectorAll('.bnav-item').forEach(function (b) {
+        if (b.classList.contains('active')) b.setAttribute('aria-current', 'page');
+        else b.removeAttribute('aria-current');
+      });
+    }
+    syncAriaCurrent();
+    var nav = document.querySelector('.bottom-nav');
+    if (nav && 'MutationObserver' in window) {
+      new MutationObserver(syncAriaCurrent).observe(nav, {
+        subtree: true, attributes: true, attributeFilter: ['class']
+      });
+    }
+    // Reset top bar + book bar on every nav tap (new screen starts at top)
+    document.querySelectorAll('.bnav-item').forEach(function (b) {
+      b.addEventListener('click', function () { applyScrolled(false, null); });
+    });
+
+    // Traveling CTA handoff: route the book bar to the same action as the
+    // Reports tab (which app.js already wires) instead of duplicating logic.
+    if (bookBar) {
+      var btn = bookBar.querySelector('.book-bar-btn');
+      var reportsTab = document.querySelector('.bnav-item[data-screen="reports"]');
+      if (btn && reportsTab) {
+        btn.addEventListener('click', function () { reportsTab.click(); applyScrolled(false, null); });
+      }
+    }
+  })();
+  </script>
 </body>
 </html>

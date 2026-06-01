@@ -5,455 +5,475 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BAJAFISH — Species Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── TOKENS (inlined from OVERHAUL_SPEC) ── */
     :root {
-      --navy-0: #010810;
-      --navy-1: #04111e;
-      --navy-2: #071b2e;
+      /* navy ladder */
+      --navy-0: #030C15;
+      --navy-1: #06121E;
+      --navy-2: #0A1E30;
+      --navy-3: #0C263E;
+      --navy-4: #0F3050;
+      /* gold, rationed */
       --accent: #FFC72C;
-      --cyan: #00c8ff;
-      --green: #4ade80;
+      --accent-hover: #FFD45C;
+      --gold-line: rgba(255,199,44,0.55);
+      --gold-wash: rgba(255,199,44,0.06);
+      --gold-on: #06111E;
+      /* ink + text */
+      --ink-hero: #EAF1FA;
       --t1: #F0F6FF;
       --t2: #7A92A8;
-      --t3: #3F5568;
+      --t3: #637C92;
+      /* surfaces */
+      --glass-1: rgba(255,255,255,0.03);
       --glass-border: rgba(255,255,255,0.065);
       --glass-border-strong: rgba(255,255,255,0.11);
-      --shadow-card: 0 8px 40px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4);
-      --r-md: 18px;
-      --r-lg: 24px;
+      --surface-sticky: rgba(6,18,30,0.86);
+      /* trust */
+      --trust-verified: #34D399;
+      /* photo cohesion */
+      --photo-veil: linear-gradient(180deg, rgba(3,12,21,0.05) 0%, rgba(3,12,21,0.35) 60%, rgba(3,12,21,0.82) 100%);
+      /* shadow / elevation */
+      --shadow-card: 0 1px 0 var(--glass-border), 0 8px 30px rgba(0,0,0,0.28);
+      --shadow-card-hover: 0 1px 0 var(--gold-line), 0 18px 50px rgba(0,0,0,0.40);
+      --shadow-accent: 0 0 0 1px var(--gold-line);
+      /* type scale */
+      --fs-display: clamp(2.6rem, 8.5vw, 4.25rem);
+      --fs-h2: 1.625rem;
+      --fs-h3: 1.25rem;
+      --fs-lead: 1.125rem;
+      --fs-body: 1rem;
+      --fs-meta: 0.875rem;
+      --fs-eyebrow: 0.75rem;
+      --fs-micro: 0.6875rem;
+      --num-display: 2.5rem;
+      --num-lg: 1.5rem;
+      --num-md: 1.125rem;
+      /* spacing */
+      --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem;
+      --sp-5: 1.5rem; --sp-6: 2rem; --sp-8: 3rem; --sp-10: 4.5rem;
+      /* radius */
+      --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 26px; --r-pill: 999px;
+      /* motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --t-fast: 160ms; --t-base: 260ms; --t-slow: 480ms;
+      /* numerals helper */
+      --tnum: tabular-nums;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       background: var(--navy-0);
       background-image:
-        radial-gradient(ellipse 120% 50% at 60% -5%, rgba(13,53,87,0.65) 0%, transparent 55%),
-        radial-gradient(ellipse 80% 40% at 10% 80%, rgba(0,200,255,0.04) 0%, transparent 55%),
-        linear-gradient(180deg, #010810 0%, #04111e 50%, #071b2e 100%);
+        radial-gradient(ellipse 120% 55% at 60% -8%, rgba(15,48,80,0.55) 0%, transparent 60%),
+        linear-gradient(180deg, var(--navy-0) 0%, var(--navy-1) 55%, var(--navy-0) 100%);
       background-attachment: fixed;
       color: var(--t1);
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
+      font-size: var(--fs-body);
+      line-height: 1.6;
     }
 
-    /* ── NAV ── */
+    /* numerals everywhere read like a gauge */
+    .h-stat-num, .hero-stat-num, .hero-limit-badge .num,
+    .card-cta-limit strong, .limit-badge { font-variant-numeric: var(--tnum); font-feature-settings: "tnum" 1; }
+
+    /* global focus ring */
+    :focus-visible { outline: 2px solid var(--gold-line); outline-offset: 2px; border-radius: inherit; }
+
+    /* ── NAV (scroll-aware top bar) ── */
     .top-bar {
       position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; gap: 1rem;
-      padding: 0 2rem; height: 62px;
-      background: rgba(1,8,16,0.85);
-      backdrop-filter: blur(32px) saturate(160%);
-      border-bottom: 1px solid rgba(255,255,255,0.055);
-      box-shadow: 0 1px 0 rgba(255,199,44,0.07);
+      display: flex; align-items: center; gap: var(--sp-4);
+      padding: 0 var(--sp-6); height: 60px;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background-color var(--t-base) var(--ease-out), border-color var(--t-base) var(--ease-out), backdrop-filter var(--t-base);
+    }
+    .top-bar.scrolled {
+      background: var(--surface-sticky);
+      backdrop-filter: blur(12px) saturate(150%);
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
+      border-bottom: 1px solid var(--glass-border);
     }
     .nav-logo {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.1rem; font-weight: 700;
-      letter-spacing: 0.08em; color: var(--t1);
+      font-size: 1.05rem; font-weight: 700;
+      letter-spacing: 0.06em; color: var(--t1);
       text-decoration: none;
     }
     .nav-logo span { color: var(--accent); }
     .nav-back {
-      display: flex; align-items: center; gap: 0.4rem;
-      background: var(--glass-border); border: 1px solid var(--glass-border);
-      border-radius: 20px; padding: 0.35rem 0.9rem;
-      font-size: 0.75rem; font-weight: 600; color: var(--t2);
-      text-decoration: none; letter-spacing: 0.04em;
-      transition: color 0.18s, border-color 0.18s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: transparent; border: 1px solid var(--gold-line);
+      border-radius: var(--r-pill); padding: 0.4rem 1rem;
+      font-size: var(--fs-meta); font-weight: 600; color: var(--accent);
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast);
     }
-    .nav-back:hover { color: var(--t1); border-color: var(--glass-border-strong); }
+    .nav-back:hover { background: var(--gold-wash); color: var(--accent-hover); }
     .nav-spacer { flex: 1; }
 
     /* ── HERO ── */
     .hero {
       position: relative;
-      padding: 5rem 2rem 4rem;
+      padding: 5.5rem var(--sp-6) 3.5rem;
       text-align: center;
       overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(0,200,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,200,255,0.025) 1px, transparent 1px);
-      background-size: 44px 44px;
-      mask-image: radial-gradient(ellipse 80% 100% at 50% 0%, black 20%, transparent 70%);
-      pointer-events: none;
-    }
     .hero::after {
       content: '';
-      position: absolute; bottom: -1px; left: 0; right: 0; height: 80px;
+      position: absolute; bottom: -1px; left: 0; right: 0; height: 90px;
       background: linear-gradient(to bottom, transparent, var(--navy-0));
       pointer-events: none;
     }
-    .hero-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+    .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+
+    /* shared editorial eyebrow + hairline */
     .eyebrow {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: 0.64rem; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--cyan);
-      margin-bottom: 1.25rem;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--fs-eyebrow); font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--t2);
+      margin-bottom: var(--sp-5);
     }
-    .eyebrow-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--cyan); box-shadow: 0 0 10px rgba(0,200,255,0.7);
-      animation: pulse 2.2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(0,200,255,0.6); }
-      60%  { box-shadow: 0 0 0 8px rgba(0,200,255,0); }
-      100% { box-shadow: 0 0 0 0 rgba(0,200,255,0); }
-    }
+    .eyebrow-rule { display: inline-block; width: 24px; height: 2px; background: var(--gold-line); border-radius: 2px; }
+    .hero .eyebrow { justify-content: center; }
+
     .hero h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.8rem, 7vw, 4.2rem);
-      font-weight: 700; letter-spacing: -0.04em; line-height: 1.0;
-      background: linear-gradient(135deg, #fff 0%, #b8d4f0 55%, #6aaed6 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text; margin-bottom: 1rem;
+      font-size: var(--fs-display);
+      font-weight: 700; letter-spacing: -0.03em; line-height: 1.02;
+      color: var(--ink-hero);
+      margin-bottom: var(--sp-4);
     }
-    .hero p { font-size: 1rem; color: var(--t2); line-height: 1.7; max-width: 420px; margin: 0 auto 2.5rem; }
+    .hero p { font-size: var(--fs-lead); color: var(--t2); line-height: 1.5; max-width: 460px; margin: 0 auto var(--sp-6); }
 
-    /* Stat strip */
+    /* instrument readout strip */
     .hero-stats {
       display: inline-flex; gap: 0;
-      background: rgba(255,255,255,0.028);
+      background: var(--glass-1);
       border: 1px solid var(--glass-border);
-      border-radius: 999px; padding: 0.85rem 2rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+      border-radius: var(--r-md); padding: var(--sp-3) var(--sp-5);
     }
-    .h-stat { display: flex; flex-direction: column; align-items: center; padding: 0 1.5rem; position: relative; }
+    .h-stat { display: flex; flex-direction: column; align-items: center; padding: 0 var(--sp-5); position: relative; }
     .h-stat + .h-stat::before {
       content: ''; position: absolute; left: 0; top: 15%; height: 70%;
-      width: 1px; background: rgba(255,255,255,0.07);
+      width: 1px; background: var(--glass-border);
     }
     .h-stat-num {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.6rem; font-weight: 700; color: var(--accent);
-      letter-spacing: -0.03em; text-shadow: 0 0 20px rgba(255,199,44,0.3);
+      font-size: var(--num-display); font-weight: 500; color: var(--t1);
+      letter-spacing: -0.01em; line-height: 1;
     }
-    .h-stat-lbl { font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--t3); font-weight: 600; margin-top: 0.15rem; }
+    .h-stat-lbl { font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: 0.1em; color: var(--t3); font-weight: 500; margin-top: 0.4rem; }
 
-    /* ── FILTER BAR ── */
+    /* ── FILTER BAR (segmented text-tab + gold underline) ── */
     .filter-bar {
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      display: flex; align-items: center; justify-content: center; gap: var(--sp-2);
       flex-wrap: wrap;
-      padding: 1.25rem 2rem;
+      padding: var(--sp-4) var(--sp-6);
       border-bottom: 1px solid var(--glass-border);
-      background: rgba(1,8,16,0.5);
-      backdrop-filter: blur(20px);
+      position: sticky; top: 60px; z-index: 90;
+      background: var(--surface-sticky);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     .filter-pill {
-      padding: 0.4rem 1.1rem; border-radius: 20px;
+      position: relative;
+      padding: 0.45rem 0.9rem; border-radius: var(--r-pill);
       border: 1px solid var(--glass-border);
-      background: transparent; color: var(--t3);
-      font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 700;
-      cursor: pointer; transition: all 0.18s; white-space: nowrap;
-      letter-spacing: 0.05em; text-transform: uppercase;
+      background: var(--glass-1); color: var(--t2);
+      font-family: 'Inter', sans-serif; font-size: var(--fs-meta); font-weight: 500;
+      cursor: pointer; white-space: nowrap; letter-spacing: 0.01em;
+      transition: color var(--t-fast), border-color var(--t-fast), background-color var(--t-fast);
     }
-    .filter-pill:hover { color: var(--t1); border-color: var(--glass-border-strong); background: rgba(255,255,255,0.04); }
-    .filter-pill.active { background: rgba(255,199,44,0.1); border-color: rgba(255,199,44,0.3); color: var(--accent); }
-    .filter-pill.active.green { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.3); color: var(--green); }
-    .filter-pill.active.red { background: rgba(251,113,90,0.1); border-color: rgba(251,113,90,0.3); color: #fc9e8a; }
-    .filter-pill.active.blue { background: rgba(96,165,250,0.1); border-color: rgba(96,165,250,0.3); color: #60a5fa; }
+    .filter-pill:hover { color: var(--t1); border-color: var(--glass-border-strong); }
+    .filter-pill.active {
+      background: var(--gold-wash); border-color: var(--gold-line); color: var(--accent);
+    }
 
     /* ── GRID ── */
-    .grid-wrap {
-      max-width: 1280px; margin: 0 auto;
-      padding: 2.5rem 1.75rem 6rem;
-    }
+    .grid-wrap { max-width: 1200px; margin: 0 auto; padding: var(--sp-8) var(--sp-5) var(--sp-10); }
 
-    /* Section dividers between species types */
-    .section-divider {
-      display: flex; align-items: center; gap: 1rem;
-      margin: 3rem 0 1.25rem;
-      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--t3);
-    }
-    .section-divider::before, .section-divider::after {
-      content: ''; flex: 1; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--glass-border-strong));
-    }
-    .section-divider::before { background: linear-gradient(90deg, transparent, var(--glass-border-strong)); }
-    .section-divider::after  { background: linear-gradient(90deg, var(--glass-border-strong), transparent); }
-    .section-divider span { white-space: nowrap; color: var(--t2); }
     .section-label {
-      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.18em; color: var(--t3); margin-bottom: 1.25rem;
-      display: flex; align-items: center; gap: 0.6rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--fs-eyebrow); font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--t2); margin-bottom: var(--sp-5);
+      display: flex; align-items: center; gap: 0.7rem;
     }
-    .section-label::after {
-      content: ''; flex: 1; height: 1px;
-      background: linear-gradient(90deg, var(--glass-border), transparent);
+    .section-label::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, var(--gold-line), transparent); border-radius: 2px; max-width: 120px; }
+
+    .section-divider {
+      display: flex; align-items: center; gap: var(--sp-4);
+      margin: var(--sp-8) 0 var(--sp-5);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--fs-eyebrow); font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--t2);
     }
+    .section-divider span { white-space: nowrap; }
+    .section-divider::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, var(--gold-line), transparent); border-radius: 2px; }
+
     .species-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 3rem;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-6);
     }
 
-    /* ── SPECIES CARD ── */
+    /* scroll reveal */
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity var(--t-slow) var(--ease-out), transform var(--t-slow) var(--ease-out); }
+    [data-reveal].in-view { opacity: 1; transform: none; }
+
+    /* ── SPECIES CARD (editorial) ── */
     .species-card {
       position: relative;
-      border-radius: var(--r-lg);
+      border-radius: var(--r-md);
       overflow: hidden;
       border: 1px solid var(--glass-border);
       box-shadow: var(--shadow-card);
       cursor: pointer;
-      transition: transform 0.28s cubic-bezier(.22,1,.36,1), box-shadow 0.28s, border-color 0.28s;
       background: var(--navy-2);
-      animation: fadeInUp 0.4s ease both;
+      transition: transform var(--t-base) var(--ease-out), box-shadow var(--t-base) var(--ease-out), border-color var(--t-base) var(--ease-out);
     }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .species-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--gold-line); opacity: 0; transition: opacity var(--t-base);
+      z-index: 4;
     }
     .species-card:hover {
-      transform: translateY(-5px) scale(1.012);
-      box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 4px 12px rgba(0,0,0,0.4);
-      border-color: rgba(255,255,255,0.13);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: var(--glass-border-strong);
     }
+    .species-card:hover::before { opacity: 1; }
 
-    /* Photo area */
-    .card-photo {
-      position: relative;
-      height: 210px;
-      overflow: hidden;
-      background: var(--navy-2);
-    }
+    .card-photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--navy-2); }
     .card-photo img {
       width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.5s cubic-bezier(.22,1,.36,1);
+      object-fit: cover; object-position: center;
       display: block;
-      filter: url(#cartoon) brightness(1.08);
+      filter: url(#cartoon) brightness(1.06) saturate(1.05);
+      transition: transform var(--t-slow) var(--ease-out);
     }
-    .species-card:hover .card-photo img { transform: scale(1.06); }
+    .species-card:hover .card-photo img { transform: scale(1.03); }
+    .card-photo.img-failed { background: linear-gradient(135deg, var(--navy-3), var(--navy-1)); }
+    .card-photo.img-failed img { display: none; }
 
-    /* Cinematic gradient overlays */
-    .card-photo::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(1,8,16,0.15) 0%, transparent 30%, rgba(1,8,16,0.85) 85%, rgba(1,8,16,0.98) 100%);
-      z-index: 1;
-    }
-    /* Subtle color tint from top */
-    .card-photo::after {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 60px;
-      background: linear-gradient(to bottom, rgba(0,200,255,0.08), transparent);
-      z-index: 1;
-    }
+    .card-photo::before { content: ''; position: absolute; inset: 0; background: var(--photo-veil); z-index: 1; }
 
-    /* Limit badge — top right */
     .limit-badge {
-      position: absolute; top: 0.7rem; right: 0.7rem;
-      background: rgba(1,8,16,0.82);
-      border: 1px solid rgba(255,199,44,0.3);
-      backdrop-filter: blur(12px);
-      border-radius: 20px; padding: 0.28rem 0.7rem;
-      font-size: 0.62rem; font-weight: 800;
-      color: var(--accent); letter-spacing: 0.1em;
-      text-transform: uppercase; z-index: 2;
+      position: absolute; top: var(--sp-3); right: var(--sp-3);
+      background: rgba(3,12,21,0.78); border: 1px solid var(--gold-line);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-radius: var(--r-pill); padding: 0.25rem 0.65rem;
+      font-size: var(--fs-micro); font-weight: 600; color: var(--accent);
+      letter-spacing: 0.06em; text-transform: uppercase; z-index: 2;
     }
-
-    /* Freq tag — top left */
     .freq-tag {
-      position: absolute; top: 0.7rem; left: 0.7rem;
-      border-radius: 20px; padding: 0.26rem 0.65rem;
-      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em;
+      position: absolute; top: var(--sp-3); left: var(--sp-3);
+      border-radius: var(--r-pill); padding: 0.22rem 0.6rem;
+      font-size: var(--fs-micro); font-weight: 600; letter-spacing: 0.06em;
       text-transform: uppercase; z-index: 2;
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     }
-    .freq-tag--frequent { background: rgba(74,222,128,0.18); color: #4ade80; border: 1px solid rgba(74,222,128,0.28); }
-    .freq-tag--medium   { background: rgba(255,199,44,0.14); color: #FFC72C; border: 1px solid rgba(255,199,44,0.25); }
-    .freq-tag--rare     { background: rgba(248,113,113,0.14); color: #fca5a5; border: 1px solid rgba(248,113,113,0.25); }
+    .freq-tag--frequent { background: rgba(52,211,153,0.16); color: var(--trust-verified); border: 1px solid rgba(52,211,153,0.30); }
+    .freq-tag--medium   { background: var(--gold-wash); color: var(--accent); border: 1px solid var(--gold-line); }
+    .freq-tag--rare     { background: rgba(3,12,21,0.55); color: var(--t1); border: 1px solid var(--glass-border-strong); }
 
-    /* Overlaid name on photo */
-    .card-photo-name {
-      position: absolute; bottom: 0.85rem; left: 1rem; right: 1rem;
-      z-index: 2;
-    }
+    .card-photo-name { position: absolute; bottom: var(--sp-3); left: var(--sp-4); right: var(--sp-4); z-index: 2; }
     .card-photo-name h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.25rem; font-weight: 700;
-      color: #fff; letter-spacing: -0.02em; line-height: 1.1;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.8);
-      margin-bottom: 0.2rem;
+      font-size: var(--fs-h3); font-weight: 600;
+      color: #fff; letter-spacing: -0.01em; line-height: 1.15;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.7);
+      margin-bottom: 0.15rem;
     }
-    .card-photo-name .sci {
-      font-size: 0.68rem; color: rgba(255,255,255,0.5);
-      font-style: italic; letter-spacing: 0.02em;
-    }
+    .card-photo-name .sci { font-size: var(--fs-micro); color: rgba(255,255,255,0.6); font-style: italic; letter-spacing: 0.02em; }
 
-    /* Info area */
-    .card-info {
-      padding: 0.9rem 1rem 1rem;
-      background: rgba(4,17,30,0.9);
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .card-meta-row {
-      display: flex; align-items: center; gap: 0.5rem;
-      flex-wrap: wrap; margin-bottom: 0.65rem;
-    }
+    .card-info { padding: var(--sp-4); background: var(--navy-2); }
+    .card-meta-row { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; margin-bottom: var(--sp-3); }
     .coast-pill {
       display: inline-flex; align-items: center; gap: 0.35rem;
-      padding: 0.2rem 0.6rem; border-radius: 20px;
-      font-size: 0.62rem; font-weight: 700;
+      padding: 0.2rem 0.6rem; border-radius: var(--r-pill);
+      font-size: var(--fs-micro); font-weight: 500;
+      background: var(--glass-1); border: 1px solid var(--glass-border); color: var(--t2);
     }
-    .coast-pill--pac  { background: rgba(59,130,246,0.1); color: #60a5fa; border: 1px solid rgba(59,130,246,0.2); }
-    .coast-pill--cor  { background: rgba(34,197,94,0.1);  color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
-    .coast-pill--both { background: rgba(255,199,44,0.08); color: var(--accent); border: 1px solid rgba(255,199,44,0.18); }
     .coast-dot { width: 5px; height: 5px; border-radius: 50%; }
-    .coast-pill--pac  .coast-dot { background: #3b82f6; box-shadow: 0 0 5px rgba(59,130,246,0.6); }
-    .coast-pill--cor  .coast-dot { background: #4ade80; box-shadow: 0 0 5px rgba(74,222,128,0.6); }
-    .coast-pill--both .coast-dot { background: var(--accent); box-shadow: 0 0 5px rgba(255,199,44,0.6); }
-
+    .coast-pill--pac  .coast-dot { background: #6aaed6; }
+    .coast-pill--cor  .coast-dot { background: var(--trust-verified); }
+    .coast-pill--both .coast-dot { background: var(--accent); }
     .season-chip {
       display: inline-flex; align-items: center; gap: 0.3rem;
-      font-size: 0.62rem; font-weight: 600; color: var(--t3);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 20px; padding: 0.2rem 0.6rem;
+      font-size: var(--fs-micro); font-weight: 500; color: var(--t3);
+      border: 1px solid var(--glass-border); border-radius: var(--r-pill); padding: 0.2rem 0.6rem;
     }
 
     .card-desc {
-      font-size: 0.78rem; color: var(--t2); line-height: 1.55;
-      display: -webkit-box; -webkit-line-clamp: 2;
+      font-size: var(--fs-meta); color: var(--t2); line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2;
       -webkit-box-orient: vertical; overflow: hidden;
     }
-
-    /* Hover reveal bar */
     .card-cta {
       display: flex; align-items: center; justify-content: space-between;
-      margin-top: 0.75rem; padding-top: 0.65rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: var(--sp-3); padding-top: var(--sp-3);
+      border-top: 1px solid var(--glass-border);
     }
-    .card-cta-limit {
-      font-size: 0.72rem; color: var(--t3); font-weight: 600;
-    }
-    .card-cta-limit strong { color: var(--accent); font-family: 'Space Grotesk', sans-serif; font-size: 1rem; }
+    .card-cta-limit { font-size: var(--fs-meta); color: var(--t2); font-weight: 500; }
+    .card-cta-limit strong { color: var(--accent); font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; }
     .card-cta-pts {
-      font-size: 0.62rem; color: var(--t3);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px; padding: 0.2rem 0.55rem;
+      font-size: var(--fs-micro); color: var(--t3);
+      background: var(--glass-1); border: 1px solid var(--glass-border);
+      border-radius: var(--r-pill); padding: 0.22rem 0.6rem;
     }
 
     /* ── HERO CARD (featured species) ── */
     .species-hero-card {
       position: relative; border-radius: var(--r-lg);
-      overflow: hidden; border: 1px solid rgba(0,200,255,0.15);
-      box-shadow: 0 16px 60px rgba(0,0,0,0.65);
-      margin-bottom: 3rem;
+      overflow: hidden; border: 1px solid var(--gold-line);
+      box-shadow: var(--shadow-card);
+      margin-bottom: var(--sp-6);
       min-height: 360px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      animation: fadeInUp 0.4s ease both;
+      display: grid; grid-template-columns: 1fr 1fr;
     }
-    .hero-card-photo {
-      position: relative; overflow: hidden;
-    }
+    .hero-card-photo { position: relative; overflow: hidden; min-height: 280px; }
     .hero-card-photo img {
       width: 100%; height: 100%;
       object-fit: cover; object-position: center 30%;
-      transition: transform 0.5s cubic-bezier(.22,1,.36,1);
       display: block;
-      filter: url(#cartoon) brightness(1.08);
+      filter: url(#cartoon) brightness(1.06) saturate(1.05);
+      transition: transform var(--t-slow) var(--ease-out);
     }
-    .species-hero-card:hover .hero-card-photo img { transform: scale(1.05); }
-    .hero-card-photo::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent 60%, rgba(4,17,30,0.95) 100%),
-                  linear-gradient(to bottom, rgba(0,200,255,0.05) 0%, transparent 40%);
-    }
+    .species-hero-card:hover .hero-card-photo img { transform: scale(1.03); }
+    .hero-card-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 55%, var(--navy-2) 100%); }
+    .hero-card-photo.img-failed { background: linear-gradient(135deg, var(--navy-3), var(--navy-1)); }
+    .hero-card-photo.img-failed img { display: none; }
     .hero-card-info {
       display: flex; flex-direction: column; justify-content: center;
-      padding: 2.5rem 2rem 2rem;
-      background:
-        radial-gradient(ellipse 100% 80% at 100% 50%, rgba(0,200,255,0.04) 0%, transparent 60%),
-        rgba(4,17,30,0.96);
-      position: relative;
-    }
-    .hero-card-info::before {
-      content: '';
-      position: absolute; top: 0; left: 0; bottom: 0; width: 1px;
-      background: linear-gradient(to bottom, transparent, rgba(0,200,255,0.2), transparent);
-    }
-    .hero-eyebrow {
-      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--cyan);
-      margin-bottom: 0.6rem;
+      padding: var(--sp-6); background: var(--navy-2); position: relative;
     }
     .hero-card-name {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.4rem; font-weight: 700; letter-spacing: -0.04em;
-      line-height: 1.0; color: #fff; margin-bottom: 0.4rem;
+      font-size: 2.25rem; font-weight: 700; letter-spacing: -0.02em;
+      line-height: 1.08; color: var(--t1); margin-bottom: 0.3rem;
     }
-    .hero-card-sci { font-size: 0.8rem; color: var(--t3); font-style: italic; margin-bottom: 1.25rem; }
-    .hero-card-desc { font-size: 0.88rem; color: var(--t2); line-height: 1.65; margin-bottom: 1.5rem; }
-    .hero-card-stats {
-      display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem;
-    }
+    .hero-card-sci { font-size: var(--fs-meta); color: var(--t3); font-style: italic; margin-bottom: var(--sp-4); }
+    .hero-card-desc { font-size: var(--fs-body); color: var(--t2); line-height: 1.6; margin-bottom: var(--sp-5); }
+    .hero-card-stats { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-bottom: var(--sp-4); }
     .hero-stat {
       display: flex; flex-direction: column;
-      background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-      border-radius: 12px; padding: 0.6rem 0.9rem; min-width: 90px;
+      background: var(--glass-1); border: 1px solid var(--glass-border);
+      border-radius: var(--r-sm); padding: var(--sp-3) var(--sp-4); min-width: 88px;
     }
     .hero-stat-num {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.4rem; font-weight: 700; color: var(--accent);
-      letter-spacing: -0.03em; line-height: 1;
+      font-size: var(--num-lg); font-weight: 500; color: var(--t1);
+      letter-spacing: -0.01em; line-height: 1;
     }
-    .hero-stat-lbl { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--t3); font-weight: 600; margin-top: 0.2rem; }
+    .hero-stat-lbl { font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: 0.1em; color: var(--t3); font-weight: 500; margin-top: 0.35rem; }
     .hero-limit-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(255,199,44,0.08); border: 1px solid rgba(255,199,44,0.2);
-      border-radius: 12px; padding: 0.6rem 1rem;
-      font-size: 0.78rem; font-weight: 700; color: var(--accent);
+      display: inline-flex; align-items: center; gap: 0.5rem; align-self: flex-start;
+      background: var(--gold-wash); border: 1px solid var(--gold-line);
+      border-radius: var(--r-sm); padding: 0.55rem 0.9rem;
+      font-size: var(--fs-meta); font-weight: 500; color: var(--accent);
     }
-    .hero-limit-badge .num {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.5rem; font-weight: 700;
-    }
+    .hero-limit-badge .num { font-family: 'Space Grotesk', sans-serif; font-size: var(--num-md); font-weight: 600; }
 
-    /* Photo credit */
+    /* photo credit */
     .photo-credit {
-      position: absolute; bottom: 0.4rem; right: 0.5rem;
-      font-size: 0.52rem; color: rgba(255,255,255,0.25);
-      z-index: 3; letter-spacing: 0.04em;
+      position: absolute; bottom: 0.4rem; right: 0.55rem;
+      font-size: 0.5625rem; color: rgba(255,255,255,0.32);
+      z-index: 3; letter-spacing: 0.02em; max-width: 70%; text-align: right;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
+    .hero-card-photo .photo-credit { max-width: 85%; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 1000;
+      display: none; align-items: center; justify-content: center;
+      background: rgba(3,12,21,0.94);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      padding: var(--sp-6);
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-img {
+      max-width: min(900px, 92vw); max-height: 78vh;
+      border-radius: var(--r-lg); border: 1px solid var(--glass-border);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+      object-fit: contain;
+    }
+    .lightbox-cap {
+      position: absolute; bottom: var(--sp-6); left: 0; right: 0; text-align: center;
+      color: var(--t2); font-size: var(--fs-meta); padding: 0 var(--sp-6);
+    }
+    .lightbox-cap b { font-family: 'Space Grotesk', sans-serif; color: var(--t1); font-weight: 600; }
+    .lightbox-cap i { color: var(--t3); }
+    .lightbox-close {
+      position: absolute; top: var(--sp-5); right: var(--sp-5);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--glass-1); border: 1px solid var(--gold-line); color: var(--accent);
+      font-size: 1.4rem; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background-color var(--t-fast);
+    }
+    .lightbox-close:hover { background: var(--gold-wash); }
 
     /* ── FOOTER ── */
     .site-footer {
       border-top: 1px solid var(--glass-border);
-      padding: 2rem; text-align: center;
-      font-size: 0.78rem; color: var(--t3);
+      padding: var(--sp-6); text-align: center;
+      font-size: var(--fs-meta); color: var(--t3); line-height: 1.6;
     }
-    .site-footer strong { color: var(--accent); letter-spacing: 0.06em; }
+    .site-footer strong { color: var(--accent); letter-spacing: 0.04em; font-family: 'Space Grotesk', sans-serif; }
 
-    /* Responsive */
+    /* ── DESKTOP ── */
+    @media (min-width: 1024px) {
+      .grid-wrap { padding: var(--sp-10) var(--sp-6); }
+      .species-grid { grid-template-columns: repeat(3, 1fr); gap: var(--sp-5); }
+    }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .species-hero-card { grid-template-columns: 1fr; min-height: unset; }
-      .hero-card-photo { height: 220px; }
-      .hero-card-info::before { display: none; }
+      .hero-card-photo { height: 220px; min-height: 220px; }
       .species-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-      .hero { padding: 3.5rem 1.25rem 3rem; }
-      .hero h1 { font-size: 2.4rem; }
-      .grid-wrap { padding: 2rem 1.1rem 4rem; }
+      .hero { padding: 4rem var(--sp-4) 3rem; }
+      .grid-wrap { padding: var(--sp-6) var(--sp-4) var(--sp-8); }
+      .hero-card-name { font-size: 1.75rem; }
     }
     @media (max-width: 500px) {
       .species-grid { grid-template-columns: 1fr; }
-      .filter-bar { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding: 1rem 1.25rem; }
+      .filter-bar { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding: var(--sp-3) var(--sp-4); }
+      .h-stat { padding: 0 var(--sp-4); }
+      .h-stat-num { font-size: var(--num-lg); }
+    }
+
+    /* ── INLINE ICONS ── */
+    .ow-ico {
+      width: 1em; height: 1em; flex: none;
+      display: inline-block; vertical-align: -0.125em;
+      stroke: currentColor; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+      fill: none;
+    }
+    .ow-ico--gold { color: var(--accent); }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .species-card, .species-card .card-photo img, .hero-card-photo img,
+      .species-card:hover, .species-card:hover .card-photo img { transition: none; transform: none; }
+      .species-card:hover { transform: none; }
     }
   </style>
 </head>
@@ -463,15 +483,12 @@
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
   <defs>
     <filter id="cartoon" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
-      <!-- Pump saturation way up so colors read like paint -->
       <feColorMatrix type="saturate" values="3.2" result="sat"/>
-      <!-- Posterize: reduce gradients to flat bands (cartoon/cel shading) -->
       <feComponentTransfer in="sat" result="poster">
         <feFuncR type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1"/>
         <feFuncG type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1"/>
         <feFuncB type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1"/>
       </feComponentTransfer>
-      <!-- Light contrast nudge to sharpen the flat-color edges -->
       <feComponentTransfer in="poster">
         <feFuncR type="linear" slope="1.12" intercept="-0.06"/>
         <feFuncG type="linear" slope="1.12" intercept="-0.06"/>
@@ -481,33 +498,26 @@
   </defs>
 </svg>
 
-
 <!-- Nav -->
-<header class="top-bar">
+<header class="top-bar" id="top-bar">
   <a href="/" class="nav-logo">BAJA<span>FISH</span></a>
   <div class="nav-spacer"></div>
-  <a href="/" class="nav-back">← Back to App</a>
+  <a href="/" class="nav-back">&larr; Back to App</a>
 </header>
+
+<!-- 1px scroll sentinel -->
+<div id="scroll-sentinel" aria-hidden="true" style="position:absolute;top:0;height:1px;width:1px;"></div>
 
 <!-- Hero -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow"><span class="eyebrow-dot"></span>Species Intelligence</div>
-    <h1>What's In The Water.</h1>
-    <p>44 panga villages. 2 coasts. Every species worth chasing — with real photos, bag limits, and seasonal intel.</p>
+    <div class="eyebrow"><span class="eyebrow-rule"></span>Baja California &middot; Species Intelligence</div>
+    <h1>What&rsquo;s In The Water.</h1>
+    <p>44 panga villages. 2 coasts. Every species worth chasing &mdash; with real photos, bag limits, and seasonal intel.</p>
     <div class="hero-stats">
-      <div class="h-stat">
-        <span class="h-stat-num">29</span>
-        <span class="h-stat-lbl">Species</span>
-      </div>
-      <div class="h-stat">
-        <span class="h-stat-num">44</span>
-        <span class="h-stat-lbl">Zones</span>
-      </div>
-      <div class="h-stat">
-        <span class="h-stat-num">2</span>
-        <span class="h-stat-lbl">Coasts</span>
-      </div>
+      <div class="h-stat"><span class="h-stat-num">48</span><span class="h-stat-lbl">Species</span></div>
+      <div class="h-stat"><span class="h-stat-num">44</span><span class="h-stat-lbl">Zones</span></div>
+      <div class="h-stat"><span class="h-stat-num">2</span><span class="h-stat-lbl">Coasts</span></div>
     </div>
   </div>
 </section>
@@ -515,518 +525,763 @@
 <!-- Filter Bar -->
 <div class="filter-bar">
   <button class="filter-pill active" onclick="filterCards('all', this)">All Species</button>
-  <button class="filter-pill" onclick="filterCards('rockfish', this)">🎣 Rockfish</button>
-  <button class="filter-pill" onclick="filterCards('pelagic', this)">🐟 Pelagic</button>
-  <button class="filter-pill" onclick="filterCards('billfish', this)">⚡ Billfish</button>
-  <button class="filter-pill" onclick="filterCards('inshore', this)">🪸 Inshore</button>
-  <button class="filter-pill blue" onclick="filterCards('pac', this)">Pacific</button>
-  <button class="filter-pill blue" onclick="filterCards('cor', this)">Sea of Cortez</button>
-  <button class="filter-pill blue" onclick="filterCards('both', this)">Both Coasts</button>
+  <button class="filter-pill" onclick="filterCards('rockfish', this)">Rockfish</button>
+  <button class="filter-pill" onclick="filterCards('pelagic', this)">Pelagic</button>
+  <button class="filter-pill" onclick="filterCards('billfish', this)">Billfish</button>
+  <button class="filter-pill" onclick="filterCards('inshore', this)">Inshore</button>
+  <button class="filter-pill" onclick="filterCards('pac', this)">Pacific</button>
+  <button class="filter-pill" onclick="filterCards('cor', this)">Sea of Cortez</button>
+  <button class="filter-pill" onclick="filterCards('both', this)">Both Coasts</button>
 </div>
 
 <!-- Grid -->
 <div class="grid-wrap">
 
-  <!-- Featured Hero Card: Vermilion Rockfish -->
+  <!-- Featured Hero Card -->
   <div class="section-label">Featured Species</div>
-  <div class="species-hero-card" data-freq="frequent" data-coast="pac" data-type="rockfish">
+  <div class="species-hero-card" data-reveal data-freq="frequent" data-coast="pac" data-type="rockfish">
     <div class="hero-card-photo">
-      <img
-        src="https://inaturalist-open-data.s3.amazonaws.com/photos/134209886/medium.jpeg"
-        alt="Vermilion Rockfish"
-        onerror="this.style.background='#0a2540';this.style.display='block';this.alt='';this.src=''"
-      >
-      <div class="photo-credit">© Wikimedia Commons</div>
+      <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/134209886/medium.jpeg" alt="Vermilion Rockfish (Sebastes miniatus)" loading="lazy" onerror="this.closest('.hero-card-photo').classList.add('img-failed')">
+      <div class="photo-credit">(c) canaryrockfish, some rights reserved (CC BY-NC), uploaded by canaryrockfish</div>
     </div>
     <div class="hero-card-info">
-      <div class="hero-eyebrow">● Pacific Rockfish</div>
+      <div class="eyebrow"><span class="eyebrow-rule"></span>Pacific Rockfish</div>
       <h2 class="hero-card-name">Vermilion Rockfish</h2>
-      <p class="hero-card-sci">Sebastes miniatus — "Red Rockcod"</p>
-      <p class="hero-card-desc">The iconic red-orange rockfish of Pacific Baja — brilliant vermilion flanks, long-lived (up to 60 years), and one of the most prized table fish along the Pacific coast. Found over rocky structure from 100–1,200 ft.</p>
+      <p class="hero-card-sci">Sebastes miniatus &mdash; &ldquo;Red Rockcod&rdquo;</p>
+      <p class="hero-card-desc">The iconic red-orange rockfish of Pacific Baja &mdash; brilliant vermilion flanks, long-lived to 60 years, and one of the most prized table fish along the Pacific coast. Found over rocky structure from 100&ndash;1,200 ft.</p>
       <div class="hero-card-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-num">1 pt</span>
-          <span class="hero-stat-lbl">Point Value</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">60 yrs</span>
-          <span class="hero-stat-lbl">Max Lifespan</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">36"</span>
-          <span class="hero-stat-lbl">Max Length</span>
-        </div>
+        <div class="hero-stat"><span class="hero-stat-num">1</span><span class="hero-stat-lbl">Point Value</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">60</span><span class="hero-stat-lbl">Max Years</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">36"</span><span class="hero-stat-lbl">Max Length</span></div>
       </div>
-      <div class="hero-limit-badge">
-        <span>🇲🇽 Mexico Bag Limit</span>
-        <span class="num">5</span>
-        <span>per day</span>
-      </div>
+      <div class="hero-limit-badge"><span>MX bag limit</span><span class="num">5</span><span>per day</span></div>
     </div>
   </div>
 
-  <!-- ── ROCKFISH ── -->
-  <div class="section-divider"><span>🎣 Rockfish</span></div>
-  <div class="species-grid">
+  <!-- fish: Rockfish -->
+  <div class="section-divider" data-section="rockfish"><span><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z"/><path d="M18 12v.5"/><path d="M16 17.93a9.77 9.77 0 0 1 0-11.86"/><path d="M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33"/><path d="M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4"/><path d="m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98"/></svg> Rockfish</span></div>
+  <div class="species-grid" data-section-grid="rockfish">
 
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="rockfish">
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="rockfish" tabindex="0" role="button" aria-label="Bocaccio — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/168880674/medium.jpg" alt="Bocaccio" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/168880674/medium.jpg" alt="Bocaccio (Sebastes paucispinis)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--frequent">Frequent</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Bocaccio</h3><span class="sci">Sebastes paucispinis</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Josh Maxwell, some rights reserved (CC BY-NC), uploaded by Josh Maxwell</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">📍 Deep structure</span></div>
-        <p class="card-desc">Big-mouthed deep-water rockfish reaching 36 inches. Found 150–750 ft over rocky bottom. One of Baja's most targeted bottom fish — outstanding table fare.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Deep structure</span></div>
+        <p class="card-desc">Big-mouthed deep-water rockfish reaching 36 inches over rocky bottom 150–750 ft. One of Baja’s most targeted bottom fish and outstanding table fare.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="rockfish">
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="rockfish" tabindex="0" role="button" aria-label="Chilipepper — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/168292638/medium.jpg" alt="Chilipepper Rockfish" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/168292638/medium.jpg" alt="Chilipepper (Sebastes goodei)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--frequent">Frequent</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Chilipepper</h3><span class="sci">Sebastes goodei</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Lauren Martin, some rights reserved (CC BY-NC), uploaded by Lauren Martin</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">📍 Mid-water</span></div>
-        <p class="card-desc">Pink-red school rockfish schooling 100–400 ft. Fast and willing to bite. One of the most common rockfish on Pacific pangas. Excellent eating.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Mid-water</span></div>
+        <p class="card-desc">Pink-red rockfish schooling 100–400 ft. Fast and willing to bite — one of the most common rockfish on Pacific pangas. Excellent eating.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
-    <div class="species-card" data-freq="medium" data-coast="pac" data-type="rockfish">
+    <div class="species-card" data-reveal data-freq="medium" data-coast="pac" data-type="rockfish" tabindex="0" role="button" aria-label="Canary Rockfish — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/149875693/medium.jpg" alt="Canary Rockfish" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/149875693/medium.jpg" alt="Canary Rockfish (Sebastes pinniger)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--medium">Seasonal</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Canary Rockfish</h3><span class="sci">Sebastes pinniger</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Andrew Harmer, some rights reserved (CC BY-NC), uploaded by Andrew Harmer</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">📍 Rocky reef</span></div>
-        <p class="card-desc">Brilliant orange-yellow rockfish with distinctive lateral line marking. Prized for its bright color and excellent flesh. Found 50–900 ft on rocky structure.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Rocky reef</span></div>
+        <p class="card-desc">Brilliant orange-yellow rockfish with a distinctive lateral-line marking. Prized for color and flesh. Found 50–900 ft on rocky structure.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="rockfish">
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="rockfish" tabindex="0" role="button" aria-label="Copper Rockfish — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/153578953/medium.jpg" alt="Copper Rockfish" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/153578953/medium.jpg" alt="Copper Rockfish (Sebastes caurinus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--frequent">Frequent</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Copper Rockfish</h3><span class="sci">Sebastes caurinus</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Andrew Harmer, some rights reserved (CC BY-NC), uploaded by Andrew Harmer</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">📍 Kelp &amp; rocks</span></div>
-        <p class="card-desc">Copper-brown mottled rockfish hugging kelp edges and rocky reefs 20–600 ft. Aggressive bite, great action on light tackle. Year-round on Baja Pacific.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Kelp &amp; rocks</span></div>
+        <p class="card-desc">Copper-brown mottled rockfish hugging kelp edges and rocky reefs 20–600 ft. Aggressive bite, great light-tackle action year-round on the Pacific.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="rockfish">
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="rockfish" tabindex="0" role="button" aria-label="Blue Rockfish — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/26245/medium.jpg" alt="Blue Rockfish" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/26245/medium.jpg" alt="Blue Rockfish (Sebastes mystinus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--frequent">Frequent</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Blue Rockfish</h3><span class="sci">Sebastes mystinus</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) NOAA Photo Library, some rights reserved (CC BY)</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">📍 Kelp beds</span></div>
-        <p class="card-desc">Dark blue-grey schooling rockfish found throughout the kelp forests. Easily caught on jigs or bait, making it a reliable species for mixed-bag rockfishing trips.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Kelp beds</span></div>
+        <p class="card-desc">Dark blue-grey schooling rockfish throughout the kelp forests. Easily caught on jigs or bait — a reliable staple for mixed-bag rockfishing trips.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
   </div>
 
-  <!-- ── PELAGIC ── -->
-  <div class="section-divider"><span>🐟 Offshore Pelagic</span></div>
-  <div class="species-grid">
+  <!-- fish: Offshore Pelagic -->
+  <div class="section-divider" data-section="pelagic"><span><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z"/><path d="M18 12v.5"/><path d="M16 17.93a9.77 9.77 0 0 1 0-11.86"/><path d="M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33"/><path d="M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4"/><path d="m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98"/></svg> Offshore Pelagic</span></div>
+  <div class="species-grid" data-section-grid="pelagic">
 
-    <!-- Yellowtail -->
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="pelagic">
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="pelagic" tabindex="0" role="button" aria-label="Yellowtail — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/5853956/medium.jpg" alt="Yellowtail" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/5853956/medium.jpg" alt="Yellowtail (Seriola lalandi)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--frequent">Frequent</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Yellowtail</h3><span class="sci">Seriola lalandi</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Marine Explorer (Dr John Turnbull), some rights reserved (CC BY-NC-SA)</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">❄️ Cool water</span></div>
-        <p class="card-desc">Baja's most prized panga fish. Hard charging and excellent table fare. Best Jan–June on Pacific. Kelp paddies, rocky points, and kelp beds.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Dec–Jun</span></div>
+        <p class="card-desc">Baja’s flagship panga fish — hard-charging and superb on the plate. Best Dec–Jun on the Pacific around kelp paddies, rocky points, and Cedros.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
-    <!-- Dorado -->
-    <div class="species-card" data-freq="frequent" data-coast="both" data-type="pelagic">
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="pelagic" tabindex="0" role="button" aria-label="Dorado — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/361046671/medium.jpg" alt="Dorado" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/361046671/medium.jpg" alt="Dorado (Coryphaena hippurus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--frequent">Frequent</div>
         <div class="limit-badge">2 / day</div>
         <div class="card-photo-name"><h3>Dorado</h3><span class="sci">Coryphaena hippurus</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Luis P. B., some rights reserved (CC BY-NC), uploaded by Luis P. B.</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">☀️ Summer peak</span></div>
-        <p class="card-desc">Iridescent gold and blue flanks — the most spectacular fish in Baja waters. Explosive topwater action. Fast-growing, fast-eating. Best June–Nov.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Jun–Nov</span></div>
+        <p class="card-desc">Iridescent gold-and-blue flanks make this the most spectacular fish in Baja waters. Explosive topwater action, fast-growing. Both coasts, Jun–Nov.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts</span></div>
       </div>
     </div>
 
-    <!-- Yellowfin Tuna -->
-    <div class="species-card" data-freq="medium" data-coast="both" data-type="pelagic">
+    <div class="species-card" data-reveal data-freq="medium" data-coast="both" data-type="pelagic" tabindex="0" role="button" aria-label="Yellowfin Tuna — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/207078977/medium.jpg" alt="Yellowfin Tuna" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/207078977/medium.jpg" alt="Yellowfin Tuna (Thunnus albacares)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--medium">Seasonal</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Yellowfin Tuna</h3><span class="sci">Thunnus albacares</span></div>
-        <div class="photo-credit">© iNaturalist / NOAA</div>
+        <div class="photo-credit">(c) Almcglashan, some rights reserved (CC BY-SA)</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">☀️ June–Nov</span></div>
-        <p class="card-desc">The ultimate offshore target. High-speed, deep-diving tuna up to 400 lbs. Magdalena Bay and East Cape for big fish. Chunking with live bait.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Jul–Nov peak</span></div>
+        <p class="card-desc">The ultimate offshore target — high-speed, deep-diving tuna to 400 lb. Mag Bay cows and East Cape giants. Chunking and live bait, Jul–Nov.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
-    <!-- Wahoo -->
-    <div class="species-card" data-freq="medium" data-coast="both" data-type="pelagic">
+    <div class="species-card" data-reveal data-freq="medium" data-coast="pac" data-type="pelagic" tabindex="0" role="button" aria-label="Pacific Bluefin — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/206402044/medium.jpeg" alt="Wahoo" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--medium">Seasonal</div>
-        <div class="limit-badge">5 / day</div>
-        <div class="card-photo-name"><h3>Wahoo</h3><span class="sci">Acanthocybium solandri</span></div>
-        <div class="photo-credit">© iNaturalist / NOAA</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">☀️ Summer–Fall</span></div>
-        <p class="card-desc">The fastest fish in the ocean — over 60 mph. Razor teeth, iridescent blue bars. Trolled high-speed lures along current edges. Outstanding on the plate.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
-      </div>
-    </div>
-
-    <!-- Pacific Bluefin Tuna -->
-    <div class="species-card" data-freq="medium" data-coast="pac" data-type="pelagic">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/321268848/medium.jpg" alt="Pacific Bluefin Tuna" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/321268848/medium.jpg" alt="Pacific Bluefin (Thunnus orientalis)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--medium">Seasonal</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Pacific Bluefin</h3><span class="sci">Thunnus orientalis</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Tom Mills, some rights reserved (CC BY-NC), uploaded by Tom Mills</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">☀️ Spring–Summer</span></div>
-        <p class="card-desc">The apex predator of the Pacific — 600+ lb giants running the offshore banks. Migrating schools follow the Pacific current from spring through summer. Epic fight on any tackle.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">May–Oct</span></div>
+        <p class="card-desc">Apex Pacific tuna — 600+ lb giants running the offshore banks May–Oct. Migrating schools follow the Pacific current. Epic fight on any tackle.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
-    <!-- Bigeye Tuna -->
-    <div class="species-card" data-freq="medium" data-coast="both" data-type="pelagic">
+    <div class="species-card" data-reveal data-freq="medium" data-coast="both" data-type="pelagic" tabindex="0" role="button" aria-label="Bigeye Tuna — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/302883489/medium.jpg" alt="Bigeye Tuna" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/302883489/medium.jpg" alt="Bigeye Tuna (Thunnus obesus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--medium">Seasonal</div>
         <div class="limit-badge">2 / day</div>
         <div class="card-photo-name"><h3>Bigeye Tuna</h3><span class="sci">Thunnus obesus</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Bobby McCabe, some rights reserved (CC BY), uploaded by Bobby McCabe</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">☀️ Offshore year-round</span></div>
-        <p class="card-desc">Big-eyed deep diver up to 400 lbs. Night bite specialist — comes shallow after dark. Prized for sashimi quality meat. Caught on live bait and deep-set rigs offshore.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Offshore year-round</span></div>
+        <p class="card-desc">Big-eyed deep diver to 400 lb. A night-bite specialist that comes shallow after dark. Prized for sashimi-grade meat on deep-set offshore rigs.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts</span></div>
       </div>
     </div>
 
-    <!-- Pacific Bonito -->
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="pelagic">
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="pelagic" tabindex="0" role="button" aria-label="Pacific Bonito — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/229544907/medium.jpg" alt="Pacific Bonito" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/229544907/medium.jpg" alt="Pacific Bonito (Sarda chiliensis)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--frequent">Frequent</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Pacific Bonito</h3><span class="sci">Sarda chiliensis</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Jacob, some rights reserved (CC BY-NC), uploaded by Jacob</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">❄️ Cool water</span></div>
-        <p class="card-desc">Fast schooling tuna relative with striped back and powerful fight on light tackle. Excellent live bait for larger species. Smoked bonito is a Baja panga tradition.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Apr–Oct</span></div>
+        <p class="card-desc">Fast schooling tuna relative with a striped back and a hard fight on light tackle. Prime live/cut bait too — smoked bonito is a panga tradition.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="both" data-type="pelagic" tabindex="0" role="button" aria-label="Wahoo — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/206402044/medium.jpeg" alt="Wahoo (Acanthocybium solandri)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--medium">Seasonal</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Wahoo</h3><span class="sci">Acanthocybium solandri</span></div>
+        <div class="photo-credit">(c) Pauline Fey, some rights reserved (CC BY-NC), uploaded by Pauline Fey</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Summer–Fall</span></div>
+        <p class="card-desc">The fastest fish in the ocean — over 60 mph, razor teeth, electric-blue bars. High-speed trolling along current edges off Cerralvo and the banks.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="pelagic" tabindex="0" role="button" aria-label="Skipjack Tuna — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/31259311/medium.jpeg" alt="Skipjack Tuna (Katsuwonus pelamis)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Skipjack Tuna</h3><span class="sci">Katsuwonus pelamis</span></div>
+        <div class="photo-credit">(c) Clinton Duffy, some rights reserved (CC BY-NC), uploaded by Clinton Duffy</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Feb–Nov</span></div>
+        <p class="card-desc">Abundant schooling tuna of the Sea of Cortez — a reliable panga catch and prime live bait for marlin and dorado. Hard runs on light tackle, Feb–Nov.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
   </div>
 
-  <!-- ── BILLFISH ── -->
-  <div class="section-divider"><span>⚡ Billfish</span></div>
-  <div class="species-grid">
+  <!-- zap: Billfish -->
+  <div class="section-divider" data-section="billfish"><span><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg> Billfish</span></div>
+  <div class="species-grid" data-section-grid="billfish">
 
-    <!-- Striped Marlin -->
-    <div class="species-card" data-freq="rare" data-coast="both" data-type="billfish">
+    <div class="species-card" data-reveal data-freq="rare" data-coast="both" data-type="billfish" tabindex="0" role="button" aria-label="Striped Marlin — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/86518084/medium.jpg" alt="Striped Marlin" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/33570742/medium.jpeg" alt="Striped Marlin (Kajikia audax)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--rare">Trophy</div>
         <div class="limit-badge">1 / day</div>
         <div class="card-photo-name"><h3>Striped Marlin</h3><span class="sci">Kajikia audax</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Fernando Olea, some rights reserved (CC BY-NC), uploaded by Fernando Olea</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">🌊 Nov–Mar peak</span></div>
-        <p class="card-desc">Baja's billfish king. Cabo and East Cape hold world-class concentrations Nov–Feb. Tail-walking runs and aerial displays. Mostly C&R.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>1</strong></div><span class="card-cta-pts">5 pts each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Nov–Apr peak</span></div>
+        <p class="card-desc">Baja’s billfish king. Cabo, East Cape, and the Mag Bay fall run hold world-class concentrations. Tail-walking aerial displays. Mostly C&amp;R.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>1</strong></div><span class="card-cta-pts">5 pts</span></div>
       </div>
     </div>
 
-    <!-- Blue Marlin -->
-    <div class="species-card" data-freq="rare" data-coast="cor" data-type="billfish">
+    <div class="species-card" data-reveal data-freq="rare" data-coast="both" data-type="billfish" tabindex="0" role="button" aria-label="Blue Marlin — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/161629363/medium.jpg" alt="Blue Marlin" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/161629363/medium.jpg" alt="Blue Marlin (Makaira nigricans)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--rare">Trophy</div>
         <div class="limit-badge">1 / day</div>
         <div class="card-photo-name"><h3>Blue Marlin</h3><span class="sci">Makaira nigricans</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Keith Martin-Smith, some rights reserved (CC BY-NC-SA), uploaded by Keith Martin-Smith</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">☀️ Summer peak</span></div>
-        <p class="card-desc">The ultimate trophy billfish — 1,000+ lb giants in the East Cape. Cabo San Lucas hosts the legendary Los Cabos Billfish Tournament. Powerful and acrobatic. Mostly C&R.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>1</strong></div><span class="card-cta-pts">5 pts each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Summer peak</span></div>
+        <p class="card-desc">The ultimate trophy billfish — 1,000+ lb grander potential off the East Cape and Cabo. Powerful and acrobatic. Summer peak. Mostly C&amp;R.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>1</strong></div><span class="card-cta-pts">5 pts</span></div>
       </div>
     </div>
 
-    <!-- Sailfish -->
-    <div class="species-card" data-freq="medium" data-coast="both" data-type="billfish">
+    <div class="species-card" data-reveal data-freq="rare" data-coast="cor" data-type="billfish" tabindex="0" role="button" aria-label="Black Marlin — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/152543/medium.jpg" alt="Sailfish" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/38638414/medium.jpeg" alt="Black Marlin (Istiompax indica)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--rare">Trophy</div>
+        <div class="limit-badge">1 / day</div>
+        <div class="card-photo-name"><h3>Black Marlin</h3><span class="sci">Istiompax indica</span></div>
+        <div class="photo-credit">(c) Michael Keogh, some rights reserved (CC BY-NC-SA), uploaded by Michael Keogh</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">Jun–Nov</span></div>
+        <p class="card-desc">Recognized Sea of Cortez trophy billfish, listed alongside blue and striped on Cortez charts. Less common but a true heavyweight. Summer. Mostly C&amp;R.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>1</strong></div><span class="card-cta-pts">5 pts</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="both" data-type="billfish" tabindex="0" role="button" aria-label="Sailfish — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/152543/medium.jpg" alt="Sailfish (Istiophorus platypterus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--medium">Seasonal</div>
         <div class="limit-badge">1 / day</div>
         <div class="card-photo-name"><h3>Sailfish</h3><span class="sci">Istiophorus platypterus</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Robin Hughes, some rights reserved (CC BY-NC-SA)</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">☀️ Warm months</span></div>
-        <p class="card-desc">Spectacular sail-dorsal billfish known for blistering runs and aerial leaps. Lighter than marlin but pound-for-pound the most exciting billfish on any tackle. Full C&R recommended.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>1</strong></div><span class="card-cta-pts">5 pts each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Warm months</span></div>
+        <p class="card-desc">Spectacular sail-dorsal billfish known for blistering runs and aerial leaps. Pound-for-pound the most exciting billfish on any tackle. Full C&amp;R recommended.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>1</strong></div><span class="card-cta-pts">5 pts</span></div>
       </div>
     </div>
 
-    <!-- Swordfish -->
-    <div class="species-card" data-freq="rare" data-coast="pac" data-type="billfish">
+    <div class="species-card" data-reveal data-freq="rare" data-coast="pac" data-type="billfish" tabindex="0" role="button" aria-label="Swordfish — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/11989857/medium.jpg" alt="Swordfish" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/11989857/medium.jpg" alt="Swordfish (Xiphias gladius)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--rare">Trophy</div>
         <div class="limit-badge">1 / day</div>
         <div class="card-photo-name"><h3>Swordfish</h3><span class="sci">Xiphias gladius</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) FWC Fish and Wildlife Research Institute, some rights reserved (CC BY-NC-ND)</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">🌙 Night bite</span></div>
-        <p class="card-desc">Daytime deep diver, nighttime surface feeder. Broadbill swordfish targeted on the Pacific side with deep-drop lights after dark. Among the most prized catches in all of Baja fishing.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>1</strong></div><span class="card-cta-pts">5 pts each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Night / deep-drop</span></div>
+        <p class="card-desc">Daytime deep diver, nighttime surface feeder. Broadbill targeted on the Pacific with deep-drop lights after dark — among the most prized catches in Baja.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>1</strong></div><span class="card-cta-pts">5 pts</span></div>
       </div>
     </div>
 
   </div>
 
-  <!-- ── INSHORE & REEF ── -->
-  <div class="section-divider"><span>🪸 Inshore &amp; Reef</span></div>
-  <div class="species-grid">
+  <!-- waves: Inshore &amp; Reef -->
+  <div class="section-divider" data-section="inshore"><span><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg> Inshore &amp; Reef</span></div>
+  <div class="species-grid" data-section-grid="inshore">
 
-    <!-- Roosterfish -->
-    <div class="species-card" data-freq="rare" data-coast="cor" data-type="inshore">
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="cor" data-type="inshore" tabindex="0" role="button" aria-label="Pez Fuerte — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/246384258/medium.png" alt="Roosterfish" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--rare">Prize</div>
-        <div class="limit-badge">2 / day</div>
-        <div class="card-photo-name"><h3>Roosterfish</h3><span class="sci">Nematistius pectoralis</span></div>
-        <div class="photo-credit">© iNaturalist</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">🌊 Warm water</span></div>
-        <p class="card-desc">The ultimate inshore trophy. Unmistakable 7-spike dorsal comb, blistering runs. Mostly catch-and-release. Year-round in Cortez, peaking June–Oct.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts each</span></div>
-      </div>
-    </div>
-
-    <!-- Cabrilla -->
-    <div class="species-card" data-freq="frequent" data-coast="cor" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/59027228/medium.jpeg" alt="Cabrilla" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--frequent">Frequent</div>
-        <div class="limit-badge">5 / day ⚠️</div>
-        <div class="card-photo-name"><h3>Cabrilla</h3><span class="sci">Mycteroperca rosacea</span></div>
-        <div class="photo-credit">© iNaturalist</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">📍 Rocky reefs</span></div>
-        <p class="card-desc">Leopard grouper of the Cortez — aggressive, structure-loving, excellent eating. Can display stunning yellow-orange xanthic color phase. Confirm local limits.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong> ⚠️</div><span class="card-cta-pts">1 pt each</span></div>
-      </div>
-    </div>
-
-    <!-- Sierra -->
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/384548363/medium.jpg" alt="Sierra Mackerel" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--frequent">Frequent</div>
-        <div class="limit-badge">5 / day</div>
-        <div class="card-photo-name"><h3>Sierra</h3><span class="sci">Scomberomorus sierra</span></div>
-        <div class="photo-credit">© iNaturalist / NOAA</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">❄️ Winter peak</span></div>
-        <p class="card-desc">The Pacific's answer to Spanish mackerel — spotted flanks, razor teeth, fast and furious on light tackle. Outstanding smoked or grilled. Easy limit fish Dec–Mar.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
-      </div>
-    </div>
-
-    <!-- White Seabass -->
-    <div class="species-card" data-freq="medium" data-coast="pac" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/17872930/medium.jpg" alt="White Seabass" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--medium">Seasonal</div>
-        <div class="limit-badge">2 / day</div>
-        <div class="card-photo-name"><h3>White Seabass</h3><span class="sci">Atractoscion nobilis</span></div>
-        <div class="photo-credit">© iNaturalist</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">🌸 Spring spawn</span></div>
-        <p class="card-desc">The ghost of the kelp forest — massive croaker exceeding 80 lbs. Spring spawning run brings them into the surf zone. Kelp edges at dawn. One of Baja Pacific's premier table fish.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts each</span></div>
-      </div>
-    </div>
-
-    <!-- California Halibut -->
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/147660671/medium.jpg" alt="California Halibut" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--frequent">Frequent</div>
-        <div class="limit-badge">5 / day</div>
-        <div class="card-photo-name"><h3>California Halibut</h3><span class="sci">Paralichthys californicus</span></div>
-        <div class="photo-credit">© iNaturalist</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">☀️ Summer flatties</span></div>
-        <p class="card-desc">Flat-bodied ambush predator up to 60 lbs lurking on sandy Pacific bottoms. Drifting live bait or slow-trolling over sandy structure. Outstanding eating — delicate white flesh.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
-      </div>
-    </div>
-
-    <!-- Lingcod -->
-    <div class="species-card" data-freq="medium" data-coast="pac" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/4705/medium.jpg" alt="Lingcod" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--medium">Seasonal</div>
-        <div class="limit-badge">2 / day</div>
-        <div class="card-photo-name"><h3>Lingcod</h3><span class="sci">Ophiodon elongatus</span></div>
-        <div class="photo-credit">© iNaturalist</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">❄️ Cold water</span></div>
-        <p class="card-desc">Ferocious predator with enormous mouth and electric-blue flesh when raw (turns white when cooked). Found on rocky Pacific reefs 50–400 ft. Will eat anything that moves — and a lot that doesn't.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts each</span></div>
-      </div>
-    </div>
-
-    <!-- Pacific Barracuda -->
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/166109748/medium.jpg" alt="Pacific Barracuda" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--frequent">Frequent</div>
-        <div class="limit-badge">5 / day</div>
-        <div class="card-photo-name"><h3>Pacific Barracuda</h3><span class="sci">Sphyraena argentea</span></div>
-        <div class="photo-credit">© iNaturalist</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">☀️ Year-round</span></div>
-        <p class="card-desc">Sleek silver torpedo with razor teeth. Schools along kelp edges and offshore structure. Smashes iron jigs and fly-lined bait. Great sport on light tackle and delicious when fresh.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
-      </div>
-    </div>
-
-    <!-- Colorado Snapper (Pargo) -->
-    <div class="species-card" data-freq="frequent" data-coast="cor" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/631903028/medium.jpg" alt="Colorado Snapper" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--frequent">Frequent</div>
-        <div class="limit-badge">5 / day</div>
-        <div class="card-photo-name"><h3>Pargo Colorado</h3><span class="sci">Lutjanus colorado</span></div>
-        <div class="photo-credit">© iNaturalist</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">📍 Rocky reef</span></div>
-        <p class="card-desc">Brilliant red snapper of the Cortez — "pargo" to every panga captain. Found over rocky structure 20–200 ft. Strong fighter and arguably the best eating fish on the Cortez side.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
-      </div>
-    </div>
-
-    <!-- Longfin Yellowtail / Pez Fuerte -->
-    <div class="species-card" data-freq="frequent" data-coast="cor" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/166671542/medium.jpg" alt="Longfin Yellowtail" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/130330796/medium.jpeg" alt="Pez Fuerte (Seriola rivoliana)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
         <div class="freq-tag freq-tag--frequent">Frequent</div>
         <div class="limit-badge">5 / day</div>
         <div class="card-photo-name"><h3>Pez Fuerte</h3><span class="sci">Seriola rivoliana</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) Dennis Rabeling, some rights reserved (CC BY-NC-ND), uploaded by Dennis Rabeling</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">☀️ Warm water</span></div>
-        <p class="card-desc">Longfin amberjack — the Cortez's bruising inshore yellowtail. Hits iron jigs and live bait hard over rocky structure. Pound-for-pound one of the strongest fish you'll ever hook.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">Warm-water peak</span></div>
+        <p class="card-desc">The longfin amberjack — the Cortez’s bruising inshore yellowtail. Hits iron and live bait hard over rocky structure. Pound-for-pound one of the strongest fish you’ll hook.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
       </div>
     </div>
 
-    <!-- Giant Sea Bass -->
-    <div class="species-card" data-freq="rare" data-coast="pac" data-type="inshore">
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Sierra — view photo">
       <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/523249777/medium.jpg" alt="Giant Sea Bass" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--rare">C&amp;R Only</div>
-        <div class="limit-badge">C&amp;R</div>
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/384548363/medium.jpg" alt="Sierra (Scomberomorus sierra)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Sierra</h3><span class="sci">Scomberomorus sierra</span></div>
+        <div class="photo-credit">(c) Ricardo Betancur, some rights reserved (CC BY-NC-ND)</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Nov–Apr</span></div>
+        <p class="card-desc">The Pacific’s answer to Spanish mackerel — spotted flanks, razor teeth, fast and furious on light tackle. Outstanding smoked or grilled. Easy limits Nov–Apr.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="rare" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Roosterfish — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/526058077/medium.jpg" alt="Roosterfish (Nematistius pectoralis)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--rare">Trophy</div>
+        <div class="limit-badge">2 / day</div>
+        <div class="card-photo-name"><h3>Roosterfish</h3><span class="sci">Nematistius pectoralis</span></div>
+        <div class="photo-credit">(c) bpfish, some rights reserved (CC BY-NC)</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Jun–Oct peak</span></div>
+        <p class="card-desc">The ultimate inshore trophy — unmistakable 7-spike dorsal comb and blistering surf-zone runs. Mostly catch-and-release. Jun–Oct peak on both coasts.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Cabrilla — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/59027228/medium.jpeg" alt="Cabrilla (Mycteroperca rosacea)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Cabrilla</h3><span class="sci">Mycteroperca rosacea</span></div>
+        <div class="photo-credit">(c) craigjhowe, some rights reserved (CC BY-NC-ND)</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Year-round</span></div>
+        <p class="card-desc">Leopard grouper of the Cortez — aggressive, structure-loving, and excellent eating. Can flush a stunning golden xanthic phase. Confirm local limits.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="rare" data-coast="cor" data-type="inshore" tabindex="0" role="button" aria-label="Golden Grouper — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/59027228/medium.jpeg" alt="Golden Grouper (Mycteroperca rosacea)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--rare">Trophy</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Golden Grouper</h3><span class="sci">Mycteroperca rosacea</span></div>
+        <div class="photo-credit">(c) craigjhowe, some rights reserved (CC BY-NC-ND)</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">May–Sep</span></div>
+        <p class="card-desc">The rare xanthic color morph of the leopard grouper (same species as cabrilla) — flushed brilliant gold-orange. A prized, photogenic Cortez catch.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="rare" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Gulf Grouper — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/356737663/medium.jpg" alt="Gulf Grouper (Mycteroperca jordani)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--rare">Trophy</div>
+        <div class="limit-badge">C&R</div>
+        <div class="card-photo-name"><h3>Gulf Grouper</h3><span class="sci">Mycteroperca jordani</span></div>
+        <div class="photo-credit">(c) Luis P. B., some rights reserved (CC BY-NC), uploaded by Luis P. B.</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Spring–summer</span></div>
+        <p class="card-desc">Endemic Gulf apex grouper to 200 lb and the flagship recovery species of Cabo Pulmo. IUCN Endangered and protected — handle with care, catch-and-release only.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>C&amp;R</strong></div><span class="card-cta-pts">Protected</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Broomtail Grouper — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/384524989/medium.jpg" alt="Broomtail Grouper (Mycteroperca xenarcha)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--medium">Seasonal</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Broomtail Grouper</h3><span class="sci">Mycteroperca xenarcha</span></div>
+        <div class="photo-credit">(c) Douglas Jiang, some rights reserved (CC BY-NC), uploaded by Douglas Jiang</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Warm-water peak</span></div>
+        <p class="card-desc">Large reef grouper of southern Baja with a distinctive ragged “broom” tail. A genuine East Cape and Cabo Pulmo reef catch, often confused with Gulf grouper.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="Calico Bass — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/107880234/medium.jpg" alt="Calico Bass (Paralabrax clathratus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Calico Bass</h3><span class="sci">Paralabrax clathratus</span></div>
+        <div class="photo-credit">(c) Brian Gratwicke, some rights reserved (CC BY)</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Year-round</span></div>
+        <p class="card-desc">The classic kelp bass of the northern Pacific — a top Cedros and Coronados target. Ambushes bait and iron in the kelp and structure. Year-round, summer best.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="Barred Sand Bass — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/449004516/medium.jpg" alt="Barred Sand Bass (Paralabrax nebulifer)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Barred Sand Bass</h3><span class="sci">Paralabrax nebulifer</span></div>
+        <div class="photo-credit">(c) Jeremy_Jodoin, some rights reserved (CC BY-NC), uploaded by Jeremy_Jodoin</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Summer</span></div>
+        <p class="card-desc">A common northern Pacific bass alongside the calico — a routine panga and skiff catch over sand and structure. Summer spawning aggregations bunch them up.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Spotted Bay Bass — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/336062813/medium.jpg" alt="Spotted Bay Bass (Paralabrax maculatofasciatus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Spotted Bay Bass</h3><span class="sci">Paralabrax maculatofasciatus</span></div>
+        <div class="photo-credit">(c) koakinley, some rights reserved (CC BY-NC)</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Year-round</span></div>
+        <p class="card-desc">A light-tackle bay favorite of estuaries and lagoons (San Quintin, Mag Bay, the upper Gulf). Aggressive on small plastics and bait. Year-round.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Pargo Colorado — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/322565728/medium.jpeg" alt="Pargo Colorado (Lutjanus colorado)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Pargo Colorado</h3><span class="sci">Lutjanus colorado</span></div>
+        <div class="photo-credit">(c) Alberto Alcalá, some rights reserved (CC BY), uploaded by Alberto Alcalá</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Apr–Jul peak</span></div>
+        <p class="card-desc">The brilliant red “pargo” every panga captain targets, over rocky structure 20–200 ft. A strong fighter and arguably the best eating on the Cortez side.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Yellow Snapper — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/54948027/medium.jpg" alt="Yellow Snapper (Lutjanus argentiventris)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Yellow Snapper</h3><span class="sci">Lutjanus argentiventris</span></div>
+        <div class="photo-credit">(c) Felipe Campos, some rights reserved (CC BY-NC), uploaded by Felipe Campos</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Apr–Jul peak</span></div>
+        <p class="card-desc">One of the most common reef snappers in the southern Gulf and around the islands — golden-yellow tail, willing biter, fine eating. Year-round, Apr–Jul peak.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Barred Pargo — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/53801076/medium.jpeg" alt="Barred Pargo (Hoplopagrus guentherii)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--medium">Seasonal</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Barred Pargo</h3><span class="sci">Hoplopagrus guentherii</span></div>
+        <div class="photo-credit">(c) Martin Purdy, some rights reserved (CC BY), uploaded by Martin Purdy</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Apr–Jul peak</span></div>
+        <p class="card-desc">A bruising rocky-reef snapper (its own genus, Hoplopagrus) very common near shore at the East Cape and islands. Dives hard for structure the instant it’s hooked.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="rare" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Dog Snapper — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/352574462/medium.jpg" alt="Dog Snapper (Lutjanus novemfasciatus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--rare">Trophy</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Dog Snapper</h3><span class="sci">Lutjanus novemfasciatus</span></div>
+        <div class="photo-credit">(c) Luis P. B., some rights reserved (CC BY-NC), uploaded by Luis P. B.</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Summer peak</span></div>
+        <p class="card-desc">The Pacific “cubera” — the biggest, hardest-fighting reef snapper, the legendary “big toad” pargo. An East Cape and Cabo Pulmo structure trophy. Summer peak.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="cor" data-type="inshore" tabindex="0" role="button" aria-label="Mullet Snapper — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/203277/medium.jpg" alt="Mullet Snapper (Lutjanus aratus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--medium">Seasonal</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Mullet Snapper</h3><span class="sci">Lutjanus aratus</span></div>
+        <div class="photo-credit">(c) Mark Rosenstein, some rights reserved (CC BY-NC)</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">Warm months</span></div>
+        <p class="card-desc">Schooling reef snapper cited around Espiritu Santo and the La Paz islands. Fast and aggressive over structure in the warm months — a fun mixed-bag target.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Gulf Corvina — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/57117308/medium.jpg" alt="Gulf Corvina (Cynoscion othonopterus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--medium">Seasonal</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Gulf Corvina</h3><span class="sci">Cynoscion othonopterus</span></div>
+        <div class="photo-credit">(c) Renzo Cisneros, some rights reserved (CC BY-NC), uploaded by Renzo Cisneros</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Feb–Apr run</span></div>
+        <p class="card-desc">The famous upper-Gulf croaker of the Feb–Apr spawning run (San Felipe, El Golfo). Light-tackle fun and prized white flesh. Gulf corvina, Cynoscion othonopterus.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="White Seabass — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/17872930/medium.jpg" alt="White Seabass (Atractoscion nobilis)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--medium">Seasonal</div>
+        <div class="limit-badge">2 / day</div>
+        <div class="card-photo-name"><h3>White Seabass</h3><span class="sci">Atractoscion nobilis</span></div>
+        <div class="photo-credit">(c) uzun, some rights reserved (CC BY-NC), uploaded by uzun</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Mar–Jul</span></div>
+        <p class="card-desc">The ghost of the kelp forest — a massive croaker exceeding 80 lb. The spring spawning run brings them into the surf zone. Kelp edges at dawn, Mar–Jul.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="California Halibut — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/147660671/medium.jpg" alt="California Halibut (Paralichthys californicus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>California Halibut</h3><span class="sci">Paralichthys californicus</span></div>
+        <div class="photo-credit">(c) Alexis, some rights reserved (CC BY-NC), uploaded by Alexis</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Mar–Sep</span></div>
+        <p class="card-desc">Flat-bodied ambush predator to 60 lb on sandy Pacific bottoms. Drift live bait or slow-troll over sandy structure. Delicate white flesh — outstanding eating.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="Lingcod — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/4705/medium.jpg" alt="Lingcod (Ophiodon elongatus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--medium">Seasonal</div>
+        <div class="limit-badge">2 / day</div>
+        <div class="card-photo-name"><h3>Lingcod</h3><span class="sci">Ophiodon elongatus</span></div>
+        <div class="photo-credit">(c) Dan Hershman, some rights reserved (CC BY)</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Nov–Mar</span></div>
+        <p class="card-desc">Ferocious predator with an enormous mouth and electric-blue flesh when raw. Rocky Pacific reefs 50–400 ft, Nov–Mar. Will eat anything that moves.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>2</strong></div><span class="card-cta-pts">2.5 pts</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="Pacific Barracuda — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/431738093/medium.jpeg" alt="Pacific Barracuda (Sphyraena argentea)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Pacific Barracuda</h3><span class="sci">Sphyraena argentea</span></div>
+        <div class="photo-credit">(c) Dave Fitzgerald, some rights reserved (CC BY-NC), uploaded by Dave Fitzgerald</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Year-round</span></div>
+        <p class="card-desc">Sleek silver torpedo with razor teeth, schooling along kelp edges and offshore structure. Smashes iron jigs and fly-lined bait. Great light-tackle sport.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Jack Crevalle — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/256100254/medium.jpeg" alt="Jack Crevalle (Caranx caninus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Jack Crevalle</h3><span class="sci">Caranx caninus</span></div>
+        <div class="photo-credit">(c) Alberto Alcalá, some rights reserved (CC BY), uploaded by Alberto Alcalá</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">May–Nov</span></div>
+        <p class="card-desc">A brawling schooling jack (Pacific crevalle) that crushes topwater and chrome with reckless aggression in warm Cortez bays. Relentless fighter — pure fun on light gear.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="cor" data-type="inshore" tabindex="0" role="button" aria-label="Bigeye Trevally — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/1411110/medium.jpg" alt="Bigeye Trevally (Caranx sexfasciatus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--medium">Seasonal</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Bigeye Trevally</h3><span class="sci">Caranx sexfasciatus</span></div>
+        <div class="photo-credit">(c) Mark Rosenstein, some rights reserved (CC BY-NC), uploaded by Mark Rosenstein</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">Summer–Fall</span></div>
+        <p class="card-desc">Schooling jack commonly caught around the La Paz islands in the warm months. Hard, dogged runs on light tackle — a reliable structure-edge target. Summer–Fall.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="medium" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Pompano — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/604934570/medium.jpg" alt="Pompano (Trachinotus rhodopus)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--medium">Seasonal</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Pompano</h3><span class="sci">Trachinotus rhodopus</span></div>
+        <div class="photo-credit">(c) Alberto Alcalá, some rights reserved (CC BY), uploaded by Alberto Alcalá</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Summer–Fall</span></div>
+        <p class="card-desc">A surf-zone and beach pompano — a common light-tackle catch around La Paz beaches, the islands, and East Cape. Quick, scrappy, and excellent eating. Summer–Fall.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Ladyfish (Machete) — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/64532599/medium.jpg" alt="Ladyfish (Machete) (Elops affinis)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Ladyfish (Machete)</h3><span class="sci">Elops affinis</span></div>
+        <div class="photo-credit">(c) Programa Marino del Golfo de California, some rights reserved (CC BY-NC-SA), uploaded by Programa Marino del Golfo de California</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Warm months</span></div>
+        <p class="card-desc">The “machete” — a silvery, acrobatic light-tackle and fly target on East Cape and La Paz charts. Also a top live bait for roosterfish. Warm months.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="rare" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="Black Snook — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/643714016/medium.jpg" alt="Black Snook (Centropomus nigrescens)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--rare">Trophy</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Black Snook</h3><span class="sci">Centropomus nigrescens</span></div>
+        <div class="photo-credit">(c) Alberto Alcalá, some rights reserved (CC BY), uploaded by Alberto Alcalá</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">May–Oct peak</span></div>
+        <p class="card-desc">A mangrove trophy of the Pacific lagoons — Mag Bay and Lopez Mateos. Ambushes bait in the channels and roots. Powerful, structure-savvy. May–Oct peak.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="both" data-type="inshore" tabindex="0" role="button" aria-label="Triggerfish — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/13218878/medium.jpg" alt="Triggerfish (Balistes polylepis)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Triggerfish</h3><span class="sci">Balistes polylepis</span></div>
+        <div class="photo-credit">(c) Peter Krottje, some rights reserved (CC BY-NC), uploaded by Peter Krottje</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--both"><span class="coast-dot"></span>Both Coasts</span><span class="season-chip">Year-round</span></div>
+        <p class="card-desc">A very common reef and upper-Gulf staple with tough leathery skin and crushing teeth. Excellent eating once cleaned. Year-round, often a welcome bycatch.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="Sheephead — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/106228676/medium.jpg" alt="Sheephead (Bodianus pulcher)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Sheephead</h3><span class="sci">Bodianus pulcher</span></div>
+        <div class="photo-credit">(c) victorbach, some rights reserved (CC BY-NC), uploaded by victorbach</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Year-round</span></div>
+        <p class="card-desc">Bold red-and-black wrasse with crushing teeth for urchins and shellfish; males show a striking white chin. Kelp forests of Pacific Baja. Firm, sweet flesh.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="frequent" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="Ocean Whitefish — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/508985302/medium.jpg" alt="Ocean Whitefish (Caulolatilus princeps)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--frequent">Frequent</div>
+        <div class="limit-badge">5 / day</div>
+        <div class="card-photo-name"><h3>Ocean Whitefish</h3><span class="sci">Caulolatilus princeps</span></div>
+        <div class="photo-credit">(c) Jacob, some rights reserved (CC BY-NC), uploaded by Jacob</div>
+      </div>
+      <div class="card-info">
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Year-round</span></div>
+        <p class="card-desc">An extremely common Pacific rocky-reef catch (Cedros, the Coronados, all north-Pacific structure) and badly underrated eating. A reliable mixed-bag bottom fish.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt</span></div>
+      </div>
+    </div>
+
+    <div class="species-card" data-reveal data-freq="rare" data-coast="pac" data-type="inshore" tabindex="0" role="button" aria-label="Giant Sea Bass — view photo">
+      <div class="card-photo">
+        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/260710655/medium.jpg" alt="Giant Sea Bass (Stereolepis gigas)" loading="lazy" onerror="this.closest('.card-photo').classList.add('img-failed')">
+        <div class="freq-tag freq-tag--rare">Trophy</div>
+        <div class="limit-badge">C&R</div>
         <div class="card-photo-name"><h3>Giant Sea Bass</h3><span class="sci">Stereolepis gigas</span></div>
-        <div class="photo-credit">© iNaturalist</div>
+        <div class="photo-credit">(c) uwkwaj, some rights reserved (CC BY-NC), uploaded by uwkwaj</div>
       </div>
       <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">📍 Kelp structure</span></div>
-        <p class="card-desc">Ancient giant reaching 600+ lbs and 70+ years. Now fully protected — catch-and-release only. Encountering one in the kelp is an unforgettable experience. Handle with care and respect.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>C&amp;R</strong></div><span class="card-cta-pts">⚠️ Protected</span></div>
-      </div>
-    </div>
-
-    <!-- Jack Crevalle -->
-    <div class="species-card" data-freq="frequent" data-coast="cor" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/92378422/medium.jpg" alt="Jack Crevalle" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--frequent">Frequent</div>
-        <div class="limit-badge">5 / day</div>
-        <div class="card-photo-name"><h3>Jack Crevalle</h3><span class="sci">Caranx hippos</span></div>
-        <div class="photo-credit">© iNaturalist</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--cor"><span class="coast-dot"></span>Sea of Cortez</span><span class="season-chip">☀️ Warm bays</span></div>
-        <p class="card-desc">Brawling schooling jack that hits topwater and chrome jigs with reckless aggression. Warm Cortez bays year-round. Relentless fighter — not the best table fish but one of the most fun to catch.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
-      </div>
-    </div>
-
-    <!-- Sheephead -->
-    <div class="species-card" data-freq="frequent" data-coast="pac" data-type="inshore">
-      <div class="card-photo">
-        <img src="https://inaturalist-open-data.s3.amazonaws.com/photos/106228676/medium.jpg" alt="Sheephead" onerror="this.parentElement.style.background='linear-gradient(135deg,#0a2540,#071b2e)'">
-        <div class="freq-tag freq-tag--frequent">Frequent</div>
-        <div class="limit-badge">5 / day</div>
-        <div class="card-photo-name"><h3>Sheephead</h3><span class="sci">Semicossyphus pulcher</span></div>
-        <div class="photo-credit">© iNaturalist</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">📍 Kelp forest</span></div>
-        <p class="card-desc">Bold red-black wrasse with crushing teeth for eating urchins and shellfish. Males develop striking white chin patch. Kelp forests of Pacific Baja. Firm, sweet white flesh.</p>
-        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>5</strong></div><span class="card-cta-pts">1 pt each</span></div>
+        <div class="card-meta-row"><span class="coast-pill coast-pill--pac"><span class="coast-dot"></span>Pacific</span><span class="season-chip">Year-round</span></div>
+        <p class="card-desc">An ancient kelp giant reaching 600+ lb and 70+ years. Fully protected — catch-and-release only. Encountering one in the kelp is unforgettable. Handle with care.</p>
+        <div class="card-cta"><div class="card-cta-limit">Daily limit <strong>C&amp;R</strong></div><span class="card-cta-pts">Protected</span></div>
       </div>
     </div>
 
@@ -1035,43 +1290,127 @@
 
 <!-- Footer -->
 <footer class="site-footer">
-  <p><strong>BAJAFISH</strong> — Species Intelligence. Images © Wikimedia Commons contributors (CC / Public Domain). Bag limits per CONAPESCA 2026.</p>
+  <p><strong>BAJAFISH</strong> &mdash; Species Intelligence. Photos via iNaturalist Open Data (CC-licensed); per-photo credit shown on each card. Bag limits per the CONAPESCA 10-point system.</p>
 </footer>
 
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Species photo">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  <div class="lightbox-cap" id="lightbox-cap"></div>
+</div>
+
 <script>
+  // ── Filtering (preserved API: filterCards(filter, btn)) ──
   function filterCards(filter, btn) {
     document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
+    if (btn) btn.classList.add('active');
 
     const cards = document.querySelectorAll('.species-card');
-    let visible = 0;
     cards.forEach((card) => {
       const coast = card.dataset.coast;
       const type  = card.dataset.type;
       let show = false;
 
-      if (filter === 'all')                                              show = true;
-      else if (filter === 'rockfish' && type === 'rockfish')            show = true;
-      else if (filter === 'pelagic'  && type === 'pelagic')             show = true;
-      else if (filter === 'billfish' && type === 'billfish')            show = true;
-      else if (filter === 'inshore'  && type === 'inshore')             show = true;
-      else if (filter === 'pac'  && (coast === 'pac'  || coast === 'both')) show = true;
-      else if (filter === 'cor'  && (coast === 'cor'  || coast === 'both')) show = true;
-      else if (filter === 'both' && coast === 'both')                   show = true;
+      if (filter === 'all')                                                 show = true;
+      else if (filter === 'rockfish' && type === 'rockfish')               show = true;
+      else if (filter === 'pelagic'  && type === 'pelagic')                show = true;
+      else if (filter === 'billfish' && type === 'billfish')               show = true;
+      else if (filter === 'inshore'  && type === 'inshore')                show = true;
+      else if (filter === 'pac'  && (coast === 'pac' || coast === 'both')) show = true;
+      else if (filter === 'cor'  && (coast === 'cor' || coast === 'both')) show = true;
+      else if (filter === 'both' && coast === 'both')                      show = true;
 
       card.style.display = show ? '' : 'none';
-      if (show) { card.style.animationDelay = (visible * 0.04) + 's'; visible++; }
     });
 
-    // Show/hide section labels based on visible cards
+    // Hero featured card is type=rockfish, coast=pac — match it to the same rules
+    const heroCard = document.querySelector('.species-hero-card');
+    const heroLabel = document.querySelector('.section-label');
+    if (heroCard) {
+      const hc = heroCard.dataset.coast, ht = heroCard.dataset.type;
+      let hs = false;
+      if (filter === 'all') hs = true;
+      else if (filter === ht) hs = true;
+      else if (filter === 'pac' && (hc === 'pac' || hc === 'both')) hs = true;
+      else if (filter === 'cor' && (hc === 'cor' || hc === 'both')) hs = true;
+      else if (filter === 'both' && hc === 'both') hs = true;
+      heroCard.style.display = hs ? '' : 'none';
+      if (heroLabel) heroLabel.style.display = hs ? '' : 'none';
+    }
+
+    // Hide a section heading + its grid when that grid has no visible cards.
     document.querySelectorAll('.section-divider').forEach(div => {
-      const next = div.nextElementSibling;
-      const grid = div.nextElementSibling?.nextElementSibling;
+      const cat = div.dataset.section;
+      const grid = document.querySelector('.species-grid[data-section-grid="' + cat + '"]');
       const hasVisible = grid && Array.from(grid.querySelectorAll('.species-card')).some(c => c.style.display !== 'none');
       div.style.display = hasVisible ? '' : 'none';
-      if (next && next.classList.contains('species-grid')) next.style.display = hasVisible ? '' : 'none';
+      if (grid) grid.style.display = hasVisible ? '' : 'none';
     });
   }
+
+  // ── Scroll-aware top bar ──
+  (function () {
+    const bar = document.getElementById('top-bar');
+    const sentinel = document.getElementById('scroll-sentinel');
+    if (bar && sentinel && 'IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        bar.classList.toggle('scrolled', !entries[0].isIntersecting);
+      }, { threshold: 0 }).observe(sentinel);
+    } else if (bar) {
+      bar.classList.add('scrolled');
+    }
+  })();
+
+  // ── Scroll reveal ──
+  (function () {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const targets = document.querySelectorAll('[data-reveal]');
+    if (reduce || !('IntersectionObserver' in window)) {
+      targets.forEach(t => t.classList.add('in-view'));
+      return;
+    }
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+    targets.forEach((t, i) => { t.style.transitionDelay = (Math.min(i, 6) * 60) + 'ms'; io.observe(t); });
+  })();
+
+  // ── Lightbox ──
+  (function () {
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbCap = document.getElementById('lightbox-cap');
+    const lbClose = document.getElementById('lightbox-close');
+
+    function openFor(cardEl) {
+      const img = cardEl.querySelector('img');
+      if (!img || cardEl.querySelector('.card-photo, .hero-card-photo')?.classList.contains('img-failed')) return;
+      const nameEl = cardEl.querySelector('.card-photo-name h3, .hero-card-name');
+      const sciEl  = cardEl.querySelector('.card-photo-name .sci, .hero-card-sci');
+      const credEl = cardEl.querySelector('.photo-credit');
+      lbImg.src = img.currentSrc || img.src;
+      lbImg.alt = img.alt || '';
+      lbCap.innerHTML = '<b>' + (nameEl ? nameEl.textContent : '') + '</b>' +
+        (sciEl ? ' &nbsp;<i>' + sciEl.textContent + '</i>' : '') +
+        (credEl ? '<br>' + credEl.textContent : '');
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() { lb.classList.remove('open'); lbImg.src = ''; document.body.style.overflow = ''; }
+
+    document.querySelectorAll('.species-card, .species-hero-card').forEach(card => {
+      card.addEventListener('click', () => openFor(card));
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFor(card); }
+      });
+    });
+    lbClose.addEventListener('click', close);
+    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) close(); });
+  })();
 </script>
 
 </body>

@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/no-emoji-em-dash.js",
+            "statusMessage": "Checking for emojis / em dashes"
+          }
+        ]
+      }
+    ]
+  }
+}

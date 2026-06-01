@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.basemaps.cartocdn.com https://unpkg.com; media-src 'self'; connect-src 'self' https://formspree.io https://docs.google.com; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self' https://formspree.io">
+  <title>BajaFish, Panga Sportfishing in Baja California</title>
+  <meta name="description" content="Live fishing intelligence and the local panga captains who put you on fish, across the Pacific and the Sea of Cortez.">
+  <link rel="manifest" href="/site/manifest.webmanifest">
+  <meta name="theme-color" content="#05121A">
+  <link rel="apple-touch-icon" href="/site/img/icon-180.png">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="icon" sizes="192x192" href="/site/img/icon-192.png">
+  <link rel="canonical" href="/site/index.html">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BajaFish">
+  <!-- Social share. Prefix og:url and og:image with the production domain when deployed. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BajaFish">
+  <meta property="og:title" content="BajaFish, Panga Sportfishing in Baja California">
+  <meta property="og:description" content="Live fishing intelligence and the local panga captains who put you on fish, across the Pacific and the Sea of Cortez.">
+  <meta property="og:image" content="/site/img/og.jpg">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BajaFish, Panga Sportfishing in Baja California">
+  <meta name="twitter:description" content="Live fishing intelligence and the local panga captains who put you on fish, across the Pacific and the Sea of Cortez.">
+  <meta name="twitter:image" content="/site/img/og.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site/site.css?v=17">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "BajaFish",
+    "description": "Live panga fishing intelligence and verified local captains across Baja California, the Pacific and the Sea of Cortez.",
+    "url": "/site/index.html",
+    "logo": "/site/img/icon-512.png",
+    "image": "/site/img/og.jpg",
+    "areaServed": ["Baja California", "Pacific Ocean", "Sea of Cortez"],
+    "knowsAbout": ["Panga sportfishing", "Yellowtail", "Dorado", "Marlin", "Roosterfish"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ░░ NAV ░░ -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#hero" aria-label="BajaFish home">
+      <img src="/logo.svg" alt="" class="nav__mark" width="26" height="26">
+      <span class="nav__word">BAJAFISH</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#biting">What's biting</a>
+      <a href="#coasts">The Coasts</a>
+      <a href="#how">How it works</a>
+      <a href="#captains">Captains</a>
+      <a href="#map">Map</a>
+      <a href="#species">Species</a>
+      <span class="nav__live" id="navLive" hidden><span class="pulse"></span><b>0</b>&nbsp;hot</span>
+    </nav>
+    <a class="btn btn--gold nav__cta" href="#cta" data-trip>Plan a trip</a>
+    <button class="nav__burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <main id="main">
+  <!-- ░░ HERO ░░ -->
+  <section class="hero" id="hero">
+    <div class="hero__media" data-parallax aria-hidden="true">
+      <img src="/img/hero-main.jpg" srcset="/img/hero-main-1000.jpg 1000w, /img/hero-main.jpg 2000w" sizes="100vw" width="2000" height="1500" alt="" class="hero__img" fetchpriority="high">
+      <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true" poster="/site/img/hero-ocean-poster.jpg?v=1">
+        <source data-src="/site/img/hero-ocean.mp4?v=4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="hero__grain" aria-hidden="true"></div>
+
+    <div class="hero__inner">
+      <p class="eyebrow eyebrow--gold" data-rise>Baja California · Panga Sportfishing</p>
+      <h1 class="hero__title" data-rise data-rise-d="1">
+        Chase the bite<br><span class="ital">of a lifetime.</span>
+      </h1>
+      <p class="hero__sub" data-rise data-rise-d="2">
+        Live fishing intelligence and the local panga captains who put you on fish,
+        across the Pacific and the Sea of Cortez.
+      </p>
+      <div class="hero__actions" data-rise data-rise-d="3">
+        <a class="btn btn--gold btn--lg" href="#cta" data-trip>Plan your trip
+          <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn--ghost btn--lg" href="#captains">Meet the captains</a>
+      </div>
+    </div>
+
+    <div class="hero__ticker" data-rise data-rise-d="4">
+      <span class="ticker__label"><span class="pulse"></span>Now biting</span>
+      <div class="ticker__track" id="tickerTrack"><span>Dorado</span><span>Yellowtail</span><span>Roosterfish</span></div>
+    </div>
+
+    <a href="#coasts" class="hero__scroll" aria-label="Scroll down"><span></span></a>
+
+    <ul class="hero__stats" aria-label="Coverage">
+      <li data-rise data-rise-d="3"><b class="count" data-stat="villages" data-to="44">0</b><span>Panga villages</span></li>
+      <li data-rise data-rise-d="4"><b class="count" data-stat="captains" data-to="50">0</b><span>Local captains</span></li>
+      <li data-rise data-rise-d="5"><b class="count" data-stat="species" data-to="39">0</b><span>Target species</span></li>
+    </ul>
+  </section>
+
+  <!-- ░░ WHAT'S BITING NOW, LIVE REPORTS STRIP ░░ -->
+  <section class="biting" id="biting">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow eyebrow--gold"><span class="biting__live"><span class="pulse"></span>Live from the water</span></p>
+      <h2 class="section-title">What's biting<br><span class="ital">right now.</span></h2>
+      <p class="section-lede">Fresh panga reports from both coasts, the catches, the captains and the bite ratings, straight off the radio.</p>
+    </div>
+
+    <div class="biting__rail-wrap" data-reveal>
+      <div class="biting__rail" id="bitingRail" aria-label="Recent fishing reports"></div>
+      <div class="biting__fade biting__fade--l" aria-hidden="true"></div>
+      <div class="biting__fade biting__fade--r" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ░░ TWO COASTS ░░ -->
+  <section class="coasts" id="coasts">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Two coasts, one peninsula</p>
+      <h2 class="section-title">The Pacific roars.<br>The Cortez glows.</h2>
+      <p class="section-lede">Eight hundred miles of coastline, two utterly different fisheries. We cover both, and tell you which one is on, today.</p>
+    </div>
+    <div class="coasts__grid">
+      <article class="coast-card" data-reveal>
+        <div class="coast-card__media"><img src="/img/baja-coast.jpg" alt="The Pacific coast of Baja California" loading="lazy"></div>
+        <div class="coast-card__body">
+          <span class="tag tag--warm">Pacific Side</span>
+          <h3>Cold, green &amp; wild</h3>
+          <p>Kelp-edge yellowtail, white seabass and giant calicos from Ensenada to Mag Bay. Cool upwelling water and the legendary Cedros Island bite.</p>
+          <div class="coast-card__live" data-coast-live="Pacific" hidden>
+            <span><i class="dot dot--gold"></i><b>0</b> reports</span>
+            <span><b>0</b> hot this week</span>
+          </div>
+          <ul class="chips" data-coast-pac></ul>
+        </div>
+      </article>
+      <article class="coast-card" data-reveal data-reveal-d="1">
+        <div class="coast-card__media"><img src="/img/texture-water.jpg" alt="The Sea of Cortez" loading="lazy"></div>
+        <div class="coast-card__body">
+          <span class="tag">Sea of Cortez</span>
+          <h3>Warm, blue &amp; alive</h3>
+          <p>Jacques Cousteau's "aquarium of the world." Marlin, dorado, roosterfish and pargo from La Paz down through the East Cape and Cabo.</p>
+          <div class="coast-card__live" data-coast-live="Sea of Cortez" hidden>
+            <span><i class="dot dot--aqua"></i><b>0</b> reports</span>
+            <span><b>0</b> hot this week</span>
+          </div>
+          <ul class="chips" data-coast-cor></ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ░░ HOW IT WORKS ░░ -->
+  <section class="how" id="how">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow">How it works</p>
+      <h2 class="section-title">From "where's the bite?"<br>to lines in the water.</h2>
+    </div>
+    <ol class="steps">
+      <span class="steps__line" data-reveal aria-hidden="true"></span>
+      <li class="step" data-reveal>
+        <span class="step__ico-wrap">
+          <svg viewBox="0 0 24 24" class="step__ico"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+        </span>
+        <span class="step__n">01</span>
+        <h3>Pick your target</h3>
+        <p>Choose a species or a zone. We show where it's biting right now from live local reports across both coasts.</p>
+      </li>
+      <li class="step" data-reveal data-reveal-d="1">
+        <span class="step__ico-wrap">
+          <svg viewBox="0 0 24 24" class="step__ico"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>
+        </span>
+        <span class="step__n">02</span>
+        <h3>Match a captain</h3>
+        <p>Get matched to a verified local panga captain who fishes that water, with real ratings, specialties and gear.</p>
+      </li>
+      <li class="step" data-reveal data-reveal-d="2">
+        <span class="step__ico-wrap">
+          <svg viewBox="0 0 24 24" class="step__ico"><path d="M3 7l9-4 9 4-9 4-9-4zM3 7v8l9 4 9-4V7"/></svg>
+        </span>
+        <span class="step__n">03</span>
+        <h3>Book the panga</h3>
+        <p>Lock your date, meet at the launch, and chase the bite. Mexican licensing and bag limits handled up front.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ░░ FEATURED CAPTAINS ░░ -->
+  <section class="captains" id="captains">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">The fleet</p>
+      <h2 class="section-title">Captains who know<br>their water.</h2>
+      <p class="section-lede">Generations of local knowledge. These are the pangueros who'll put you on fish.</p>
+    </div>
+    <div class="cap-controls" data-reveal>
+      <div class="cap-search">
+        <input id="capSearch" type="search" placeholder="Search captains or ports" aria-label="Search captains or ports">
+      </div>
+      <div class="cap-filters" role="group" aria-label="Filter by coast">
+        <button type="button" class="cap-filter is-active" data-coast="all">All coasts</button>
+        <button type="button" class="cap-filter" data-coast="Pacific">Pacific</button>
+        <button type="button" class="cap-filter" data-coast="Sea of Cortez">Sea of Cortez</button>
+      </div>
+      <select id="capSpecies" class="cap-select" aria-label="Filter by target species">
+        <option value="">All species</option>
+      </select>
+    </div>
+    <p class="cap-count" id="capCount" aria-live="polite"></p>
+    <div class="cap-grid" id="capGrid" aria-label="Captains"></div>
+    <p class="cap-empty" id="capEmpty" hidden>No captains match those filters.</p>
+    <div class="cap-join" data-reveal>
+      <div class="cap-join__txt">
+        <h3>Run a panga in Baja?</h3>
+        <p>Get listed on BajaFish. Tell us your ports, your target species, and your track record. No app to download.</p>
+      </div>
+      <button type="button" class="btn btn--gold btn--lg" data-join>Join the fleet</button>
+    </div>
+  </section>
+
+  <!-- CAPTAIN SELF-REPORT FORM (modal) -->
+  <div class="join" id="capJoin" aria-hidden="true">
+    <div class="join__backdrop" data-join-close></div>
+    <div class="join__sheet" role="dialog" aria-modal="true" aria-labelledby="joinTitle">
+      <div class="join__head">
+        <div>
+          <p class="eyebrow eyebrow--gold">Join the fleet</p>
+          <h2 class="join__title" id="joinTitle">List your panga</h2>
+        </div>
+        <button type="button" class="join__x" data-join-close aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <form class="join-form" id="capJoinForm" action="https://formspree.io/f/your-form-id" method="POST">
+        <div class="join-grid">
+          <label class="field"><span>Captain name</span><input name="name" type="text" required autocomplete="name"></label>
+          <label class="field"><span>WhatsApp or phone</span><input name="whatsapp" type="tel" required autocomplete="tel"></label>
+          <label class="field"><span>Home port</span><select name="port" id="joinPort" required><option value="">Select a port</option></select></label>
+          <label class="field"><span>Years fishing</span><input name="years" type="number" min="0" max="80" inputmode="numeric"></label>
+          <label class="field field--wide"><span>Target species</span><input name="species" type="text" placeholder="Yellowtail, Dorado, Roosterfish"></label>
+          <label class="field"><span>Anglers per year (approx)</span><input name="anglers_per_year" type="text" inputmode="numeric" placeholder="e.g. 300"></label>
+          <label class="field"><span>Pangas in your fleet</span><input name="boats" type="number" min="1" max="50" inputmode="numeric" placeholder="1"></label>
+          <label class="field field--wide"><span>Short bio</span><textarea name="bio" rows="3" placeholder="Where you fish, what you are known for, languages spoken."></textarea></label>
+        </div>
+        <p class="join-note">We will request boat and trip photos over WhatsApp after you submit, so nothing to upload here.</p>
+        <label class="join-consent"><input type="checkbox" name="consent" required><span>I am a licensed local panguero and consent to being listed on BajaFish.</span></label>
+        <button type="submit" class="btn btn--gold btn--lg join-submit">Send my details</button>
+        <p class="join-error" role="alert" hidden>Something went wrong. Please WhatsApp us instead.</p>
+      </form>
+      <div class="join-done" hidden>
+        <h3>Got it, captain.</h3>
+        <p>Thanks. Our team will review your details and reach out on WhatsApp to verify and add you to the fleet.</p>
+        <button type="button" class="btn btn--ghost" data-join-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░ ZONE MAP ░░ -->
+  <section class="zonemap" id="map">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">The grounds</p>
+      <h2 class="section-title">Forty-four villages.<br><span class="ital">Two coasts.</span></h2>
+      <p class="section-lede">From the kelp-cold Pacific to the glowing Cortez, tap a port to see how the pangas launch and who runs the water.</p>
+    </div>
+
+    <div class="zonemap__frame" data-reveal>
+      <div class="zonemap__filter" role="group" aria-label="Filter by coast">
+        <button type="button" class="zmf is-on" data-coast="all" aria-pressed="true">All</button>
+        <button type="button" class="zmf" data-coast="Pacific" aria-pressed="false">Pacific</button>
+        <button type="button" class="zmf" data-coast="Sea of Cortez" aria-pressed="false">Sea of Cortez</button>
+      </div>
+
+      <div id="baja-map" role="region" aria-label="Map of Baja California panga fishing villages"></div>
+
+      <aside class="zone-panel" id="zonePanel" aria-hidden="true" aria-label="Zone detail">
+        <button class="zone-panel__x" id="zonePanelClose" aria-label="Close zone detail">
+          <svg viewBox="0 0 24 24" class="ico"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="zone-panel__scroll" id="zonePanelBody"></div>
+      </aside>
+
+      <div class="zonemap__legend">
+        <span><i class="dot dot--gold"></i>Pacific</span>
+        <span><i class="dot dot--aqua"></i>Sea of Cortez</span>
+        <span><i class="dot dot--hub"></i>Major launch hub</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ SPECIES EXPLORER ░░ -->
+  <section class="species" id="species">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">The quarry</p>
+      <h2 class="section-title">Thirty-nine species.<br><span class="ital">One unforgettable fight.</span></h2>
+      <p class="section-lede">From kelp-cold rockcod to grander marlin, explore what swims here, when it bites, and exactly what it's caught on.</p>
+    </div>
+
+    <div class="explorer" data-reveal>
+      <div class="explorer__filters" aria-label="Filter species">
+        <div class="filterset" id="catFilters" role="group" aria-label="By category"></div>
+        <div class="filterset filterset--coast" id="coastFilters" role="group" aria-label="By coast"></div>
+      </div>
+      <p class="explorer__count" id="speciesCount" aria-live="polite"></p>
+    </div>
+
+    <div class="explorer__actions" data-reveal data-reveal-d="1">
+      <button class="btn btn--ghost" id="openPlate" type="button">
+        See every species on one plate
+        <svg viewBox="0 0 24 24" class="ico"><path d="M3 7l9-4 9 4-9 4-9-4zM3 7v8l9 4 9-4V7"/></svg>
+      </button>
+    </div>
+
+    <div class="explorer__grid" id="speciesGrid" aria-label="Species"></div>
+    <p class="explorer__empty" id="speciesEmpty" hidden>No species match that combination. Try another coast or category.</p>
+  </section>
+
+  <!-- ░░ SPECIES DETAIL MODAL ░░ -->
+  <div class="sp-modal" id="spModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="spModalName">
+    <div class="sp-modal__backdrop" data-modal-close></div>
+    <div class="sp-modal__panel" id="spModalPanel" role="document">
+      <button class="sp-modal__x" id="spModalClose" aria-label="Close species detail">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="sp-modal__media">
+        <img id="spModalImg" src="" alt="" loading="lazy">
+        <div class="sp-modal__veil"></div>
+        <div class="sp-modal__head">
+          <span class="sp-modal__cat" id="spModalCat"></span>
+          <h3 class="sp-modal__name" id="spModalName"></h3>
+          <p class="sp-modal__latin" id="spModalLatin"></p>
+        </div>
+      </div>
+      <div class="sp-modal__body" id="spModalBody"></div>
+    </div>
+  </div>
+
+  <!-- ░░ SPECIES PLATE (unison view) ░░ -->
+  <div class="plate" id="speciesPlate" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Every species on one plate">
+    <div class="plate__backdrop" data-plate-close></div>
+    <div class="plate__sheet" role="document">
+      <header class="plate__head">
+        <div>
+          <p class="eyebrow eyebrow--gold">The field guide</p>
+          <h3 class="plate__title">The catch of Baja California</h3>
+        </div>
+        <button class="plate__x" id="plateClose" type="button" aria-label="Close the plate">
+          <svg viewBox="0 0 24 24" class="ico"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+      <div class="plate__grid" id="plateGrid" aria-label="All species"></div>
+    </div>
+  </div>
+
+  <!-- ░░ TRUST / SOCIAL PROOF ░░ -->
+  <section class="trust" id="trust" aria-labelledby="trustTitle">
+    <div class="trust__inner">
+      <div data-reveal>
+        <p class="eyebrow eyebrow--gold">Trusted on the water</p>
+        <h2 class="trust__title" id="trustTitle">Local knowledge,<br><span class="ital">verified.</span></h2>
+        <p class="trust__lede">Every captain on BajaFish is a licensed, vetted local panguero, not a call-center booking. The numbers behind both coasts.</p>
+      </div>
+
+      <ul class="trust__stats" id="trustStats" aria-label="BajaFish coverage at a glance" data-reveal data-reveal-d="1">
+        <li class="trust-stat">
+          <div class="trust-stat__n"><span class="count" data-stat="captains" data-to="50">0</span></div>
+          <div class="trust-stat__label">Local captains</div>
+          <p class="trust-stat__note">Vetted pangueros, both coasts</p>
+        </li>
+        <li class="trust-stat">
+          <div class="trust-stat__n"><span class="count" data-stat="villages" data-to="44">0</span></div>
+          <div class="trust-stat__label">Panga villages</div>
+          <p class="trust-stat__note">Ensenada to the East Cape</p>
+        </li>
+        <li class="trust-stat">
+          <div class="trust-stat__n"><span class="count" data-stat="species" data-to="39">0</span></div>
+          <div class="trust-stat__label">Target species</div>
+          <p class="trust-stat__note">Rockcod to grander marlin</p>
+        </li>
+        <li class="trust-stat">
+          <div class="trust-stat__n"><span class="count" data-stat="rating" data-to="4.6" data-dec="1">0</span><span class="trust-stat__suffix"><svg class="trust-star" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg></span></div>
+          <div class="trust-stat__label">Avg captain rating</div>
+          <p class="trust-stat__note">Across the verified fleet</p>
+        </li>
+      </ul>
+
+      <div class="trust__assure" data-reveal data-reveal-d="2">
+        <div class="trust-badge">
+          <span class="trust-badge__ico">
+            <svg viewBox="0 0 24 24" class="ico" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </span>
+          <span class="trust-badge__t">CONAPESCA licensing handled<span class="trust-badge__s">Mexican permits &amp; bag limits sorted before you launch</span></span>
+        </div>
+        <div class="trust-badge">
+          <span class="trust-badge__ico">
+            <svg viewBox="0 0 24 24" class="ico" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          </span>
+          <span class="trust-badge__t">Every captain verified<span class="trust-badge__s">Real ratings, real boats, real local cooperatives</span></span>
+        </div>
+      </div>
+
+      <p class="trust__close" data-reveal data-reveal-d="3">
+        We don't sell trips. We connect you to the pangueros who've fished this water <span class="ital">for generations.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ░░ CTA ░░ -->
+  <section class="cta" id="cta">
+    <div class="cta__media" aria-hidden="true"><img src="/img/hero-alt.jpg" alt="" loading="lazy"></div>
+    <div class="cta__inner" data-reveal>
+      <h2 class="cta__title">Your panga is waiting.</h2>
+      <p class="cta__sub">Tell us when you're coming. We'll have the bite, the boat and the captain ready.</p>
+      <div class="cta__actions">
+        <button type="button" class="btn btn--gold btn--lg" data-trip>Plan your trip
+          <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <a class="btn btn--ghost btn--lg" href="#captains">Meet the captains</a>
+      </div>
+      <p class="cta__trust">CONAPESCA-licensed · Verified captains · Pacific &amp; Sea of Cortez</p>
+    </div>
+  </section>
+
+  <!-- ANGLER TRIP INQUIRY (modal) -->
+  <div class="join" id="tripModal" aria-hidden="true">
+    <div class="join__backdrop" data-trip-close></div>
+    <div class="join__sheet" role="dialog" aria-modal="true" aria-labelledby="tripTitle">
+      <div class="join__head">
+        <div>
+          <p class="eyebrow eyebrow--gold">Plan a trip</p>
+          <h2 class="join__title" id="tripTitle">Tell us when you are coming</h2>
+        </div>
+        <button type="button" class="join__x" data-trip-close aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <form class="join-form" id="tripForm" action="https://formspree.io/f/your-form-id" method="POST">
+        <input type="hidden" name="captain" value="">
+        <div class="join-grid">
+          <label class="field"><span>Your name</span><input name="name" type="text" required autocomplete="name"></label>
+          <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email"></label>
+          <label class="field"><span>WhatsApp or phone</span><input name="whatsapp" type="tel" autocomplete="tel"></label>
+          <label class="field"><span>When (month or dates)</span><input name="when" type="text" placeholder="e.g. October 2026"></label>
+          <label class="field"><span>Where</span><select name="where"><option value="">Any coast</option><option>Pacific</option><option>Sea of Cortez</option></select></label>
+          <label class="field"><span>Anglers in your party</span><input name="party" type="number" min="1" max="20" inputmode="numeric" placeholder="2"></label>
+          <label class="field field--wide"><span>Target species (optional)</span><input name="species" type="text" placeholder="Yellowtail, Dorado, Marlin"></label>
+          <label class="field field--wide"><span>Anything else</span><textarea name="message" rows="3" placeholder="Experience level, mothership or day trip, any questions."></textarea></label>
+        </div>
+        <button type="submit" class="btn btn--gold btn--lg join-submit">Send my trip request</button>
+        <p class="join-error" role="alert" hidden>Something went wrong. Please WhatsApp us instead.</p>
+      </form>
+      <div class="join-done" hidden>
+        <h3>Request received.</h3>
+        <p>Thanks. We will match you with a verified local captain for your dates and reply by email or WhatsApp.</p>
+        <button type="button" class="btn btn--ghost" data-trip-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░ GET THE APP ░░ -->
+  <section class="getapp" id="app">
+    <div class="getapp__glow" aria-hidden="true"></div>
+    <div class="getapp__inner">
+      <div class="getapp__copy" data-reveal>
+        <p class="eyebrow eyebrow--gold">Coming to your pocket</p>
+        <h2 class="section-title">The whole bite,<br><span class="ital">in your hand.</span></h2>
+        <p class="section-lede">Live reports, your captains, the species plate and the zone map, wherever the signal reaches. BajaFish is coming to iPhone and Android.</p>
+        <div class="getapp__badges">
+          <a class="storebadge" href="#app" aria-label="Download on the App Store">
+            <svg class="storebadge__svg" viewBox="0 0 142 47" role="img" aria-label="Download on the App Store">
+              <rect x=".5" y=".5" width="141" height="46" rx="9" fill="#000" stroke="rgba(255,255,255,.4)"/>
+              <svg x="11" y="12" width="23" height="23" viewBox="0 0 24 24"><path fill="#fff" d="M17.05 12.04c-.03-2.6 2.13-3.86 2.23-3.92-1.22-1.78-3.11-2.02-3.78-2.05-1.61-.16-3.14.95-3.95.95-.81 0-2.07-.93-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.82 3.16-.46 7.83 1.3 10.4.86 1.25 1.88 2.66 3.22 2.61 1.29-.05 1.78-.83 3.34-.83 1.56 0 2 .83 3.37.81 1.39-.03 2.27-1.28 3.12-2.54.98-1.46 1.39-2.87 1.41-2.94-.03-.01-2.71-1.04-2.74-4.13zM14.53 4.6c.71-.86 1.19-2.06 1.06-3.25-1.02.04-2.26.68-2.99 1.54-.66.76-1.23 1.98-1.08 3.15 1.14.09 2.3-.58 3.01-1.44z"/></svg>
+              <text x="43" y="20" fill="#fff" font-family="'Hanken Grotesk',system-ui,sans-serif" font-size="7.5" letter-spacing=".5">Download on the</text>
+              <text x="43" y="36" fill="#fff" font-family="'Hanken Grotesk',system-ui,sans-serif" font-size="16" font-weight="600">App Store</text>
+            </svg>
+          </a>
+          <a class="storebadge" href="#app" aria-label="Get it on Google Play">
+            <svg class="storebadge__svg" viewBox="0 0 150 47" role="img" aria-label="Get it on Google Play">
+              <defs><linearGradient id="gpg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#00d4ff"/><stop offset=".34" stop-color="#00f076"/><stop offset=".68" stop-color="#ffce3d"/><stop offset="1" stop-color="#ff4757"/>
+              </linearGradient></defs>
+              <rect x=".5" y=".5" width="149" height="46" rx="9" fill="#000" stroke="rgba(255,255,255,.4)"/>
+              <path fill="url(#gpg)" d="M15 13.1v20.8c0 .8.9 1.2 1.5.7l11.9-10.4c.5-.4.5-1.2 0-1.6L16.5 12.3c-.6-.5-1.5-.1-1.5.8z"/>
+              <text x="40" y="20" fill="#fff" font-family="'Hanken Grotesk',system-ui,sans-serif" font-size="7.5" letter-spacing="1.5">GET IT ON</text>
+              <text x="40" y="36" fill="#fff" font-family="'Hanken Grotesk',system-ui,sans-serif" font-size="16" font-weight="600">Google Play</text>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="getapp__device" data-reveal data-reveal-d="1">
+        <div class="phone">
+          <div class="phone__island" aria-hidden="true"></div>
+          <img class="phone__screen" src="/site/img/app-screen.webp?v=4" width="600" height="1298" alt="BajaFish on iPhone" loading="lazy">
+          <div class="phone__glare" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="foot__grid">
+      <div class="foot__top">
+        <div class="foot__brand"><img src="/logo.svg" alt="" width="24" height="24"><span>BAJAFISH</span></div>
+        <p>Panga fishing intelligence for Baja California. Live reports, verified local captains, and the launches that put you on fish, across both coasts.</p>
+      </div>
+      <div class="foot__col">
+        <h4>Explore</h4>
+        <a href="#coasts">The Coasts</a>
+        <a href="#map">Zone map</a>
+        <a href="#species">Species</a>
+        <a href="#captains">Captains</a>
+      </div>
+      <div class="foot__col">
+        <h4>Trips</h4>
+        <a href="#biting">What's biting</a>
+        <a href="#cta" data-trip>Plan a trip</a>
+        <a href="#how">How it works</a>
+      </div>
+      <div class="foot__col">
+        <h4>Good to know</h4>
+        <a href="#trust">CONAPESCA licensing</a>
+        <a href="#trust">Bag limits</a>
+        <a href="#map">Coverage</a>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>(c) 2026 BajaFish</span>
+      <span>Species photos via iNaturalist (CC)</span>
+      <span>Pacific · Sea of Cortez</span>
+    </div>
+  </footer>
+
+  <script src="/data.js?v=20260529-4"></script>
+  <script src="/site/departures.js?v=1"></script>
+  <script src="/site/catch-data.js?v=3"></script>
+  <script src="/site/hero-video.js?v=2"></script>
+  <script src="/site/site.js?v=23"></script>
+</body>
+</html>

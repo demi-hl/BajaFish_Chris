@@ -1,0 +1,19 @@
+{
+  "name": "BajaFish",
+  "short_name": "BajaFish",
+  "description": "Live panga fishing intelligence and verified local captains across Baja California, the Pacific and the Sea of Cortez.",
+  "id": "/site/",
+  "start_url": "/site/index.html",
+  "scope": "/site/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05121A",
+  "theme_color": "#05121A",
+  "categories": ["travel", "sports", "lifestyle"],
+  "icons": [
+    { "src": "/site/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/site/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/site/img/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/site/img/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
