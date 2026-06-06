@@ -286,6 +286,32 @@ window.CATCH = [
     "img": "/site/img/species/skipjack-tuna.jpg"
   },
   {
+    "key": "albacore",
+    "commonName": "Albacore Tuna",
+    "spanishName": "Albacora",
+    "scientificName": "Thunnus alalunga",
+    "category": "Tuna",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Jun to Oct",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "anchovies",
+      "cut bait"
+    ],
+    "lures": [
+      "feathers",
+      "cedar plugs",
+      "trolled jigs",
+      "swimbaits"
+    ],
+    "technique": "Troll feathers and cedar plugs along temperature breaks and offshore current lines, then drop live bait when the school sounds; a cooler-water tuna taken on the Pacific side. Famous for its long pectoral fins and prized table fare.",
+    "notes": "The 'longfin' tuna, identified by its extra-long pectorals. A Pacific-coast catch, less common inside the Sea of Cortez.",
+    "img": "/site/img/species/albacore.jpg"
+  },
+  {
     "key": "sierra",
     "commonName": "Pacific Sierra (Sierra Mackerel)",
     "spanishName": "Sierra",
@@ -441,6 +467,32 @@ window.CATCH = [
     "technique": "Specialized daytime deep-drop: sink a rigged squid/bonito belly with a light and breakaway weight to 1,000 to 1,800 ft over offshore canyons, or night-drift baits near the surface. Not a typical panga fishery.",
     "notes": "Deep-drop/long-range specialty, not a standard panga catch.",
     "img": "/site/img/species/swordfish.jpg"
+  },
+  {
+    "key": "shortbill-spearfish",
+    "commonName": "Shortbill Spearfish",
+    "spanishName": "Marlín Trompa Corta",
+    "scientificName": "Tetrapturus angustirostris",
+    "category": "Billfish",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Offshore; warm months (incidental)",
+    "marquee": false,
+    "baits": [
+      "live caballito (mackerel)",
+      "rigged ballyhoo",
+      "small live sardina"
+    ],
+    "lures": [
+      "small skirted trolling lures",
+      "hookless teasers (bait-and-switch)",
+      "feathers"
+    ],
+    "technique": "An uncommon, lightweight billfish usually raised while trolling small skirts and ballyhoo for sailfish or dorado; bait-and-switch a small live caballito. Mostly an incidental, prized release.",
+    "notes": "Rare incidental billfish; release.",
+    "img": "/site/img/species/shortbill-spearfish.jpg"
   },
   {
     "key": "roosterfish",

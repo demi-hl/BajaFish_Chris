@@ -396,14 +396,15 @@
   // Species with a transparent field-guide illustration in /site/img/illus/<key>.webp
   // render as drawn specimen plates; the rest fall back to a color photo.
   var ILLUS = {};
-  ['dorado','bonito','wahoo','yellowfin','bluefin-tuna','bigeye-tuna','skipjack-tuna',
-   'striped-marlin','blue-marlin','black-marlin','sailfish','swordfish','snook','corvina',
+  ['dorado','bonito','wahoo','yellowfin','bluefin-tuna','bigeye-tuna','skipjack-tuna','albacore',
+   'striped-marlin','blue-marlin','black-marlin','sailfish','swordfish','shortbill-spearfish','snook','corvina',
    'sierra','jack-crevalle','bigeye-trevally','halibut','white-seabass','pompano','ladyfish',
    'pacific-barracuda','gulf-grouper','grouper','broomtail-grouper','giant-sea-bass',
    'copper-rockfish','blue-rockfish','canary-rockfish','pargo','pargo-colorado','yellow-snapper',
-   'dog-snapper','mullet-snapper','yellowtail','amberjack','lingcod','sheephead','triggerfish'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=4'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=4'; // almaco jack, same fish as amberjack plate
+   'dog-snapper','mullet-snapper','yellowtail','amberjack','lingcod','sheephead','triggerfish',
+   'barred-pargo','cabrilla','golden-grouper'
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=13'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=13'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
@@ -1082,7 +1083,59 @@
     });
   }
 
-  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); captains(); capJoin(); tripInquiry(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
+  /* ---- Captains of the Month: top 5 per coast, with rank medals ---- */
+  function captainsOfMonth() {
+    var host = $('#comFeatured'); if (!host || !CAPS) return;
+    var now = new Date();
+    var month = E('div', 'com-month', now.toLocaleString('en-US', { month: 'long' }) + ' ' + now.getFullYear());
+    host.appendChild(month);
+    var groups = E('div', 'com-groups');
+
+    function coastOf(c) { return (ZN[c.zone] || {}).coast || 'Pacific'; }
+    function topFor(coast) {
+      return CAPS.filter(function (c) { return coastOf(c) === coast; })
+        .slice().sort(function (a, b) { return (b.rating || 0) - (a.rating || 0) || (b.years || 0) - (a.years || 0); })
+        .slice(0, 5);
+    }
+    function medal(rank) { return rank === 1 ? ' com-rank--gold' : rank === 2 ? ' com-rank--silver' : rank === 3 ? ' com-rank--bronze' : ''; }
+    function fcard(c, rank) {
+      var z = ZN[c.zone] || {};
+      var initials = (c.name || '?').replace(/Capit[aá]n\s*/i, '').split(' ').map(function (w) { return w[0]; }).slice(0, 2).join('');
+      var sps = (c.specialtySpecies || c.species || []).map(function (s) { return nm(s); }).slice(0, 3);
+      var card = E('div', 'com-fcard');
+      card.appendChild(E('div', 'com-rank' + medal(rank), String(rank)));
+      card.appendChild(E('div', 'com-favatar', initials));
+      var info = E('div', 'com-finfo');
+      info.appendChild(E('div', 'com-fname', c.name || 'Captain'));
+      info.appendChild(E('div', 'com-fmeta', (c.homePort || z.name || 'Baja') + ' · ★' + (c.rating != null ? Number(c.rating).toFixed(1) : '5.0') + (c.years ? ' · ' + c.years + ' yrs' : '')));
+      info.appendChild(E('div', 'com-fspecies', sps.join(' · ')));
+      card.appendChild(info);
+      return card;
+    }
+    function group(coast, label, dotCls) {
+      var g = E('div', 'com-group');
+      var head = E('div', 'com-group-head');
+      head.appendChild(E('span', 'com-coast-dot com-coast-dot--' + dotCls));
+      head.appendChild(document.createTextNode(label));
+      g.appendChild(head);
+      topFor(coast).forEach(function (c, i) { g.appendChild(fcard(c, i + 1)); });
+      return g;
+    }
+    groups.appendChild(group('Pacific', 'North Pacific Ocean', 'pac'));
+    groups.appendChild(group('Sea of Cortez', 'Sea of Cortez', 'cor'));
+    host.appendChild(groups);
+
+    // "View" dropdown mirrors the coast filter buttons on the full grid
+    var sel = $('#comCoastSelect');
+    if (sel) sel.addEventListener('change', function () {
+      var want = sel.value;
+      var btn = document.querySelector('.cap-filter[data-coast="' + want + '"]');
+      if (btn) btn.click();
+      var grid = $('#capGrid'); if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); captains(); captainsOfMonth(); capJoin(); tripInquiry(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
   // register the service worker (installable PWA + offline shell)

@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/site/site.css?v=17">
+  <link rel="stylesheet" href="/site/site.css?v=24">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -136,10 +136,10 @@
     </div>
     <div class="coasts__grid">
       <article class="coast-card" data-reveal>
-        <div class="coast-card__media"><img src="/img/baja-coast.jpg" alt="The Pacific coast of Baja California" loading="lazy"></div>
+        <div class="coast-card__media coast-card__media--pacific"><img src="/img/baja-coast.jpg" alt="Aerial view of the North Pacific coast of Baja California" loading="lazy"></div>
         <div class="coast-card__body">
-          <span class="tag tag--warm">Pacific Side</span>
-          <h3>Cold, green &amp; wild</h3>
+          <span class="tag tag--warm">North Pacific Ocean</span>
+          <h3>Cold, blue &amp; wild</h3>
           <p>Kelp-edge yellowtail, white seabass and giant calicos from Ensenada to Mag Bay. Cool upwelling water and the legendary Cedros Island bite.</p>
           <div class="coast-card__live" data-coast-live="Pacific" hidden>
             <span><i class="dot dot--gold"></i><b>0</b> reports</span>
@@ -149,10 +149,10 @@
         </div>
       </article>
       <article class="coast-card" data-reveal data-reveal-d="1">
-        <div class="coast-card__media"><img src="/img/texture-water.jpg" alt="The Sea of Cortez" loading="lazy"></div>
+        <div class="coast-card__media coast-card__media--cortez"><img src="/img/hero-alt.jpg" alt="Aerial view of the turquoise Sea of Cortez coast of Baja California" loading="lazy"></div>
         <div class="coast-card__body">
           <span class="tag">Sea of Cortez</span>
-          <h3>Warm, blue &amp; alive</h3>
+          <h3>Warm, turquoise &amp; alive</h3>
           <p>Jacques Cousteau's "aquarium of the world." Marlin, dorado, roosterfish and pargo from La Paz down through the East Cape and Cabo.</p>
           <div class="coast-card__live" data-coast-live="Sea of Cortez" hidden>
             <span><i class="dot dot--aqua"></i><b>0</b> reports</span>
@@ -206,6 +206,25 @@
       <h2 class="section-title">Captains who know<br>their water.</h2>
       <p class="section-lede">Generations of local knowledge. These are the pangueros who'll put you on fish.</p>
     </div>
+
+    <div class="com-wrap" data-reveal>
+      <div class="com-head">
+        <div class="com-head-left">
+          <span class="com-eyebrow">★ Featured</span>
+          <h3 class="com-title">Captains of the Month</h3>
+        </div>
+        <label class="com-select-wrap">
+          <span class="com-select-label">View</span>
+          <select id="comCoastSelect" class="com-select" aria-label="Filter captains by coast">
+            <option value="all">All captains</option>
+            <option value="Pacific">North Pacific Ocean</option>
+            <option value="Sea of Cortez">Sea of Cortez</option>
+          </select>
+        </label>
+      </div>
+      <div id="comFeatured"></div>
+    </div>
+
     <div class="cap-controls" data-reveal>
       <div class="cap-search">
         <input id="capSearch" type="search" placeholder="Search captains or ports" aria-label="Search captains or ports">
@@ -546,8 +565,8 @@
 
   <script src="/data.js?v=20260529-4"></script>
   <script src="/site/departures.js?v=1"></script>
-  <script src="/site/catch-data.js?v=3"></script>
+  <script src="/site/catch-data.js?v=5"></script>
   <script src="/site/hero-video.js?v=2"></script>
-  <script src="/site/site.js?v=23"></script>
+  <script src="/site/site.js?v=35"></script>
 </body>
 </html>
