@@ -2,18 +2,18 @@
    Scope: /site/. Navigations are network-first with an offline fallback to the
    cached shell; same-origin assets are cache-first and populated as fetched.
    Cross-origin requests (fonts, Leaflet) are left to the network. */
-var CACHE = 'bajafish-v6';
+var CACHE = 'bajafish-v8';
 var SHELL = [
   '/site/index.html',
-  '/site/site.css?v=17',
+  '/site/site.css?v=18',
   '/site/site.js?v=23',
-  '/site/hero-video.js?v=2',
+  '/site/hero-cinematic.js?v=5',
   '/site/catch-data.js?v=3',
   '/site/departures.js?v=1',
   '/data.js?v=20260529-4',
   '/site/img/icon-192.png',
   '/site/img/icon-512.png',
-  '/site/img/hero-ocean-poster.jpg?v=1'
+  '/site/img/baja-sat.jpg?v=1'
 ];
 
 self.addEventListener('install', function (e) {
