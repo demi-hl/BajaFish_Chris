@@ -2,7 +2,7 @@
    Scope: /site/. Navigations are network-first with an offline fallback to the
    cached shell; same-origin assets are cache-first and populated as fetched.
    Cross-origin requests (fonts, Leaflet) are left to the network. */
-var CACHE = 'bajafish-v6';
+var CACHE = 'bajafish-v7';
 var SHELL = [
   '/site/index.html',
   '/site/site.css?v=17',
@@ -54,12 +54,14 @@ self.addEventListener('fetch', function (e) {
     return;
   }
 
+  // Same-origin assets: network-first so edits always show online; fall back to
+  // cache only when offline. (Was cache-first, which served stale JS/CSS.)
   e.respondWith(
-    caches.match(req).then(function (m) {
-      return m || fetch(req).then(function (r) {
-        if (r && r.ok && r.type === 'basic') { var cp = r.clone(); caches.open(CACHE).then(function (c) { c.put(req, cp); }); }
-        return r;
-      });
+    fetch(req).then(function (r) {
+      if (r && r.ok && r.type === 'basic') { var cp = r.clone(); caches.open(CACHE).then(function (c) { c.put(req, cp); }); }
+      return r;
+    }).catch(function () {
+      return caches.match(req);
     })
   );
 });

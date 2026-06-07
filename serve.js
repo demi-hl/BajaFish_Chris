@@ -2,8 +2,13 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8081;
+const PORT = Number(process.argv[2]) || Number(process.env.PORT) || 8081;
 const DIR = __dirname;
+
+// The marketing site at /site/ is the front door. Both / and /index.html
+// redirect here so the standalone app login screen is never served. The app
+// files are preserved on disk (app.js etc.) but not exposed at the root path.
+const HOME = '/site/index.html';
 
 const MIME = {
   '.html': 'text/html',
@@ -24,7 +29,11 @@ const server = http.createServer((req, res) => {
   let urlPath;
   try { urlPath = decodeURIComponent(req.url.split('?')[0]); }
   catch (e) { res.writeHead(400); res.end('Bad request'); return; }
-  const filePath = path.resolve(DIR, '.' + (urlPath === '/' ? '/index.html' : urlPath));
+  // Front door -> new marketing site, never the app login screen.
+  if (urlPath === '/' || urlPath === '/index.html') {
+    res.writeHead(302, { Location: HOME, 'Cache-Control': 'no-store' }); res.end(); return;
+  }
+  const filePath = path.resolve(DIR, '.' + urlPath);
   // keep reads inside the project directory (block path traversal)
   if (filePath !== DIR && !filePath.startsWith(DIR + path.sep)) {
     res.writeHead(403); res.end('Forbidden'); return;

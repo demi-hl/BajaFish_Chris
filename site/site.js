@@ -105,14 +105,8 @@
     var CATCH = (typeof window.CATCH !== 'undefined') ? window.CATCH : null;
     var speciesN = CATCH ? CATCH.filter(function (s) { return !(s.notes && /^DUPLICATE/.test(s.notes)) && ILLUS[s.key]; }).length : null;
     var villages = Object.keys(ZN).length || null;
-    var captainsN = (CAPS && CAPS.length) ? CAPS.length : null;
-    var ratingAvg = null;
-    if (CAPS && CAPS.length) {
-      var rated = CAPS.map(function (c) { return Number(c.rating); }).filter(function (n) { return !isNaN(n); });
-      if (rated.length) ratingAvg = (rated.reduce(function (a, b) { return a + b; }, 0) / rated.length).toFixed(1);
-    }
     // apply to every count-up element that opts in by data-stat, wherever it lives
-    var vals = { villages: villages, captains: captainsN, species: speciesN, rating: ratingAvg };
+    var vals = { villages: villages, species: speciesN };
     document.querySelectorAll('.count[data-stat]').forEach(function (el) {
       var v = vals[el.getAttribute('data-stat')];
       if (v != null) el.setAttribute('data-to', String(v));
@@ -309,12 +303,8 @@
         body.appendChild(sp);
       }
 
-      // foot: captain + when
+      // foot: when
       var foot = E('div', 'report__foot');
-      var cap = E('div', 'report__cap');
-      cap.appendChild(E('span', 'report__cap-k', 'Captain'));
-      cap.appendChild(E('span', 'report__cap-v', r.captain || 'Local panguero'));
-      foot.appendChild(cap);
       foot.appendChild(E('span', 'report__when', when(r.date)));
       body.appendChild(foot);
 
@@ -1042,12 +1032,8 @@
   function tripInquiry() {
     var modal = $('#tripModal'); if (!modal) return;
     var form = $('#tripForm');
-    var capField = form && form.querySelector('[name="captain"]');
-    var titleEl = $('#tripTitle');
-    function open(captain) {
+    function open() {
       _lastFocus = document.activeElement;
-      if (capField) capField.value = captain || '';
-      if (titleEl) titleEl.textContent = captain ? ('Request a trip with ' + captain) : 'Tell us when you are coming';
       modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       var f = form && form.querySelector('input,select'); if (f) f.focus();
@@ -1059,7 +1045,7 @@
     }
     document.addEventListener('click', function (e) {
       var t = e.target && e.target.closest ? e.target.closest('[data-trip]') : null;
-      if (t) { e.preventDefault(); open(t.getAttribute('data-captain')); }
+      if (t) { e.preventDefault(); open(); }
     });
     modal.querySelectorAll('[data-trip-close]').forEach(function (b) { b.addEventListener('click', close); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
@@ -1135,7 +1121,7 @@
     });
   }
 
-  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); captains(); captainsOfMonth(); capJoin(); tripInquiry(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
+  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); tripInquiry(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
   // register the service worker (installable PWA + offline shell)
