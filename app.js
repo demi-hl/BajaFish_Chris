@@ -15,7 +15,6 @@
     'scout@bajafish.test':     { password: 'BajaFish123!', tier: 'scout',     accountType: 'consumer' },
     'pro@bajafish.test':       { password: 'BajaFish123!', tier: 'pro',       accountType: 'consumer' },
     'unlimited@bajafish.test': { password: 'BajaFish123!', tier: 'unlimited', accountType: 'consumer' },
-    'captain@bajafish.test':   { password: 'BajaFish123!', tier: 'captain',   accountType: 'captain'  },
   };
 
   const PLAN_CONFIG = {
@@ -285,11 +284,11 @@
     _appWired = true;
 
     populateZoneDropdowns();
+    normalizeSeedReportDates();
     loadUserReports();
     initNav();
     initReportFilters();
     initReportsScreen();
-    initCaptainsSection();
     initCrewSection();
     initCommunityTabs();
     initMapLayers();
@@ -313,17 +312,10 @@
 
   // Render all data for current auth state
   function renderApp() {
-    updateMembershipUI();          // Always run first — updates top chip for all account types
-    if (BajaAuth.isCaptain()) {
-      renderCaptainDashboard();
-      switchScreen('captain-dash');
-      return;
-    }
+    updateMembershipUI();          // Always run first — updates top chip
     renderHub();
     renderHomePreview();
     renderHuntMap();
-    renderCaptains();
-    updateCaptainStats();
     renderCrewTrips();
     renderCommunityContent();
     updateStats();
@@ -353,16 +345,6 @@
       zoneConditions   = conditions || {};
       weatherLoading   = false;
       weatherFetchedAt = Date.now();
-      // If captain dash is visible, refresh its weather widget
-      const capDash = document.getElementById('screen-captain-dash');
-      if (capDash && capDash.classList.contains('active')) {
-        const widget = document.getElementById('cap-dash-weather-widget');
-        if (widget) {
-          const zk = widget.dataset.zone || 'loreto';
-          widget.innerHTML = buildCaptainWeatherWidget(zk);
-          wireCaptainWeatherSelector(widget);
-        }
-      }
     });
   }
 
@@ -405,7 +387,6 @@
     const tierEmails = {
       free:'free@bajafish.test', scout:'scout@bajafish.test',
       pro:'pro@bajafish.test',   unlimited:'unlimited@bajafish.test',
-      captain:'captain@bajafish.test',
     };
 
     // ── Mode tabs (Sign In / Create Account) ──
@@ -419,16 +400,6 @@
     }
     document.querySelectorAll('.ls-mode-tab, .ls-switch-link').forEach(btn =>
       btn.addEventListener('click', () => setMode(btn.dataset.lsMode)));
-
-    // ── Account type toggle (Angler / Captain) ──
-    function setAcctType(type) {
-      document.querySelectorAll('.ls-acct-btn').forEach(b =>
-        b.classList.toggle('ls-acct-btn--active', b.dataset.acctType === type));
-      document.getElementById('create-angler-form')?.classList.toggle('hidden', type !== 'angler');
-      document.getElementById('create-captain-form')?.classList.toggle('hidden', type !== 'captain');
-    }
-    document.querySelectorAll('.ls-acct-btn').forEach(btn =>
-      btn.addEventListener('click', () => setAcctType(btn.dataset.acctType)));
 
     // ── Dev QA collapse ──
     document.getElementById('ls-dev-toggle')?.addEventListener('click', () => {
@@ -500,37 +471,6 @@
         }));
       } catch {}
       toast(`${PLAN_CONFIG[tier]?.name || tier} account created! Welcome to BajaFish.`, 'premium');
-      signInAs(account, email);
-    });
-
-    // ── Create Captain submit ──
-    document.getElementById('create-captain-form')?.addEventListener('submit', e => {
-      e.preventDefault();
-      const name     = document.getElementById('cc-name')?.value.trim()     || '';
-      const email    = (document.getElementById('cc-email')?.value || '').trim().toLowerCase();
-      const password = document.getElementById('cc-password')?.value.trim() || '';
-      const port     = document.getElementById('cc-port')?.value.trim()     || '';
-      const coast    = document.getElementById('cc-coast')?.value           || 'Sea of Cortez';
-      const errEl    = document.getElementById('create-captain-error');
-      if (!name || !email || password.length < 6 || !port) {
-        if (errEl) errEl.classList.remove('hidden');
-        return;
-      }
-      if (TEST_ACCOUNTS[email] || getUserAccounts()[email]) {
-        if (errEl) { errEl.textContent = 'Email already in use. Try signing in.'; errEl.classList.remove('hidden'); }
-        return;
-      }
-      errEl?.classList.add('hidden');
-      const account = { password, tier: 'captain', accountType: 'captain' };
-      saveUserAccount(email, account);
-      // Pre-populate captain profile
-      try {
-        const defaults = { name, homePort: port, coast, headline: `${port} · ${coast}`, availability: 'accepting' };
-        const capKey   = 'baja_captain_profile_' + email;
-        const existing = JSON.parse(localStorage.getItem(capKey) || '{}');
-        localStorage.setItem(capKey, JSON.stringify({ ...defaults, ...existing }));
-      } catch {}
-      toast('Captain account created! Welcome, Captain.', 'premium');
       signInAs(account, email);
     });
 
@@ -829,24 +769,18 @@
   }
 
   function updateMembershipUI() {
-    const isCaptain = BajaAuth.isCaptain();
     const plan      = BajaAuth.plan;
     const tier      = BajaAuth.tier;
 
-    // Use 'captain' as the data-plan attribute so CSS can style it distinctly
-    const planAttr = isCaptain ? 'captain' : tier;
-    document.documentElement.setAttribute('data-plan', planAttr);
+    document.documentElement.setAttribute('data-plan', tier);
 
-    // Top bar chip — captains get "Captain", not a consumer tier name
+    // Top bar chip
     const chipName = document.getElementById('plan-chip-name');
-    if (chipName) chipName.textContent = isCaptain ? 'Captain' : plan.name;
+    if (chipName) chipName.textContent = plan.name;
     const chip = document.getElementById('plan-chip');
-    if (chip) chip.setAttribute('data-plan', planAttr);
+    if (chip) chip.setAttribute('data-plan', tier);
 
-    // Skip consumer-only profile UI for captain accounts
-    if (isCaptain) return;
-
-    // Profile screen (consumer only)
+    // Profile screen
     const profileEmail = document.getElementById('profile-email-display');
     if (profileEmail) profileEmail.textContent = BajaAuth.email || '—';
 
@@ -870,60 +804,10 @@
 
     // Re-render membership modules
     renderMembershipModules();
-
-    // ── Captain nav: hide consumer bottom nav, show captain nav ──
-    const consumerNav  = document.querySelector('.bottom-nav');
-    let   captainNav   = document.getElementById('captain-bottom-nav');
-
-    if (isCaptain) {
-      // Hide consumer nav
-      if (consumerNav) consumerNav.style.display = 'none';
-      // Build captain nav if not already present
-      if (!captainNav) {
-        captainNav = document.createElement('nav');
-        captainNav.id = 'captain-bottom-nav';
-        captainNav.className = 'bottom-nav captain-bottom-nav';
-        captainNav.innerHTML = `
-          <button class="bnav-item" data-cdtab="overview">
-            <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            <span class="bnav-label">Dashboard</span>
-          </button>
-          <button class="bnav-item" data-cdtab="intel">
-            <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <span class="bnav-label">Intel</span>
-          </button>
-          <button class="bnav-item" data-cdtab="leads">
-            <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.07 6.07l1.88-1.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <span class="bnav-label">Leads</span>
-          </button>
-          <button class="bnav-item" data-cdtab="profile">
-            <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-            <span class="bnav-label">My Profile</span>
-          </button>`;
-        document.getElementById('app-shell')?.appendChild(captainNav);
-
-        // Wire captain nav tabs
-        captainNav.querySelectorAll('[data-cdtab]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            capDashTab = btn.dataset.cdtab;
-            captainNav.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderCaptainDashboard();
-            document.getElementById('screen-captain-dash')?.scrollTo(0, 0);
-          });
-        });
-      }
-      captainNav.style.display = 'flex';
-    } else {
-      // Consumer: show consumer nav, hide captain nav
-      if (consumerNav) consumerNav.style.display = '';
-      if (captainNav)  captainNav.style.display = 'none';
-    }
   }
 
   function renderMembershipModules() {
     renderHotspots();
-    renderTopCaptains();
     renderCommunityContent();
     renderMapLockState();
   }
@@ -1366,7 +1250,6 @@
       case 'now':      renderRptNow(container, reports, limit);      break;
       case 'hot':      renderRptHot(container, reports, limit);      break;
       case 'zones':    renderRptZones(container, reports, limit);    break;
-      case 'captains': renderRptCaptains(container, reports, limit); break;
     }
   }
 
@@ -4667,6 +4550,28 @@
     } else {
       el.classList.add('hidden');
     }
+  }
+
+  // Demo data ships with fixed dates. Shift the whole seed set forward so the
+  // newest report lands on today — keeps "this week" stats, Latest Reports, and
+  // Now/Hot modes populated no matter when the app is opened. Spacing between
+  // reports is preserved. Runs once, before user-submitted reports are merged.
+  function normalizeSeedReportDates() {
+    if (!Array.isArray(REPORTS) || !REPORTS.length) return;
+    const times = REPORTS
+      .map(r => new Date(r.date).getTime())
+      .filter(t => !isNaN(t));
+    if (!times.length) return;
+    const maxTime = Math.max(...times);
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const offsetDays = Math.round((today.getTime() - maxTime) / 86400000);
+    if (offsetDays <= 0) return; // already current (or future-dated) — leave as is
+    REPORTS.forEach(r => {
+      const d = new Date(r.date);
+      if (isNaN(d.getTime())) return;
+      d.setDate(d.getDate() + offsetDays);
+      r.date = d.toISOString().slice(0, 10);
+    });
   }
 
   function loadUserReports() {

@@ -6,11 +6,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>BAJAFISH — Know Before You Go</title>
-  <link rel="stylesheet" href="style.css?v=20260529-4">
+  <link rel="stylesheet" href="style.css?v=20260606-2">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="openwater.css?v=20260529-4">
+  <link rel="stylesheet" href="openwater.css?v=20260606-2">
 </head>
 <body>
 
@@ -67,18 +67,6 @@
 
         <!-- CREATE ACCOUNT PANEL -->
         <div class="ls-panel" id="ls-panel-create">
-          <div class="ls-account-type-row">
-            <button class="ls-acct-btn ls-acct-btn--active" data-acct-type="angler">
-              <span class="ls-acct-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 12c1-3.5 5-6 8.5-6s6 2.5 7 6c-1 3.5-3.5 6-7 6s-7.5-2.5-8.5-6z"/><circle cx="16" cy="11" r=".8" fill="currentColor" stroke="none"/><path d="M6.5 12c-1.5 0-3-1-4-2 .5 2 .5 2 0 4 1-1 2.5-2 4-2z"/></svg></span>
-              <span class="ls-acct-label">Angler</span>
-              <span class="ls-acct-sub">Fish the Baja</span>
-            </button>
-            <button class="ls-acct-btn" data-acct-type="captain">
-              <span class="ls-acct-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg></span>
-              <span class="ls-acct-label">Captain</span>
-              <span class="ls-acct-sub">List your panga</span>
-            </button>
-          </div>
           <!-- Angler form -->
           <form id="create-angler-form" class="ls-form" novalidate>
             <div class="ls-field">
@@ -121,41 +109,9 @@
             </div>
             <div id="create-angler-error" class="ls-error hidden">Please fill in name, email, and a password (6+ chars).</div>
             <button type="submit" class="ls-submit">
-              <span class="ls-submit-label">Create Angler Account</span>
+              <span class="ls-submit-label">Create Account</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
-          </form>
-          <!-- Captain form -->
-          <form id="create-captain-form" class="ls-form hidden" novalidate>
-            <div class="ls-field">
-              <label class="ls-label">Captain Name</label>
-              <input type="text" id="cc-name" class="ls-input" placeholder="Your full name" maxlength="60" required>
-            </div>
-            <div class="ls-field">
-              <label class="ls-label">Email</label>
-              <input type="email" id="cc-email" class="ls-input" placeholder="your@email.com" autocomplete="email" required>
-            </div>
-            <div class="ls-field">
-              <label class="ls-label">Password</label>
-              <input type="password" id="cc-password" class="ls-input" placeholder="Min 6 characters" autocomplete="new-password" required>
-            </div>
-            <div class="ls-field">
-              <label class="ls-label">Home Port</label>
-              <input type="text" id="cc-port" class="ls-input" placeholder="e.g. Loreto, Ensenada, Cabo" maxlength="60" required>
-            </div>
-            <div class="ls-field">
-              <label class="ls-label">Coast</label>
-              <select id="cc-coast" class="ls-input">
-                <option value="Sea of Cortez">Sea of Cortez</option>
-                <option value="Pacific">Pacific</option>
-              </select>
-            </div>
-            <div id="create-captain-error" class="ls-error hidden">Please fill in name, email, password, and home port.</div>
-            <button type="submit" class="ls-submit ls-submit--captain">
-              <span class="ls-submit-label"><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg> Create Captain Account</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-            <p class="ls-captain-free-note">Captains list for free. Anglers pay to reach you.</p>
           </form>
           <div class="ls-switch-hint">Have an account? <button class="ls-switch-link" data-ls-mode="signin">Sign in →</button></div>
         </div>
@@ -173,7 +129,6 @@
               <button class="ls-tier-pill" data-tier="scout">Scout</button>
               <button class="ls-tier-pill" data-tier="pro">Pro</button>
               <button class="ls-tier-pill" data-tier="unlimited">Unlimited</button>
-              <button class="ls-tier-pill ls-tier-pill--captain" data-tier="captain"><svg class="ow-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg> Captain</button>
             </div>
             <p class="ls-dev-note">Password: <strong>BajaFish123!</strong></p>
           </div>
@@ -285,15 +240,6 @@
           <div id="hotspots-content" class="module-body"></div>
         </section>
 
-        <!-- Hottest Captains module -->
-        <section class="home-module" id="captains-module" data-reveal aria-label="Hottest captains this week">
-          <div class="module-header">
-            <span class="module-eyebrow">This Week</span>
-            <h2 class="module-title">Hottest Captains</h2>
-          </div>
-          <div id="top-captains-content" class="module-body"></div>
-        </section>
-
         <!-- Latest Reports preview (3 cards max) -->
         <section class="home-module" data-reveal aria-label="Latest reports">
           <div class="module-header">
@@ -320,16 +266,6 @@
       </section>
 
 
-      <!-- ── CAPTAIN DASHBOARD ── -->
-      <section class="screen" id="screen-captain-dash" aria-label="Captain dashboard">
-        <header class="cap-dash-header">
-          <p class="hub-live-badge eyebrow"><span class="live-dot live-dot--green" aria-hidden="true"></span><span>Captain Mode</span></p>
-          <h2 class="cap-dash-title">Captain Dashboard</h2>
-          <p class="cap-dash-subtitle">Fishing intelligence for working captains</p>
-        </header>
-        <div id="captain-dash-content" class="cap-dash-content"></div>
-      </section>
-
       <!-- ── REPORTS — Intelligence Browser ── -->
       <section class="screen" id="screen-reports" aria-label="Fishing reports">
 
@@ -353,7 +289,6 @@
           <button class="rpt-mode rpt-mode--active" data-rpt-mode="now">Now</button>
           <button class="rpt-mode" data-rpt-mode="hot">Hot</button>
           <button class="rpt-mode" data-rpt-mode="zones">Zones</button>
-          <button class="rpt-mode" data-rpt-mode="captains">Captains</button>
         </div>
 
         <!-- Zone + species quick filters (visible in Now/Hot modes) -->
@@ -402,7 +337,7 @@
             <div class="map-lock-card">
               <div class="lock-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
               <h3 class="lock-title">Live Heat Maps</h3>
-              <p class="lock-body">See where fish are biting right now — by species, zone, and captain activity. Pro and Unlimited only.</p>
+              <p class="lock-body">See where fish are biting right now — by species and zone. Pro and Unlimited only.</p>
               <button class="lock-upgrade-btn" data-open-upgrade>Unlock Heat Maps</button>
             </div>
           </div>
@@ -439,58 +374,6 @@
 
         </div>
 
-      </section>
-
-      <!-- ── CAPTAINS ── -->
-      <section class="screen" id="screen-captains" aria-label="Find your captain">
-        <header class="cap-hero">
-          <div class="cap-hero-glow" aria-hidden="true"></div>
-          <div class="cap-hero-inner">
-            <p class="hub-live-badge eyebrow"><span class="live-dot" aria-hidden="true"></span><span>Verified Captains</span></p>
-            <h2 class="cap-hero-title">Find Your Captain</h2>
-            <p class="cap-hero-sub">44 fishing zones · Pacific &amp; Sea of Cortez</p>
-            <div class="cap-stats-row" role="group" aria-label="Captain fleet stats">
-              <div class="cap-stat"><span class="cap-stat-num" id="stat-captains">—</span><span class="cap-stat-lbl">Captains</span></div>
-              <div class="cap-stat-div" aria-hidden="true"></div>
-              <div class="cap-stat"><span class="cap-stat-num" id="stat-cap-zones">—</span><span class="cap-stat-lbl">Zones</span></div>
-              <div class="cap-stat-div" aria-hidden="true"></div>
-              <div class="cap-stat"><span class="cap-stat-num" id="stat-cap-rating">—</span><span class="cap-stat-lbl">Avg Rating</span></div>
-            </div>
-          </div>
-        </header>
-
-        <div class="cap-controls">
-          <div class="cap-search-wrap">
-            <svg class="cap-search-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            <input id="captain-search" class="cap-search-input" type="text" placeholder="Search captains, zones, species…" autocomplete="off" aria-label="Search captains, zones, or species">
-            <button class="cap-search-clear hidden" id="captain-search-clear" aria-label="Clear search">✕</button>
-          </div>
-          <div class="loc-scroll"><div class="loc-chips" id="cap-location-chips" role="group" aria-label="Filter by location">
-            <button class="loc-chip loc-chip--active" data-zone="all">All</button>
-            <button class="loc-chip" data-zone="popotla">Popotla</button>
-            <button class="loc-chip" data-zone="ensenada">Ensenada</button>
-            <button class="loc-chip" data-zone="cabo">Cabo</button>
-            <button class="loc-chip" data-zone="la-paz">La Paz</button>
-            <button class="loc-chip loc-chip--more" id="loc-more-btn">＋ More</button>
-          </div></div>
-          <div class="sort-scroll"><div class="sort-pills" id="cap-sort-strip" role="group" aria-label="Sort captains">
-            <button class="sort-pill sort-pill--active" data-sort="rated">Top Rated</button>
-            <button class="sort-pill" data-sort="active">Most Active</button>
-            <button class="sort-pill" data-sort="experience">Most Experience</button>
-            <button class="sort-pill" data-sort="yellowtail">Best for Yellowtail</button>
-            <button class="sort-pill" data-sort="dorado">Best for Dorado</button>
-          </div></div>
-        </div>
-
-        <div class="cap-filter-row" role="group" aria-label="Refine captains">
-          <button class="cap-filter-btn" data-filter="location" aria-label="Filter by location"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="cap-filter-label">Location</span></button>
-          <button class="cap-filter-btn" data-filter="species" aria-label="Filter by species"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="11" cy="12" rx="7" ry="5"/><circle cx="9" cy="11" r="1" fill="currentColor" stroke="none"/></svg><span class="cap-filter-label">Species</span></button>
-          <button class="cap-filter-btn" data-filter="rating" aria-label="Filter by rating"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span class="cap-filter-label">Rating</span></button>
-          <button class="cap-filter-btn" data-filter="specialty" aria-label="Filter by specialty"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg><span class="cap-filter-label">Specialty</span></button>
-        </div>
-
-        <div class="cap-results-label" id="captains-count" aria-live="polite"></div>
-        <div id="captains-list" class="cap-list"></div>
       </section>
 
       <!-- ── COMMUNITY ── -->
@@ -603,10 +486,6 @@
         <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
         <span class="bnav-label">Maps</span>
       </button>
-      <button class="bnav-item" data-screen="captains">
-        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
-        <span class="bnav-label">Captains</span>
-      </button>
       <button class="bnav-item" data-screen="reports">
         <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 12C6.5 12 4 9 2 9c0 4 2.5 6 4.5 6s4-1 5.5-3"/><path d="M22 12c-2 0-4.5-3-4.5-3S15 12 15 12s2.5 3 2.5 3S20 12 22 12z"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/></svg>
         <span class="bnav-label">Reports</span>
@@ -632,7 +511,7 @@
     <div class="bs-header"><h3 class="bs-title">Select Location</h3><button class="bs-close" id="bs-close" aria-label="Close">✕</button></div>
     <div class="bs-search-wrap"><input class="bs-search" id="bs-location-search" type="text" placeholder="Search locations…" autocomplete="off"></div>
     <div class="bs-list" id="bs-location-list"></div>
-    <div class="bs-footer"><button class="bs-apply-btn" id="bs-apply">Show Captains</button></div>
+    <div class="bs-footer"><button class="bs-apply-btn" id="bs-apply">Apply</button></div>
   </div>
 
   <div class="bottom-sheet" id="bs-filter" role="dialog" aria-modal="true">
@@ -675,7 +554,7 @@
           </form>
         </div>
         <div class="upgrade-panel" data-upanel="pro">
-          <div class="upgrade-tier-info"><span class="upgrade-tier-badge upgrade-tier-badge--paid">Tier 2</span><div class="upgrade-tier-desc">Full intelligence + captain access + live heat maps</div></div>
+          <div class="upgrade-tier-info"><span class="upgrade-tier-badge upgrade-tier-badge--paid">Tier 2</span><div class="upgrade-tier-desc">Full intelligence + live heat maps</div></div>
           <form class="upgrade-form" data-utier-form="pro" novalidate>
             <input type="email" class="upgrade-input" data-auth-email value="pro@bajafish.test">
             <input type="password" class="upgrade-input" data-auth-password value="BajaFish123!">
@@ -727,10 +606,9 @@
           </div>
           <div class="submit-form-row">
             <div class="submit-field"><label class="submit-label">Fish Count</label><input type="number" class="submit-input" id="submit-count" min="0" max="999" placeholder="How many?"></div>
-            <div class="submit-field"><label class="submit-label">Captain</label><input type="text" class="submit-input" id="submit-captain" placeholder="Optional"></div>
+            <div class="submit-field"><label class="submit-label">How Was It?</label><select class="submit-input" id="submit-rating" required><option value="hot">Hot — Wide open</option><option value="good">Good — Steady action</option><option value="slow">Slow — Picked a few</option></select></div>
           </div>
           <div class="submit-form-row">
-            <div class="submit-field"><label class="submit-label">How Was It?</label><select class="submit-input" id="submit-rating" required><option value="hot">Hot — Wide open</option><option value="good">Good — Steady action</option><option value="slow">Slow — Picked a few</option></select></div>
             <div class="submit-field"><label class="submit-label">Bait Type</label><select class="submit-input" id="submit-bait"><option value="">Any / Unknown</option><option value="Live bait">Live bait</option><option value="Fresh dead bait">Fresh dead bait</option><option value="Artificial">Artificial (lures/jigs)</option></select></div>
           </div>
           <div id="count-limit-check" class="count-limit-check hidden"></div>
@@ -786,12 +664,12 @@
   <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="config.js?v=20260529-4"></script>
-  <script src="icons.js?v=20260529-4"></script>
-  <script src="data.js?v=20260529-4"></script>
-  <script src="weather.js?v=20260529-4"></script>
-  <script src="app.js?v=20260529-4"></script>
-  <script src="openwater.js?v=20260529-4"></script>
+  <script src="config.js?v=20260606-2"></script>
+  <script src="icons.js?v=20260606-2"></script>
+  <script src="data.js?v=20260606-2"></script>
+  <script src="weather.js?v=20260606-2"></script>
+  <script src="app.js?v=20260606-2"></script>
+  <script src="openwater.js?v=20260606-2"></script>
 
   <!-- ── OVERHAUL §7 — additive presentation JS (no logic changes to app.js handlers) ── -->
   <script>
