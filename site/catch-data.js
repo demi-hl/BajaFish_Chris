@@ -1036,6 +1036,85 @@ window.CATCH = [
     "img": "/site/img/species/shortfin-corvina.jpg"
   },
   {
+    "key": "yellowfin-croaker",
+    "commonName": "Yellowfin Croaker",
+    "spanishName": "Berrugata Aletas Amarillas / Corvineta",
+    "scientificName": "Umbrina roncador",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Summer to fall",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "ghost shrimp",
+      "bloodworms",
+      "cut squid",
+      "mussel"
+    ],
+    "lures": [
+      "small soft plastics",
+      "bait rigs (Carolina/dropper)"
+    ],
+    "technique": "Surf and bay bottom fish: soak ghost shrimp, mussel or bloodworms on a Carolina rig in the wash and around sand troughs, jetties and estuary mouths. A reliable light-tackle and surf-fishing croaker.",
+    "notes": "Surf and bay croaker with yellow fins and a single chin barbel. Fun light-tackle and panfish target.",
+    "img": "/site/img/species/yellowfin-croaker.jpg"
+  },
+  {
+    "key": "black-croaker",
+    "commonName": "Black Croaker",
+    "spanishName": "Berrugata Negra / Roncador Negro",
+    "scientificName": "Cheilotrema saturnum",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "ghost shrimp",
+      "cut squid",
+      "mussel"
+    ],
+    "lures": [
+      "small soft plastics",
+      "bait rigs"
+    ],
+    "technique": "Fish bait on the bottom around rocky reef, kelp edges, jetties and pilings, often after dark; a secretive structure-oriented croaker. Juveniles show bold white bars that fade with age.",
+    "notes": "Reef/structure croaker (copper-bronze adults, barred juveniles). Often caught around rocks and pilings at night.",
+    "img": "/site/img/species/black-croaker.jpg"
+  },
+  {
+    "key": "spotfin-croaker",
+    "commonName": "Spotfin Croaker",
+    "spanishName": "Berrugata Aleta Manchada / Roncador",
+    "scientificName": "Roncador stearnsii",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Late summer to fall (best run)",
+    "marquee": false,
+    "baits": [
+      "ghost shrimp",
+      "clams",
+      "mussel",
+      "bloodworms",
+      "cut squid"
+    ],
+    "lures": [
+      "bait rigs (Carolina/dropper)"
+    ],
+    "technique": "A prized surf-fishing croaker: soak ghost shrimp, clams or mussel on a Carolina rig in the surf troughs and around sandy structure, best on a building swell in late summer. Look for the black spot at the pectoral-fin base.",
+    "notes": "Prized surf croaker with a distinct black spot at the pectoral base; no chin barbel. Strong fall surf run.",
+    "img": "/site/img/species/spotfin-croaker.jpg"
+  },
+  {
     "key": "halibut",
     "commonName": "California Halibut",
     "spanishName": "Lenguado de California",
