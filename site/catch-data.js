@@ -1116,6 +1116,59 @@ window.CATCH = [
     "img": "/site/img/species/bigeye-trevally.jpg"
   },
   {
+    "key": "bluefin-trevally",
+    "commonName": "Bluefin Trevally",
+    "spanishName": "Jurel Aleta Azul / Cojinuda Azul",
+    "scientificName": "Caranx melampygus",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez"
+    ],
+    "season": "Summer to fall (warm water)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live caballito (mackerel)",
+      "cut bait"
+    ],
+    "lures": [
+      "poppers",
+      "surface stickbaits",
+      "yo-yo iron",
+      "swimbaits",
+      "vertical jigs"
+    ],
+    "technique": "Hammer poppers and stickbaits over shallow reef and rocky points, or drop iron along island walls; an aggressive, hard-pulling jack of the warmer southern Gulf and Pacific tip. Often mixed with bigeye trevally and crevalle.",
+    "notes": "Electric-blue-finned reef jack. Topwater bruiser around East Cape and the islands.",
+    "img": "/site/img/species/bluefin-trevally.jpg"
+  },
+  {
+    "key": "green-jack",
+    "commonName": "Green Jack",
+    "spanishName": "Cocinero / Jurel Verde",
+    "scientificName": "Caranx caballus",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "small live sardina",
+      "cut bait",
+      "sabiki bait rigs"
+    ],
+    "lures": [
+      "small jigs",
+      "small swimbaits",
+      "sabiki rigs"
+    ],
+    "technique": "Catch on sabikis and small jigs around bait schools, reefs and panga moorings; a common schooling jack used both as a light-tackle target and as prime live bait for dorado, tuna and billfish.",
+    "notes": "Abundant small schooling jack. Doubles as top-grade live bait for bigger pelagics.",
+    "img": "/site/img/species/green-jack.jpg"
+  },
+  {
     "key": "pompano",
     "commonName": "Gafftopsail Pompano / Paloma Pompano",
     "spanishName": "Pámpano / Palometa",
