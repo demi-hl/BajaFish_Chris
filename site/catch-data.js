@@ -737,6 +737,32 @@ window.CATCH = [
     "img": "/site/img/species/spotted-bay-bass.jpg"
   },
   {
+    "key": "goldspotted-bass",
+    "commonName": "Goldspotted Sand Bass",
+    "spanishName": "Cabrilla Extranjera / Verdillo",
+    "scientificName": "Paralabrax auroguttatus",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut squid",
+      "cut bait",
+      "ghost shrimp"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "dropper-loop rigs",
+      "small jigs"
+    ],
+    "technique": "Fish live or cut bait on a dropper loop over rocky reef and rubble bottom, or work swimbaits and small jigs along structure; a deeper, more rock-oriented Paralabrax of the upper and central Gulf. Often shares ground with cabrilla and other sand bass.",
+    "notes": "Rocky-reef sand bass of the Sea of Cortez. Gold flecks distinguish it from barred sand bass.",
+    "img": "/site/img/species/goldspotted-bass.jpg"
+  },
+  {
     "key": "pargo",
     "commonName": "Pargo / Snapper (generic)",
     "spanishName": "Pargo",
