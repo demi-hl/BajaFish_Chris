@@ -1115,6 +1115,50 @@ window.CATCH = [
     "img": "/site/img/species/spotfin-croaker.jpg"
   },
   {
+    "key": "california-corbina",
+    "commonName": "California Corbina",
+    "spanishName": "Berrugata Californiana / Corvina de Aleta Corta",
+    "scientificName": "Menticirrhus undulatus",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Summer to early fall",
+    "marquee": false,
+    "baits": [
+      "sand crabs (mole crabs)",
+      "ghost shrimp",
+      "bloodworms",
+      "mussel",
+      "clams"
+    ],
+    "lures": [
+      "Carolina/dropper bait rigs",
+      "small soft plastics"
+    ],
+    "technique": "Classic surf-fishing target: light Carolina rig with fresh sand crabs worked in the wash, sand troughs and cuts on a moving tide. Wary and soft-biting, so go light and stealthy. A single chin barbel and no spot distinguish it from spotfin croaker.",
+    "notes": "The premier California surf croaker. Sand crabs are the #1 bait. Single chin barbel; no pectoral spot. Often catch-and-release.",
+    "img": "/site/img/species/california-corbina.jpg"
+  },
+  {
+    "key": "totoaba",
+    "commonName": "Totoaba",
+    "spanishName": "Totoaba",
+    "scientificName": "Totoaba macdonaldi",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez"
+    ],
+    "season": "Protected — no open season",
+    "marquee": false,
+    "baits": [],
+    "lures": [],
+    "technique": "PROTECTED SPECIES — do not target. Endemic to the upper Gulf of California and listed as critically endangered (CITES Appendix I). Fishing for and retaining totoaba is illegal in Mexico. If one is hooked incidentally, release it in the water immediately without removing it from the water. Included here for identification only.",
+    "notes": "PROTECTED / NO-TAKE. Critically endangered upper-Gulf giant croaker (Totoaba macdonaldi). Illegal to catch or keep; release immediately if hooked. ID reference only.",
+    "img": "/site/img/species/totoaba.jpg"
+  },
+  {
     "key": "halibut",
     "commonName": "California Halibut",
     "spanishName": "Lenguado de California",

@@ -396,9 +396,10 @@
    'calico-bass','sand-bass','spotted-bay-bass','goldspotted-bass',
    'bluefin-trevally','green-jack',
    'orangemouth-corvina','shortfin-corvina',
-   'yellowfin-croaker','black-croaker','spotfin-croaker'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=19'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=19'; // almaco jack, same fish as amberjack plate
+   'yellowfin-croaker','black-croaker','spotfin-croaker',
+   'california-corbina','totoaba'
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=20'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=20'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
