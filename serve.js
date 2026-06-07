@@ -33,20 +33,27 @@ const server = http.createServer((req, res) => {
   if (urlPath === '/' || urlPath === '/index.html') {
     res.writeHead(302, { Location: HOME, 'Cache-Control': 'no-store' }); res.end(); return;
   }
-  const filePath = path.resolve(DIR, '.' + urlPath);
+  let filePath = path.resolve(DIR, '.' + urlPath);
   // keep reads inside the project directory (block path traversal)
   if (filePath !== DIR && !filePath.startsWith(DIR + path.sep)) {
     res.writeHead(403); res.end('Forbidden'); return;
   }
-  const ext = path.extname(filePath);
-  const contentType = MIME[ext] || 'application/octet-stream';
+  // directory URL (e.g. /site/) -> serve its index.html
+  if (urlPath.endsWith('/')) filePath = path.join(filePath, 'index.html');
 
   fs.stat(filePath, (err, stat) => {
+    // fall back to index.html for a directory hit without a trailing slash
+    if (!err && stat.isDirectory()) {
+      filePath = path.join(filePath, 'index.html');
+      try { stat = fs.statSync(filePath); err = null; } catch (e) { err = e; }
+    }
     if (err || !stat.isFile()) {
       res.writeHead(404);
       res.end('Not found');
       return;
     }
+    const ext = path.extname(filePath);
+    const contentType = MIME[ext] || 'application/octet-stream';
     const total = stat.size;
     const headers = { 'Content-Type': contentType, 'Cache-Control': 'no-store', 'Accept-Ranges': 'bytes' };
     const range = req.headers.range;

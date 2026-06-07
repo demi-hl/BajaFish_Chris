@@ -2,7 +2,7 @@
   "name": "BajaFish",
   "short_name": "BajaFish",
   "description": "Panga fishing intelligence for Baja California — know before you go.",
-  "start_url": "/",
+  "start_url": "/site/index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#010810",
