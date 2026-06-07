@@ -982,6 +982,60 @@ window.CATCH = [
     "img": "/site/img/species/white-seabass.jpg"
   },
   {
+    "key": "orangemouth-corvina",
+    "commonName": "Orangemouth Corvina",
+    "spanishName": "Corvina Boquinaranja / Corvina Pintada",
+    "scientificName": "Cynoscion xanthulus",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Spring to fall (warm water)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut bait",
+      "shrimp",
+      "mudsuckers"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "Rapalas",
+      "small spoons",
+      "topwater at dawn"
+    ],
+    "technique": "Work swimbaits, Rapalas and topwater along channel edges, esteros and warm-water flats, or soak live and cut bait; the largest of the corvinas and a strong light-tackle target in Pacific lagoons and the upper Gulf. Look for the orange mouth and fins.",
+    "notes": "Biggest corvina (Cynoscion xanthulus). The 'corvina' of many Pacific lagoons. Orange mouth/fins are the tell.",
+    "img": "/site/img/species/orangemouth-corvina.jpg"
+  },
+  {
+    "key": "shortfin-corvina",
+    "commonName": "Shortfin Corvina",
+    "spanishName": "Corvina Aleta Corta / Corvina Picuda",
+    "scientificName": "Cynoscion parvipinnis",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Spring to fall (warm water)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "cut bait",
+      "shrimp"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "Rapalas",
+      "small spoons"
+    ],
+    "technique": "Cast swimbaits and Rapalas or soak cut bait around sandy channels, surf and estuary mouths; a toothy, schooling corvina common along the open Pacific coast and into the Gulf. Often mixed with other corvinas on the same ground.",
+    "notes": "Toothy open-coast corvina (Cynoscion parvipinnis). Schools along sandy beaches and estuary mouths.",
+    "img": "/site/img/species/shortfin-corvina.jpg"
+  },
+  {
     "key": "halibut",
     "commonName": "California Halibut",
     "spanishName": "Lenguado de California",

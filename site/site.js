@@ -394,9 +394,10 @@
    'dog-snapper','mullet-snapper','yellowtail','amberjack','lingcod','sheephead','triggerfish',
    'barred-pargo','cabrilla','golden-grouper',
    'calico-bass','sand-bass','spotted-bay-bass','goldspotted-bass',
-   'bluefin-trevally','green-jack'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=17'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=17'; // almaco jack, same fish as amberjack plate
+   'bluefin-trevally','green-jack',
+   'orangemouth-corvina','shortfin-corvina'
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=18'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=18'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
