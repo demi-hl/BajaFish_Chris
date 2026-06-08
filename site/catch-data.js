@@ -1212,6 +1212,59 @@ window.CATCH = [
     "img": "/site/img/species/halibut.jpg"
   },
   {
+    "key": "cortez-halibut",
+    "commonName": "Cortez Halibut",
+    "spanishName": "Lenguado de Cortez",
+    "scientificName": "Paralichthys aestuarius",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live/fresh squid",
+      "cut bait"
+    ],
+    "lures": [
+      "leadhead swimbaits (3 to 5 in)",
+      "bucktail jigs",
+      "drift/trap-rig live bait"
+    ],
+    "technique": "Drift live bait or slow-bounce swimbaits along sand flats and the sand-structure edge, mostly inside the Gulf and Baja bays; the Cortez cousin of the California halibut. Sandy-bottom ambush flatfish.",
+    "notes": "Gulf of California halibut (Paralichthys aestuarius). Same drift-the-sand tactics as the California halibut.",
+    "img": "/site/img/species/cortez-halibut.jpg"
+  },
+  {
+    "key": "california-turbot",
+    "commonName": "California Turbot (Diamond Turbot)",
+    "spanishName": "Lenguado Diamante / Platija",
+    "scientificName": "Hypsopsetta guttulata",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "ghost shrimp",
+      "bloodworms",
+      "clams",
+      "cut squid",
+      "mussel"
+    ],
+    "lures": [
+      "small leadhead jigs (bait-tipped)",
+      "dropper/Carolina bait rigs"
+    ],
+    "technique": "Soak small baits on a light Carolina rig over sand and eelgrass in bays and estuaries; a small, diamond-shaped flatfish that nibbles, so use small hooks. Common bay bycatch and a fine panfish.",
+    "notes": "Small diamond-shaped bay flatfish (Hypsopsetta guttulata) with blue-flecked spots. Light-tackle bay fish.",
+    "img": "/site/img/species/california-turbot.jpg"
+  },
+  {
     "key": "lingcod",
     "commonName": "Lingcod",
     "spanishName": "Bacalao / Lorcha",
