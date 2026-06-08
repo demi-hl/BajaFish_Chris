@@ -400,9 +400,10 @@
    'california-corbina','totoaba','huachinango',
    'black-triggerfish','burrito-grunt',
    'cortez-halibut','california-turbot',
-   'needlefish','mexican-barracuda'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=26'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=26'; // almaco jack, same fish as amberjack plate
+   'needlefish','mexican-barracuda',
+   'vermilion-rockfish','bocaccio','chilipepper','starry-rockfish'
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=27'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=27'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
