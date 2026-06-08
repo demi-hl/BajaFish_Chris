@@ -1318,6 +1318,58 @@ window.CATCH = [
     "img": "/site/img/species/pacific-barracuda.jpg"
   },
   {
+    "key": "mexican-barracuda",
+    "commonName": "Mexican Barracuda",
+    "spanishName": "Picuda / Barracuda Mexicana",
+    "scientificName": "Sphyraena ensis",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round (warm-water peak)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "live caballito (mackerel)",
+      "cut bait"
+    ],
+    "lures": [
+      "chrome/blue surface iron",
+      "spoons",
+      "Rapalas",
+      "casting jigs"
+    ],
+    "technique": "Cast flashy iron, spoons and Rapalas or fly-line live bait around reefs, points and current lines, mostly inside the Gulf and south; use a wire or heavy fluoro shock leader for the teeth. The warm-water Cortez counterpart to the Pacific barracuda.",
+    "notes": "Gulf/southern barracuda (Sphyraena ensis). Toothy schooler, shock leader required.",
+    "img": "/site/img/species/mexican-barracuda.jpg"
+  },
+  {
+    "key": "needlefish",
+    "commonName": "California Needlefish",
+    "spanishName": "Agujón / Marao",
+    "scientificName": "Strongylura exilis",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Summer to fall (warm water)",
+    "marquee": false,
+    "baits": [
+      "small live sardina",
+      "cut bait strips"
+    ],
+    "lures": [
+      "small spoons",
+      "small surface plugs",
+      "yarn/rope teasers (foul the teeth)"
+    ],
+    "technique": "Sight-cast small flashy lures or fly-line a small bait to fish working the surface around bays, esteros and current lines; their hard beaks make hookups tricky, so rope/yarn flies that tangle the teeth help. Mostly a surface light-tackle and bait fish.",
+    "notes": "Long-beaked surface fish (Strongylura exilis). Hard to hook on its bony beak; also common live bait for bigger predators.",
+    "img": "/site/img/species/needlefish.jpg"
+  },
+  {
     "key": "jack-crevalle",
     "commonName": "Pacific Crevalle Jack (Toro)",
     "spanishName": "Toro / Jurel Toro / Cocinero",
