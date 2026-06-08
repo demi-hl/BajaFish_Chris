@@ -398,8 +398,8 @@
    'orangemouth-corvina','shortfin-corvina',
    'yellowfin-croaker','black-croaker','spotfin-croaker',
    'california-corbina','totoaba','huachinango'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=21'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=21'; // almaco jack, same fish as amberjack plate
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=22'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=22'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
