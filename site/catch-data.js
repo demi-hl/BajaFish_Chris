@@ -1532,6 +1532,32 @@ window.CATCH = [
     "img": "/site/img/species/sheephead.jpg"
   },
   {
+    "key": "burrito-grunt",
+    "commonName": "Burrito Grunt",
+    "spanishName": "Burro / Burrito",
+    "scientificName": "Anisotremus interruptus",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "shrimp",
+      "cut squid",
+      "cut bait/strips",
+      "clams"
+    ],
+    "lures": [
+      "small leadhead jigs (bait-tipped)",
+      "dropper-loop bottom rigs"
+    ],
+    "technique": "Drop small baits to rocky reef, jetties and structure where they hold in loose schools; steady bottom bites on shrimp and squid. A common reef grunt around the Cape and Gulf, good light-tackle and table fish.",
+    "notes": "Schooling reef grunt (Anisotremus interruptus), silvery with a yellow tail. Small-bait bottom fish.",
+    "img": "/site/img/species/burrito-grunt.jpg"
+  },
+  {
     "key": "ocean-whitefish",
     "commonName": "Ocean Whitefish",
     "spanishName": "Pierna / Blanquillo",
