@@ -1482,6 +1482,31 @@ window.CATCH = [
     "img": "/site/img/species/triggerfish.jpg"
   },
   {
+    "key": "black-triggerfish",
+    "commonName": "Pacific Black Triggerfish",
+    "spanishName": "Cochito Negro / Puerco Negro",
+    "scientificName": "Melichthys niger",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round (warm water)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "shrimp",
+      "cut bait/strips"
+    ],
+    "lures": [
+      "small leadhead jigs (bait-tipped)",
+      "dropper-loop bottom rigs"
+    ],
+    "technique": "Drop small baits to reef, pinnacles and island walls where they school in midwater and pick at the bait; quick set on the nibble. Common around the southern Cape and offshore rocks. Dark, with thin blue lines along the fin bases.",
+    "notes": "Schooling reef triggerfish, near-black with blue fin-base lines. Same small-bait tactics as cochito.",
+    "img": "/site/img/species/black-triggerfish.jpg"
+  },
+  {
     "key": "sheephead",
     "commonName": "California Sheephead",
     "spanishName": "Vieja de California / Pez Perro",
