@@ -791,6 +791,33 @@ window.CATCH = [
     "img": "/site/img/species/pargo.jpg"
   },
   {
+    "key": "huachinango",
+    "commonName": "Pacific Red Snapper (Huachinango)",
+    "spanishName": "Huachinango",
+    "scientificName": "Lutjanus peru",
+    "category": "Inshore",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Year-round (cooler months best)",
+    "marquee": true,
+    "baits": [
+      "live sardina",
+      "cut squid",
+      "cut bait",
+      "whole dead bait"
+    ],
+    "lures": [
+      "yo-yo iron",
+      "leadhead swimbaits / plastics",
+      "vertical jigs"
+    ],
+    "technique": "Drop bait or iron to deeper rocky reef, banks and drop-offs (often 100-300 ft); fish the bottom at first light or drift the structure edges. The classic bright-red Baja table snapper and a prized panga catch.",
+    "notes": "The famous huachinango (Lutjanus peru). Deeper-reef bright-red snapper, top table fare across Baja.",
+    "img": "/site/img/species/huachinango.jpg"
+  },
+  {
     "key": "pargo-colorado",
     "commonName": "Colorado Snapper (Pargo Colorado)",
     "spanishName": "Pargo Colorado",
