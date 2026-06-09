@@ -1838,6 +1838,107 @@ window.CATCH = [
     "img": "/site/img/species/copper-rockfish.jpg"
   },
   {
+    "key": "bank-rockfish",
+    "commonName": "Bank Rockfish",
+    "spanishName": "Rocote de Banco",
+    "scientificName": "Sebastes rufus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp"
+    ],
+    "lures": [
+      "shrimp flies (gangion)",
+      "deep-drop dropper-loop rigs"
+    ],
+    "technique": "Deep-drop shrimp-fly gangions and bait rigs to offshore banks and high-relief rock; an orange, black-flecked rockfish taken in the deep rockfish complex. Bring a heavy sinker for the depth.",
+    "notes": "Deep offshore-bank rockfish (Sebastes rufus), orange with black speckling. Gangion bottom fish.",
+    "img": "/site/img/species/bank-rockfish.jpg"
+  },
+  {
+    "key": "widow-rockfish",
+    "commonName": "Widow Rockfish",
+    "spanishName": "Rocote Viuda",
+    "scientificName": "Sebastes entomelas",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp"
+    ],
+    "lures": [
+      "shrimp flies (gangion)",
+      "small jigs",
+      "deep-drop dropper-loop rigs"
+    ],
+    "technique": "Work shrimp-fly gangions and small jigs through mid-water and over deep reef where they school, often well up off the bottom; a dark brassy schooling rockfish caught in numbers in the complex.",
+    "notes": "Schooling mid-water rockfish (Sebastes entomelas), dark brassy-brown. Often suspends off the bottom.",
+    "img": "/site/img/species/widow-rockfish.jpg"
+  },
+  {
+    "key": "brown-rockfish",
+    "commonName": "Brown Rockfish",
+    "spanishName": "Rocote Café",
+    "scientificName": "Sebastes auriculatus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (kelp & rocks)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp",
+      "live sardina"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "shrimp flies (gangion)",
+      "small jigs"
+    ],
+    "technique": "Fish bait or swimbaits on rocky and kelp-bed bottom in shallow to moderate depth, including bays and jetties; a tan-brown mottled rockfish with a dark gill-cover blotch, caught shallower than the deep reds.",
+    "notes": "Shallow kelp/bay rockfish (Sebastes auriculatus) with a dark spot on the gill cover.",
+    "img": "/site/img/species/brown-rockfish.jpg"
+  },
+  {
+    "key": "gopher-rockfish",
+    "commonName": "Gopher Rockfish",
+    "spanishName": "Rocote Gopher",
+    "scientificName": "Sebastes carnatus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (kelp & rocks)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp",
+      "live sardina"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "shrimp flies (gangion)",
+      "small jigs"
+    ],
+    "technique": "Drop bait or small swimbaits tight to shallow high-relief rock and kelp; a stocky brown-and-pink mottled rockfish that holds close to structure. Quick lift to keep it out of the rocks.",
+    "notes": "Shallow-reef rockfish (Sebastes carnatus), brown with pink/white mottling. Tight-to-structure fish.",
+    "img": "/site/img/species/gopher-rockfish.jpg"
+  },
+  {
     "key": "blue-rockfish",
     "commonName": "Blue Rockfish",
     "spanishName": "Rocote Azul",
