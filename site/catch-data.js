@@ -1764,6 +1764,55 @@ window.CATCH = [
     "img": "/site/img/species/california-scorpionfish.jpg"
   },
   {
+    "key": "shortfin-mako",
+    "commonName": "Shortfin Mako Shark",
+    "spanishName": "Marrajo / Mako",
+    "scientificName": "Isurus oxyrinchus",
+    "category": "Pelagic",
+    "coasts": [
+      "Pacific",
+      "Sea of Cortez"
+    ],
+    "season": "Spring to fall (warm water)",
+    "marquee": false,
+    "baits": [
+      "drifted whole mackerel / bonito",
+      "live caballito (mackerel)",
+      "fly-lined bait in a chum slick"
+    ],
+    "lures": [
+      "trolled rigged baits",
+      "large trolling lures"
+    ],
+    "technique": "Drift or slow-troll rigged baits in a chum slick along temperature breaks and current lines offshore; the fastest, hardest-jumping shark in the ocean. Use heavy wire/cable leader and handle boatside with extreme care. Shortfin mako are a conservation concern with retention limits, so know current regulations and consider catch-and-release.",
+    "notes": "Fast, jumping pelagic shark (Isurus oxyrinchus). Overfished — tight retention limits; check regs and consider release. Wire leader, handle with care.",
+    "img": "/site/img/species/shortfin-mako.jpg"
+  },
+  {
+    "key": "thresher-shark",
+    "commonName": "Thresher Shark",
+    "spanishName": "Zorro / Pez Zorro",
+    "scientificName": "Alopias vulpinus",
+    "category": "Pelagic",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Spring to fall",
+    "marquee": false,
+    "baits": [
+      "drifted/trolled whole mackerel",
+      "live caballito (mackerel)",
+      "fly-lined bait in a slick"
+    ],
+    "lures": [
+      "trolled rigged baits",
+      "trolled feathers / lures"
+    ],
+    "technique": "Troll or drift rigged baits along current lines and temperature breaks offshore; threshers stun bait with their long upper tail lobe and are often tail-hooked. Use a wire/heavy leader and handle the powerful tail with care. Subject to retention limits, so check regulations and release fish you can't keep.",
+    "notes": "Long-tailed pelagic shark (Alopias vulpinus). Stuns prey with its tail; often foul-hooked there. Retention-limited — check regs.",
+    "img": "/site/img/species/thresher-shark.jpg"
+  },
+  {
     "key": "giant-sea-bass",
     "commonName": "Giant Sea Bass",
     "spanishName": "Mero Gigante / Pez Negro",

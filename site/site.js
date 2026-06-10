@@ -405,9 +405,10 @@
    'bank-rockfish','widow-rockfish','brown-rockfish','gopher-rockfish',
    'olive-rockfish','black-rockfish','treefish','flag-rockfish',
    'greenblotched-rockfish','rosethorn-rockfish','cowcod',
-   'speckled-rockfish','cabezon','california-scorpionfish','ocean-whitefish'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=31'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=31'; // almaco jack, same fish as amberjack plate
+   'speckled-rockfish','cabezon','california-scorpionfish','ocean-whitefish',
+   'shortfin-mako','thresher-shark'
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=32'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=32'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
