@@ -2062,6 +2062,77 @@ window.CATCH = [
     "img": "/site/img/species/flag-rockfish.jpg"
   },
   {
+    "key": "greenblotched-rockfish",
+    "commonName": "Greenblotched Rockfish",
+    "spanishName": "Rocote Manchas Verdes",
+    "scientificName": "Sebastes rosenblatti",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp"
+    ],
+    "lures": [
+      "shrimp flies (gangion)",
+      "deep-drop dropper-loop rigs"
+    ],
+    "technique": "Deep-drop shrimp-fly gangions and bait rigs to deep high-relief rock and mud-rock edges; a pink rockfish marbled with green blotches, caught in the deep complex. Heavy sinker for the depth.",
+    "notes": "Deep-water rockfish (Sebastes rosenblatti), pink with green vermiculation. Gangion bottom fish.",
+    "img": "/site/img/species/greenblotched-rockfish.jpg"
+  },
+  {
+    "key": "rosethorn-rockfish",
+    "commonName": "Rosethorn Rockfish",
+    "spanishName": "Rocote Espina Rosa",
+    "scientificName": "Sebastes helvomaculatus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp"
+    ],
+    "lures": [
+      "shrimp flies (gangion)",
+      "deep-drop dropper-loop rigs"
+    ],
+    "technique": "Deep-drop shrimp-fly gangions and bait rigs to deep rocky reef; a small red rockfish with pale yellow saddle blotches, taken in the deep complex. Bring weight for the depth.",
+    "notes": "Small deep rockfish (Sebastes helvomaculatus), red with pale saddle patches. Gangion bottom fish.",
+    "img": "/site/img/species/rosethorn-rockfish.jpg"
+  },
+  {
+    "key": "cowcod",
+    "commonName": "Cowcod",
+    "spanishName": "Rocote Vaca",
+    "scientificName": "Sebastes levis",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Protected / restricted (check regs)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip"
+    ],
+    "lures": [
+      "shrimp flies (gangion)",
+      "deep-drop dropper-loop rigs"
+    ],
+    "technique": "A large, deep-water rockfish of high-relief rock and pinnacles, usually taken incidentally on deep gangion drops. Heavily regulated after past overfishing, with closed areas (Cowcod Conservation Areas) and tight limits, so check current rules before keeping one.",
+    "notes": "Large deep rockfish (Sebastes levis), orange-barred juveniles. RESTRICTED — Cowcod Conservation Areas and strict limits; verify regs before retaining.",
+    "img": "/site/img/species/cowcod.jpg"
+  },
+  {
     "key": "starry-rockfish",
     "commonName": "Starry Rockfish",
     "spanishName": "Rocote Estrellado",
