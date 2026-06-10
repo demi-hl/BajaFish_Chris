@@ -1689,6 +1689,81 @@ window.CATCH = [
     "img": "/site/img/species/ocean-whitefish.jpg"
   },
   {
+    "key": "speckled-rockfish",
+    "commonName": "Speckled Rockfish",
+    "spanishName": "Rocote Pecoso",
+    "scientificName": "Sebastes ovalis",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "live sardina"
+    ],
+    "lures": [
+      "shrimp flies (gangion)",
+      "small leadhead swimbaits",
+      "deep-drop dropper-loop rigs"
+    ],
+    "technique": "Work shrimp-fly gangions and swimbaits over deep reef and high-relief rock where they school, often up off the bottom; an orange-tan rockfish finely speckled with black, caught in the deep complex.",
+    "notes": "Schooling deep rockfish (Sebastes ovalis), tan with fine black speckling. Gangion bottom fish.",
+    "img": "/site/img/species/speckled-rockfish.jpg"
+  },
+  {
+    "key": "cabezon",
+    "commonName": "Cabezon",
+    "spanishName": "Cabezón / Bocón",
+    "scientificName": "Scorpaenichthys marmoratus",
+    "category": "Bottomfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (spring spawn best)",
+    "marquee": false,
+    "baits": [
+      "live/fresh squid",
+      "shrimp",
+      "cut bait/strip",
+      "crab"
+    ],
+    "lures": [
+      "leadhead swimbaits / plastics",
+      "bait-tipped jigs"
+    ],
+    "technique": "Fish bait or swimbaits tight to rocky reef, kelp and tidepool structure where this big scaleless sculpin ambushes from cover; a hard bottom-grabber, lift fast. Good eating, but note the roe is toxic and must be discarded.",
+    "notes": "Large kelp/rock sculpin (Scorpaenichthys marmoratus). Excellent table fish, but its eggs/roe are poisonous, do not eat.",
+    "img": "/site/img/species/cabezon.jpg"
+  },
+  {
+    "key": "california-scorpionfish",
+    "commonName": "California Scorpionfish (Sculpin)",
+    "spanishName": "Escorpión / Lapón",
+    "scientificName": "Scorpaena guttata",
+    "category": "Bottomfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (summer spawn)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "shrimp",
+      "cut bait/strip",
+      "live sardina"
+    ],
+    "lures": [
+      "bait-tipped leadhead jigs",
+      "dropper-loop bottom rigs"
+    ],
+    "technique": "Soak bait on the bottom around rocky reef, wrecks and hard structure where they pile up, especially on the summer spawn; superb eating. CAUTION: the dorsal, anal and pelvic spines are venomous and give a very painful sting, so handle with care and avoid the spines when unhooking.",
+    "notes": "Prized eating 'sculpin' (Scorpaena guttata). VENOMOUS fin spines deliver a painful sting, handle carefully.",
+    "img": "/site/img/species/california-scorpionfish.jpg"
+  },
+  {
     "key": "giant-sea-bass",
     "commonName": "Giant Sea Bass",
     "spanishName": "Mero Gigante / Pez Negro",
