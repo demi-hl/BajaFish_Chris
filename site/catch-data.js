@@ -1964,6 +1964,104 @@ window.CATCH = [
     "img": "/site/img/species/blue-rockfish.jpg"
   },
   {
+    "key": "olive-rockfish",
+    "commonName": "Olive Rockfish",
+    "spanishName": "Rocote Olivo",
+    "scientificName": "Sebastes serranoides",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (kelp beds)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "live sardina"
+    ],
+    "lures": [
+      "small leadhead swimbaits",
+      "shrimp flies (gangion)",
+      "small jigs"
+    ],
+    "technique": "Cast or drop small swimbaits and flies around kelp edges and rocky reef where they hold up off the bottom; an olive-green, pale-blotched rockfish often mistaken for a small yellowtail. Kelp-and-rock light-tackle fish.",
+    "notes": "Kelp-bed rockfish (Sebastes serranoides), olive with pale spots. Often confused with yellowtail.",
+    "img": "/site/img/species/olive-rockfish.jpg"
+  },
+  {
+    "key": "black-rockfish",
+    "commonName": "Black Rockfish",
+    "spanishName": "Rocote Negro",
+    "scientificName": "Sebastes melanops",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "live sardina"
+    ],
+    "lures": [
+      "shrimp flies (gangion)",
+      "small leadhead swimbaits",
+      "surface iron / small jigs"
+    ],
+    "technique": "Work flies, swimbaits and small iron from the bottom up to mid-water around reefs and kelp where they school, sometimes right at the surface; a dark, hard-fighting schooling rockfish caught in numbers. Cold-water northern-Pacific reef fish.",
+    "notes": "Schooling black-grey rockfish (Sebastes melanops). Often suspends high or busts bait on top.",
+    "img": "/site/img/species/black-rockfish.jpg"
+  },
+  {
+    "key": "treefish",
+    "commonName": "Treefish",
+    "spanishName": "Rocote Catalina",
+    "scientificName": "Sebastes serriceps",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round (rocks & reef)",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "shrimp",
+      "cut bait/strip"
+    ],
+    "lures": [
+      "small leadhead jigs (bait-tipped)",
+      "dropper-loop bottom rigs"
+    ],
+    "technique": "Drop small baits tight into rocky crevices, ledges and reef holes where they hold close to cover; a boldly black-barred yellow rockfish with pink lips. A solitary structure-hugger, lift fast to clear the rocks.",
+    "notes": "Reef-crevice rockfish (Sebastes serriceps): yellow body, black bars, pink lips. Tight-to-structure fish.",
+    "img": "/site/img/species/treefish.jpg"
+  },
+  {
+    "key": "flag-rockfish",
+    "commonName": "Flag Rockfish",
+    "spanishName": "Rocote Bandera",
+    "scientificName": "Sebastes rubrivinctus",
+    "category": "Rockfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "cut bait/strip",
+      "shrimp"
+    ],
+    "lures": [
+      "shrimp flies (gangion)",
+      "deep-drop dropper-loop rigs"
+    ],
+    "technique": "Deep-drop shrimp-fly gangions and bait rigs to deep high-relief rock and pinnacles; a striking white-and-red banded ('flag') rockfish caught in the deep complex. Heavy sinker for the depth.",
+    "notes": "Deep rocky-reef rockfish (Sebastes rubrivinctus), white with bold red bars. Gangion bottom fish.",
+    "img": "/site/img/species/flag-rockfish.jpg"
+  },
+  {
     "key": "starry-rockfish",
     "commonName": "Starry Rockfish",
     "spanishName": "Rocote Estrellado",
