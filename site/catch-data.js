@@ -1534,9 +1534,9 @@ window.CATCH = [
   },
   {
     "key": "snook",
-    "commonName": "Black Snook",
-    "spanishName": "Robalo Prieto / Robalo Negro",
-    "scientificName": "Centropomus nigrescens",
+    "commonName": "Pacific Fat Snook",
+    "spanishName": "Robalo / Constantino",
+    "scientificName": "Centropomus medius",
     "category": "Inshore",
     "coasts": [
       "Pacific"
