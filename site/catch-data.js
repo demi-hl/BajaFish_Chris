@@ -1813,6 +1813,81 @@ window.CATCH = [
     "img": "/site/img/species/thresher-shark.jpg"
   },
   {
+    "key": "pacific-sanddab",
+    "commonName": "Pacific Sanddab",
+    "spanishName": "Lenguado Arenero",
+    "scientificName": "Citharichthys sordidus",
+    "category": "Bottomfish",
+    "coasts": [
+      "Pacific"
+    ],
+    "season": "Year-round",
+    "marquee": false,
+    "baits": [
+      "cut squid",
+      "small cut bait/strip",
+      "shrimp"
+    ],
+    "lures": [
+      "multi-hook sanddab/shrimp-fly rigs (bait-tipped)"
+    ],
+    "technique": "Drop a light multi-hook bait rig with small squid strips to soft sand and mud bottom in moderate depth and bounce it; a small left-eyed flatfish caught in numbers and prized as some of the best eating on the coast.",
+    "notes": "Small soft-bottom flatfish (Citharichthys sordidus). Light multi-hook bait rigs; superb table fare.",
+    "img": "/site/img/species/pacific-sanddab.jpg"
+  },
+  {
+    "key": "bonefish",
+    "commonName": "Bonefish",
+    "spanishName": "Macabí",
+    "scientificName": "Albula spp.",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Year-round (warm water)",
+    "marquee": false,
+    "baits": [
+      "live/fresh shrimp",
+      "small cut bait",
+      "ghost shrimp"
+    ],
+    "lures": [
+      "shrimp/crab flies",
+      "small soft plastics",
+      "small bonefish jigs"
+    ],
+    "technique": "Sight-cast small flies, jigs or shrimp to fish tailing and cruising shallow sand and mangrove flats on a moving tide; spooky and very fast, so long leaders and quiet wading help. Almost entirely catch-and-release.",
+    "notes": "Silvery flats speedster (Albula spp.). Sight-fishing and fly target; catch-and-release. Bony, not table fare.",
+    "img": "/site/img/species/bonefish.jpg"
+  },
+  {
+    "key": "threadfin-jack",
+    "commonName": "Threadfin Jack",
+    "spanishName": "Jurel Fino / Hilacho",
+    "scientificName": "Caranx otrynter",
+    "category": "Inshore",
+    "coasts": [
+      "Sea of Cortez",
+      "Pacific"
+    ],
+    "season": "Summer to fall (warm water)",
+    "marquee": false,
+    "baits": [
+      "live sardina",
+      "small cut bait",
+      "live caballito (mackerel)"
+    ],
+    "lures": [
+      "small swimbaits / plastics",
+      "small jigs",
+      "poppers"
+    ],
+    "technique": "Cast small swimbaits, jigs or poppers and fly-line live bait around reefs, points and beaches where they school; a deep-bodied jack whose juveniles trail long thread-like dorsal and anal fin filaments. Hard-pulling light-tackle fish.",
+    "notes": "Deep-bodied jack (Caranx otrynter) with trailing fin filaments when young. Schooling light-tackle bruiser.",
+    "img": "/site/img/species/threadfin-jack.jpg"
+  },
+  {
     "key": "giant-sea-bass",
     "commonName": "Giant Sea Bass",
     "spanishName": "Mero Gigante / Pez Negro",
