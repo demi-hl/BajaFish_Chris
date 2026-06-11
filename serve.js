@@ -2,8 +2,13 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8081;
+const PORT = Number(process.argv[2]) || Number(process.env.PORT) || 8081;
 const DIR = __dirname;
+
+// The marketing site at /site/ is the front door. Both / and /index.html
+// redirect here. The standalone app (app.html/app.js) has been removed; the
+// root index.html is now just a redirect stub to /site/.
+const HOME = '/site/index.html';
 
 const MIME = {
   '.html': 'text/html',
@@ -24,20 +29,31 @@ const server = http.createServer((req, res) => {
   let urlPath;
   try { urlPath = decodeURIComponent(req.url.split('?')[0]); }
   catch (e) { res.writeHead(400); res.end('Bad request'); return; }
-  const filePath = path.resolve(DIR, '.' + (urlPath === '/' ? '/index.html' : urlPath));
+  // Front door -> new marketing site, never the app login screen.
+  if (urlPath === '/' || urlPath === '/index.html') {
+    res.writeHead(302, { Location: HOME, 'Cache-Control': 'no-store' }); res.end(); return;
+  }
+  let filePath = path.resolve(DIR, '.' + urlPath);
   // keep reads inside the project directory (block path traversal)
   if (filePath !== DIR && !filePath.startsWith(DIR + path.sep)) {
     res.writeHead(403); res.end('Forbidden'); return;
   }
-  const ext = path.extname(filePath);
-  const contentType = MIME[ext] || 'application/octet-stream';
+  // directory URL (e.g. /site/) -> serve its index.html
+  if (urlPath.endsWith('/')) filePath = path.join(filePath, 'index.html');
 
   fs.stat(filePath, (err, stat) => {
+    // fall back to index.html for a directory hit without a trailing slash
+    if (!err && stat.isDirectory()) {
+      filePath = path.join(filePath, 'index.html');
+      try { stat = fs.statSync(filePath); err = null; } catch (e) { err = e; }
+    }
     if (err || !stat.isFile()) {
       res.writeHead(404);
       res.end('Not found');
       return;
     }
+    const ext = path.extname(filePath);
+    const contentType = MIME[ext] || 'application/octet-stream';
     const total = stat.size;
     const headers = { 'Content-Type': contentType, 'Cache-Control': 'no-store', 'Accept-Ranges': 'bytes' };
     const range = req.headers.range;

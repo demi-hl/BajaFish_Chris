@@ -125,9 +125,16 @@ section{position:relative}
 .coast-card{border-radius:22px;overflow:hidden;background:var(--deep);border:1px solid var(--line);
   transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease)}
 .coast-card:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 40px 80px -40px #000}
-.coast-card__media{height:clamp(220px,26vw,320px);overflow:hidden}
+.coast-card__media{position:relative;height:clamp(220px,26vw,320px);overflow:hidden}
 .coast-card__media img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
 .coast-card:hover .coast-card__media img{transform:scale(1.06)}
+/* North Pacific: original aerial coast photo, untouched. */
+/* Sea of Cortez: turquoise grade, kept photo-real. */
+.coast-card__media--cortez img{filter:brightness(.96) saturate(1.32) contrast(1.04)}
+.coast-card__media--cortez::after,
+.coast-card__media--cortez::before{content:"";position:absolute;inset:0;pointer-events:none}
+.coast-card__media--cortez::after{background:linear-gradient(180deg, rgba(6,16,38,.5), transparent 50%)}
+.coast-card__media--cortez::before{background:linear-gradient(180deg, transparent 38%, rgba(28,206,196,.42));mix-blend-mode:screen}
 .coast-card__body{padding:clamp(22px,3vw,36px)}
 .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--aqua);
   border:1px solid rgba(90,199,199,.3);background:rgba(90,199,199,.07);border-radius:100px;padding:5px 13px}
@@ -397,28 +404,26 @@ section{position:relative}
 .sp--plate .sp__stage{position:relative;aspect-ratio:1/1;overflow:hidden;
   border-bottom:1px solid var(--line);
   background:
-    radial-gradient(120% 96% at 50% 30%,rgba(90,199,199,.10),transparent 62%),
-    radial-gradient(150% 120% at 50% 118%,rgba(5,13,18,.0),rgba(5,13,18,.7) 100%),
-    linear-gradient(165deg,var(--sea) 0%,var(--deep) 46%,var(--ink-2) 100%)}
+    radial-gradient(120% 96% at 50% 26%,rgba(90,199,199,.16),transparent 60%),
+    linear-gradient(180deg,#fbfdfd 0%,#eef2f2 72%,#e4eaea 100%)}
 /* faint field-guide grid behind the specimen */
-.sp--plate .sp__stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
+.sp--plate .sp__stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.6;
   background-image:
-    linear-gradient(rgba(243,236,221,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(243,236,221,.05) 1px,transparent 1px);
+    linear-gradient(rgba(11,42,54,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(11,42,54,.06) 1px,transparent 1px);
   background-size:34px 34px;mask-image:radial-gradient(120% 100% at 50% 40%,#000 38%,transparent 78%)}
 /* the cortez side warms the vignette gold instead of aqua */
 .sp--plate.is-cortez .sp__stage{
   background:
-    radial-gradient(120% 96% at 50% 30%,rgba(255,199,44,.10),transparent 62%),
-    radial-gradient(150% 120% at 50% 118%,rgba(5,13,18,.0),rgba(5,13,18,.7) 100%),
-    linear-gradient(165deg,var(--sea) 0%,var(--deep) 46%,var(--ink-2) 100%)}
+    radial-gradient(120% 96% at 50% 26%,rgba(255,199,44,.16),transparent 60%),
+    linear-gradient(180deg,#fdfcf8 0%,#f3efe5 72%,#ece6d8 100%)}
 /* soft contact shadow that grounds the fish on the panel */
 .sp--plate .sp__stage::after{content:"";position:absolute;z-index:1;left:50%;bottom:13%;
   width:62%;height:13px;transform:translateX(-50%);border-radius:50%;
   background:radial-gradient(closest-side,rgba(2,8,12,.6),transparent);filter:blur(3px);
   opacity:.9;transition:transform .9s var(--ease),opacity .6s var(--ease)}
 .sp--plate .sp__illus{position:relative;z-index:2;width:100%;height:100%;
-  object-fit:contain;object-position:center 46%;padding:16px 18px 22px;
+  object-fit:contain;object-position:center 50%;padding:6px 8px 8px;
   filter:drop-shadow(0 14px 18px rgba(2,8,12,.5)) saturate(1.06);
   transition:transform .9s var(--ease),filter .6s var(--ease)}
 .sp--plate:hover .sp__illus{transform:scale(1.05) translateY(-2px);filter:drop-shadow(0 20px 26px rgba(2,8,12,.6)) saturate(1.1)}
@@ -463,8 +468,8 @@ section{position:relative}
 /* modal media in plate mode: illus floats on the same tinted ocean stage */
 .sp-modal__media.is-plate{
   background:
-    radial-gradient(120% 100% at 50% 28%,rgba(90,199,199,.12),transparent 60%),
-    linear-gradient(165deg,var(--sea) 0%,var(--deep) 50%,var(--ink-2) 100%)}
+    radial-gradient(120% 100% at 50% 26%,rgba(90,199,199,.16),transparent 58%),
+    linear-gradient(180deg,#fbfdfd 0%,#eef2f2 64%,#e3e9e9 100%)}
 .sp-modal__media.is-plate img{object-fit:contain;object-position:center 40%;
   padding:26px 28px 60px;filter:drop-shadow(0 18px 24px rgba(2,8,12,.55)) saturate(1.05)}
 .sp-modal__media.is-plate .sp-modal__veil{
@@ -784,3 +789,41 @@ section{position:relative}
   .getapp__device{order:-1}
   .phone{transform:none;animation-name:phonefloat-m}
 }
+
+/* ── Captains of the Month ───────────────────────────────────── */
+.com-wrap{margin:0 0 34px;padding:clamp(18px,2.4vw,26px);border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,199,44,.06),rgba(243,236,221,.02));
+  border:1px solid rgba(255,199,44,.2);}
+.com-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+.com-eyebrow{display:block;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);}
+.com-title{font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);font-weight:600;color:var(--fg);margin:4px 0 0;letter-spacing:-.01em;}
+.com-select-wrap{display:flex;align-items:center;gap:9px;}
+.com-select-label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2);}
+.com-select{appearance:none;-webkit-appearance:none;background:var(--deep);color:var(--fg);
+  border:1px solid var(--line-2);border-radius:12px;padding:10px 34px 10px 14px;font-size:14px;font-weight:600;
+  font-family:var(--sans);cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23FFC72C' stroke-width='3' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat:no-repeat;background-position:right 12px center;}
+.com-select:focus{outline:none;border-color:var(--gold);}
+.com-month{font-size:13px;font-weight:600;color:var(--fg-2);margin-bottom:16px;}
+.com-groups{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:720px){.com-groups{grid-template-columns:1fr;}}
+.com-group-head{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--fg);
+  margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+.com-coast-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.com-coast-dot--pac{background:#3f8cff;}
+.com-coast-dot--cor{background:var(--aqua);}
+.com-fcard{display:flex;align-items:center;gap:13px;padding:11px 10px;border-radius:14px;margin-bottom:8px;
+  background:rgba(243,236,221,.03);border:1px solid var(--line);transition:background .15s,border-color .15s,transform .15s;}
+.com-fcard:hover{background:rgba(243,236,221,.06);border-color:rgba(255,199,44,.32);transform:translateY(-1px);}
+.com-rank{width:26px;height:26px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:var(--ink);background:var(--muted);font-family:var(--sans);}
+.com-rank--gold{background:linear-gradient(135deg,#FFD75E,#E6A100);box-shadow:0 0 12px rgba(255,199,44,.5);}
+.com-rank--silver{background:linear-gradient(135deg,#EEF3F7,#A8B6C4);}
+.com-rank--bronze{background:linear-gradient(135deg,#E8A871,#B06B33);}
+.com-favatar{width:38px;height:38px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:var(--fg);background:var(--deep);border:1px solid var(--line-2);font-family:var(--sans);}
+.com-finfo{min-width:0;flex:1;}
+.com-fname{font-size:15px;font-weight:700;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.com-fmeta{font-size:12px;color:var(--gold);font-weight:600;margin-top:1px;}
+.com-fspecies{font-size:12px;color:var(--fg-2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}

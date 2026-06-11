@@ -105,14 +105,8 @@
     var CATCH = (typeof window.CATCH !== 'undefined') ? window.CATCH : null;
     var speciesN = CATCH ? CATCH.filter(function (s) { return !(s.notes && /^DUPLICATE/.test(s.notes)) && ILLUS[s.key]; }).length : null;
     var villages = Object.keys(ZN).length || null;
-    var captainsN = (CAPS && CAPS.length) ? CAPS.length : null;
-    var ratingAvg = null;
-    if (CAPS && CAPS.length) {
-      var rated = CAPS.map(function (c) { return Number(c.rating); }).filter(function (n) { return !isNaN(n); });
-      if (rated.length) ratingAvg = (rated.reduce(function (a, b) { return a + b; }, 0) / rated.length).toFixed(1);
-    }
     // apply to every count-up element that opts in by data-stat, wherever it lives
-    var vals = { villages: villages, captains: captainsN, species: speciesN, rating: ratingAvg };
+    var vals = { villages: villages, species: speciesN };
     document.querySelectorAll('.count[data-stat]').forEach(function (el) {
       var v = vals[el.getAttribute('data-stat')];
       if (v != null) el.setAttribute('data-to', String(v));
@@ -309,12 +303,8 @@
         body.appendChild(sp);
       }
 
-      // foot: captain + when
+      // foot: when
       var foot = E('div', 'report__foot');
-      var cap = E('div', 'report__cap');
-      cap.appendChild(E('span', 'report__cap-k', 'Captain'));
-      cap.appendChild(E('span', 'report__cap-v', r.captain || 'Local panguero'));
-      foot.appendChild(cap);
       foot.appendChild(E('span', 'report__when', when(r.date)));
       body.appendChild(foot);
 
@@ -396,14 +386,30 @@
   // Species with a transparent field-guide illustration in /site/img/illus/<key>.webp
   // render as drawn specimen plates; the rest fall back to a color photo.
   var ILLUS = {};
-  ['dorado','bonito','wahoo','yellowfin','bluefin-tuna','bigeye-tuna','skipjack-tuna',
-   'striped-marlin','blue-marlin','black-marlin','sailfish','swordfish','snook','corvina',
+  ['dorado','bonito','wahoo','yellowfin','bluefin-tuna','bigeye-tuna','skipjack-tuna','albacore',
+   'striped-marlin','blue-marlin','black-marlin','sailfish','swordfish','shortbill-spearfish','snook','corvina',
    'sierra','jack-crevalle','bigeye-trevally','halibut','white-seabass','pompano','ladyfish',
-   'pacific-barracuda','gulf-grouper','grouper','broomtail-grouper','giant-sea-bass',
-   'copper-rockfish','blue-rockfish','canary-rockfish','pargo','pargo-colorado','yellow-snapper',
-   'dog-snapper','mullet-snapper','yellowtail','amberjack','lingcod','sheephead','triggerfish'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=4'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=4'; // almaco jack, same fish as amberjack plate
+   'pacific-barracuda','gulf-grouper','broomtail-grouper','giant-sea-bass',
+   'copper-rockfish','blue-rockfish','pargo-colorado','yellow-snapper',
+   'dog-snapper','mullet-snapper','yellowtail','amberjack','lingcod','sheephead','triggerfish',
+   'barred-pargo','cabrilla','golden-grouper',
+   'calico-bass','sand-bass','spotted-bay-bass','goldspotted-bass',
+   'bluefin-trevally','green-jack',
+   'orangemouth-corvina','shortfin-corvina',
+   'yellowfin-croaker','black-croaker','spotfin-croaker',
+   'california-corbina','totoaba','huachinango',
+   'black-triggerfish','burrito-grunt',
+   'cortez-halibut','california-turbot',
+   'needlefish','mexican-barracuda',
+   'vermilion-rockfish','bocaccio','chilipepper','starry-rockfish',
+   'bank-rockfish','widow-rockfish','brown-rockfish','gopher-rockfish',
+   'olive-rockfish','black-rockfish','treefish','flag-rockfish',
+   'greenblotched-rockfish','rosethorn-rockfish','cowcod',
+   'speckled-rockfish','cabezon','california-scorpionfish','ocean-whitefish',
+   'shortfin-mako','thresher-shark',
+   'pacific-sanddab','bonefish','threadfin-jack'
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=35'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=35'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
@@ -1041,12 +1047,8 @@
   function tripInquiry() {
     var modal = $('#tripModal'); if (!modal) return;
     var form = $('#tripForm');
-    var capField = form && form.querySelector('[name="captain"]');
-    var titleEl = $('#tripTitle');
-    function open(captain) {
+    function open() {
       _lastFocus = document.activeElement;
-      if (capField) capField.value = captain || '';
-      if (titleEl) titleEl.textContent = captain ? ('Request a trip with ' + captain) : 'Tell us when you are coming';
       modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       var f = form && form.querySelector('input,select'); if (f) f.focus();
@@ -1058,7 +1060,7 @@
     }
     document.addEventListener('click', function (e) {
       var t = e.target && e.target.closest ? e.target.closest('[data-trip]') : null;
-      if (t) { e.preventDefault(); open(t.getAttribute('data-captain')); }
+      if (t) { e.preventDefault(); open(); }
     });
     modal.querySelectorAll('[data-trip-close]').forEach(function (b) { b.addEventListener('click', close); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
@@ -1082,7 +1084,59 @@
     });
   }
 
-  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); captains(); capJoin(); tripInquiry(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
+  /* ---- Captains of the Month: top 5 per coast, with rank medals ---- */
+  function captainsOfMonth() {
+    var host = $('#comFeatured'); if (!host || !CAPS) return;
+    var now = new Date();
+    var month = E('div', 'com-month', now.toLocaleString('en-US', { month: 'long' }) + ' ' + now.getFullYear());
+    host.appendChild(month);
+    var groups = E('div', 'com-groups');
+
+    function coastOf(c) { return (ZN[c.zone] || {}).coast || 'Pacific'; }
+    function topFor(coast) {
+      return CAPS.filter(function (c) { return coastOf(c) === coast; })
+        .slice().sort(function (a, b) { return (b.rating || 0) - (a.rating || 0) || (b.years || 0) - (a.years || 0); })
+        .slice(0, 5);
+    }
+    function medal(rank) { return rank === 1 ? ' com-rank--gold' : rank === 2 ? ' com-rank--silver' : rank === 3 ? ' com-rank--bronze' : ''; }
+    function fcard(c, rank) {
+      var z = ZN[c.zone] || {};
+      var initials = (c.name || '?').replace(/Capit[aá]n\s*/i, '').split(' ').map(function (w) { return w[0]; }).slice(0, 2).join('');
+      var sps = (c.specialtySpecies || c.species || []).map(function (s) { return nm(s); }).slice(0, 3);
+      var card = E('div', 'com-fcard');
+      card.appendChild(E('div', 'com-rank' + medal(rank), String(rank)));
+      card.appendChild(E('div', 'com-favatar', initials));
+      var info = E('div', 'com-finfo');
+      info.appendChild(E('div', 'com-fname', c.name || 'Captain'));
+      info.appendChild(E('div', 'com-fmeta', (c.homePort || z.name || 'Baja') + ' · ★' + (c.rating != null ? Number(c.rating).toFixed(1) : '5.0') + (c.years ? ' · ' + c.years + ' yrs' : '')));
+      info.appendChild(E('div', 'com-fspecies', sps.join(' · ')));
+      card.appendChild(info);
+      return card;
+    }
+    function group(coast, label, dotCls) {
+      var g = E('div', 'com-group');
+      var head = E('div', 'com-group-head');
+      head.appendChild(E('span', 'com-coast-dot com-coast-dot--' + dotCls));
+      head.appendChild(document.createTextNode(label));
+      g.appendChild(head);
+      topFor(coast).forEach(function (c, i) { g.appendChild(fcard(c, i + 1)); });
+      return g;
+    }
+    groups.appendChild(group('Pacific', 'North Pacific Ocean', 'pac'));
+    groups.appendChild(group('Sea of Cortez', 'Sea of Cortez', 'cor'));
+    host.appendChild(groups);
+
+    // "View" dropdown mirrors the coast filter buttons on the full grid
+    var sel = $('#comCoastSelect');
+    if (sel) sel.addEventListener('change', function () {
+      var want = sel.value;
+      var btn = document.querySelector('.cap-filter[data-coast="' + want + '"]');
+      if (btn) btn.click();
+      var grid = $('#capGrid'); if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function init() { reveal(); parallax(); navScroll(); navLive(); biting(); liveReports(); coasts(); coastsLive(); tripInquiry(); species(); plate(); ticker(); trust(); counts(); zonemap(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
   // register the service worker (installable PWA + offline shell)
