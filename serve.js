@@ -6,8 +6,8 @@ const PORT = Number(process.argv[2]) || Number(process.env.PORT) || 8081;
 const DIR = __dirname;
 
 // The marketing site at /site/ is the front door. Both / and /index.html
-// redirect here so the standalone app login screen is never served. The app
-// files are preserved on disk (app.js etc.) but not exposed at the root path.
+// redirect here. The standalone app (app.html/app.js) has been removed; the
+// root index.html is now just a redirect stub to /site/.
 const HOME = '/site/index.html';
 
 const MIME = {
