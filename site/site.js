@@ -408,8 +408,8 @@
    'speckled-rockfish','cabezon','california-scorpionfish','ocean-whitefish',
    'shortfin-mako','thresher-shark',
    'pacific-sanddab','bonefish','threadfin-jack'
-  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=33'; });
-  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=33'; // almaco jack, same fish as amberjack plate
+  ].forEach(function (k) { ILLUS[k] = '/site/img/illus/' + k + '.webp?v=34'; });
+  ILLUS['pez-fuerte'] = '/site/img/illus/pez-fuerte.webp?v=34'; // almaco jack, same fish as amberjack plate
 
   /* ---- premium species explorer (driven by window.CATCH) ---- */
   function species() {
